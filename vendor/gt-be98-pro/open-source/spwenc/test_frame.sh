@@ -32,6 +32,13 @@ results=[s.split(" ",3) for s in reference if s.startswith("RESULT ")]
 assert len(results)==65 and results[0]==["RESULT","0","0",""]
 for n,row in enumerate(results[1:],1):
     assert row[2]=="0" and base64.b64decode(row[3])==bytes.fromhex(frames[n-1].split()[2])
+decoded=[s.split(" ",3) for s in reference if s.startswith("DECODE ")]
+assert len(decoded)==64
+for n,row in enumerate(decoded,1):
+    assert row==["DECODE",str(n),"1","a"*n],row
+corrupted=[s.split() for s in reference if s.startswith("CORRUPT ")]
+assert len(corrupted)==64 and all(row[2:]==["0","1"] for row in corrupted)
+print("Frame decoding: valid reference records match; reference CRC failures pass through input (source frame parser rejects)")
 print("Password framing: native/ARM/reference CRC, padding, Base64 and empty behavior match; capacity failures preserve output")
 PYTHON
 '

@@ -85,3 +85,21 @@ ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open
 
 The CRC is part of format compatibility, not cryptographic authentication.
 Decryption validation, key derivation and complete wrapper behavior remain pending.
+
+## Decrypted-frame validation
+
+`nv_pw_unframe` validates the full bounded plaintext frame before copying its
+text: block alignment, canonical length, zero padding and the lowercase CRC32
+prefix must agree. It handles a payload ending exactly at the block boundary
+without requiring an out-of-bounds terminator. Short destinations and invalid
+frames leave output unchanged. This parser uses an explicit capacity and has a
+stricter contract than the public vendor wrapper.
+
+Native sanitizer and ARM tests cover lengths 1..64, exact block boundaries,
+corrupted CRC, nonzero padding, extra/truncated blocks, empty input and missing
+arguments. Intercepted-AES reference calls decode all 64 valid frames to the same
+text and return 1. CRC-corrupted reference calls return 0 and copy the original
+encoded input to output. That fallback must be handled by the eventual wrapper;
+it must not be mistaken for successful decryption. The frame helper deliberately
+rejects it with EBADMSG instead. No real encryption key or settings access occurs
+in these tests. `test_frame.sh` now includes both encoding and decoding checks.
