@@ -1,0 +1,4 @@
+{
+    global: nvram_*; wlcsm_*; common_nvram_kernel_set;
+    local: *;
+};

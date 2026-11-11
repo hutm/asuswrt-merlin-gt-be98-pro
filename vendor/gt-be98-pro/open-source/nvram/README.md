@@ -429,3 +429,24 @@ The real transport path also cross-compiles for ARM; Netlink usersock tests run
 natively because QEMU does not provide that facility. No restart was sent to a
 router or running wireless manager. Actual manager/hardware validation and full
 replacement-library integration remain outstanding.
+
+## Experimental firmware selection
+
+The GT-BE98 Pro WLAN Makefiles now select this source library when
+`ASUS_OPEN_COMPONENTS=y` and `BUILD_NAME=GT-BE98_PRO`. Both normal and prebuilt
+WLAN build paths invoke the source library target. Default profiles retain their
+existing selection. The library is rebuilt on each invocation to prevent a
+previously copied vendor library from satisfying the source target by timestamp.
+The command-line `nvram` executable remains the existing prebuilt artifact.
+
+The standalone Makefile builds an ARM `libnvram.so` with an explicit SONAME and
+export map, hiding internal implementation symbols. Its 25 public exports cover
+all 18 names in the earlier consumer scan. Production compilation against the
+built target libshared.so passed; dependencies are libshared, pthreads, libc and
+the ARM loader. This is API-name coverage, not full ABI or behavior validation.
+The original library has additional exports not implemented here.
+
+Full-image linking, final packaged-library identity, runtime boot settings loading
+and hardware validation must still be checked before treating this selection as
+a working firmware replacement. No installable release is implied by this build
+selection.

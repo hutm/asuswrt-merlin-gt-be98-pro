@@ -200,7 +200,11 @@ all: $(WLANAPP_DIRS)
 endif
 else
 all:
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+	$(MAKE) -C nvram dynamic install
+else
 	-cp -f $(TOP_PLATFORM)/wlan/nvram/$(PRBM_DIR)/libnvram.so nvram/
+endif
 endif
 install:
 	@echo done
@@ -415,8 +419,12 @@ ifneq ($(PREBUILT_BCMBIN),1)
 	# $(MAKE) -C $@ all install
 	$(MAKE) -C $@ dynamic install
 else
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+	$(MAKE) -C $@ dynamic install
+else
 	-cp -f $(TOP_PLATFORM)/wlan/nvram/$(PRBM_DIR)/libnvram.so nvram/
 	$(MAKE) -C $@ install
+endif
 endif
 
 wlDiag:

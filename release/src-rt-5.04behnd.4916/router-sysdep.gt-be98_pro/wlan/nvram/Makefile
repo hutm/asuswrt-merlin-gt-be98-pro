@@ -159,6 +159,9 @@ endif
 
 wlcsmdbg_tools:  wlcsmdbg wldbg wltest
 
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+all: libnvram nvram
+endif
 all: $(all_tags)
 	mkdir -p $(INSTALL_DIR)/rom/rom/etc/init.d
 	mkdir -p $(INSTALL_DIR)/rom/rom/etc/rc3.d
@@ -174,7 +177,12 @@ install:
 
 dynamic: all
 
-ifeq ($(wildcard ./*.c),)
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+.PHONY: libnvram
+libnvram:
+	$(MAKE) -f $(BUILD_DIR)/../../vendor/gt-be98-pro/open-source/nvram/Makefile \
+	  CC="$(CC)" SHARED_DIR="$(TOP)/shared" OUTPUT="$(CURDIR)/libnvram.so"
+else ifeq ($(wildcard ./*.c),)
 libnvram:
 	cp -f ./prebuilt/libnvram.so .
 else
