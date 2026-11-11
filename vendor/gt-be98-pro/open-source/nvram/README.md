@@ -32,6 +32,7 @@ support. No router or real storage device is accessed.
 | core.c / core.h | Serialized client core with owned-copy reads and updates |
 | adapter.c / adapter.h | Backend routing and borrowed-value compatibility interface |
 | storage_binding.c / storage_lock.c | Shared-library hooks and compatible storage locking |
+| runtime.c / runtime.h | Lazy process initialization and eight read/write ABI exports |
 | shared/source/nvpriv.c | GT-BE98_PRO storage routing, migration and enumeration |
 | compat/ | Bit flags, trimming, wireless-name parsing and numeric conversion |
 | getall.h | Indexed page assembly, preserving caller output on failure |
@@ -59,10 +60,10 @@ persisted. Readback can observe state but cannot make concurrent updates atomic.
 
 ## Remaining integration work
 
-The public library API still needs retained-pointer compatibility, listener
-lifecycle management, ASUS large-value/JFFS hooks, commit controls, locking, CLI/startup
-integration and complete export coverage. The GET helper currently returns a
-malloc-owned value; it must not be exposed directly as nvram_get.
+The public library still needs commit controls, persistent listener lifecycle,
+CLI/startup integration and complete export coverage. The low-level GET helper
+returns a malloc-owned value; the runtime uses the core's separate borrowed-value
+interface for nvram_get compatibility. Real-consumer validation remains required.
 
 The adapter now connects the core to an explicit storage-hook interface. Ordinary
 keys use the kernel protocol; large keys use the storage get/set/unset callbacks
@@ -83,9 +84,40 @@ Adapter tests link to the actual core/adapter shared library on native sanitizer
 and ARM builds. They use a synthetic kernel peer and mock storage/policy/lock
 callbacks to cover routing, missing versus empty values, retained pointers,
 SET(NULL) as UNSET, positive storage-write results, denied calls, failed locks,
-byte-count enumeration and output preservation. Global process lifecycle and
-exported nvram/wlcsm wrappers remain pending; the adapter is not yet a replacement
-for libnvram.so.
+byte-count enumeration and output preservation. The adapter is not yet a complete
+replacement for libnvram.so.
+
+## Experimental runtime library
+
+The runtime exports nvram_get/set/unset/getall and the four corresponding
+wlcsm_nvram functions. ASUS entry points use the adapter's storage/policy routing;
+wlcsm entry points access kernel storage directly. Both GETALL families return a
+byte count and zero-fill unused successful output. Errors return -1 and preserve
+output instead of reproducing the original kernel helper's ambiguous positive
+error result. Source compatibility helpers are linked into the same candidate.
+
+Initialization is lazy and retries after failure. The production path uses the
+published BCM4916 Netlink protocol 31 with a five-second exchange timeout, opens
+/var for storage locking, and caps retained cache allocations at 4 MiB. Tests
+compile an explicit NV_RUNTIME_TEST variant using a synthetic exchange and a
+temporary lock directory; production has no environment-variable override for
+these paths. The real transport variant is ARM-compiled but not run on hardware.
+
+An outer mutex serializes runtime operations, including storage calls. Registered
+fork handlers quiesce that mutex before fork and unlock it in parent and child,
+leaving private core/binding mutexes unheld. Tests cover initialization retry,
+four concurrent callers and post-fork reads/writes. Forking from inside callbacks,
+asynchronous signal-handler use, dynamic unloading with live state and interaction
+with other libraries' fork handlers are unsupported or unvalidated. A reentry
+guard reports EDEADLK for recursive NVRAM API calls rather than hanging. Shared
+hook behavior must be checked for such recursion on real firmware.
+
+The runtime retains state for process lifetime and does not run a notification
+thread; every read fetches fresh kernel state. Borrowed pointers can still change
+on later calls and do not become safe for concurrent readers merely because the
+API operations are locked. None of the runtime or client-core candidates is
+selected as libnvram.so by the firmware build yet. Commit, alternate persistence,
+manager/event interfaces, remaining exports and hardware behavior remain open.
 
 The storage binding calls the existing shared-library JFFS and access-policy
 exports and supplies process/thread serialization. A local mutex serializes

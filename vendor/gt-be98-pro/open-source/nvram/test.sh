@@ -58,6 +58,20 @@ timeout 30 /tmp/test-adapter
 /toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
   -pthread test_adapter.c -L/tmp/core-arm -Wl,-rpath,/tmp/core-arm -lnvcore -o /tmp/test-adapter-arm
 timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-adapter-arm
+runtime_sources="core.c adapter.c storage_binding.c storage_lock.c runtime.c compat/bitflags.c compat/strings.c compat/numbers.c"
+gcc -std=c11 -Wall -Wextra -Werror -g -fsanitize=address,undefined -DNV_RUNTIME_TEST \
+  -pthread -fPIC -shared $runtime_sources -o /tmp/core-native/libnvruntime.so
+gcc -std=c11 -Wall -Wextra -Werror -g -fsanitize=address,undefined -rdynamic \
+  -pthread test_runtime.c -L/tmp/core-native -Wl,-rpath,/tmp/core-native -lnvruntime -o /tmp/test-runtime
+timeout 30 /tmp/test-runtime
+/toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror -DNV_RUNTIME_TEST \
+  -pthread -fPIC -shared $runtime_sources -o /tmp/core-arm/libnvruntime.so
+/toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror -rdynamic \
+  -pthread test_runtime.c -L/tmp/core-arm -Wl,-rpath,/tmp/core-arm -lnvruntime -o /tmp/test-runtime-arm
+timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-runtime-arm
+# Also compile the real transport path; it is never executed on the host.
+/toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
+  -pthread -fPIC -shared $runtime_sources -o /tmp/core-arm/libnvruntime-production.so
 for name in storage storage_bulk; do
   gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined \
     storage.c "test_$name.c" -o /tmp/test-storage
