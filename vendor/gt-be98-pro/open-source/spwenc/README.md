@@ -62,3 +62,26 @@ Run with the same extracted reference root:
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_crypto.sh
 ```
+
+## Password framing candidate
+
+`frame.c` prepares the pre-AES payload using zlib's CRC32: eight lowercase hex
+characters, the input text, then zeros up to a 16-byte boundary. Empty input
+produces no payload, matching the wrapper's empty result. Capacity is explicit;
+invalid arguments, size overflow and short destinations fail before writes.
+This is a separate source API, not yet a replacement for `pw_enc` or `pw_dec`.
+
+Native sanitizer and ARM runs match 64 nonempty reference frames across block
+boundaries, plus empty-input behavior. Reference tests use synthetic settings,
+a synthetic LAN address/salt and intercepted AES functions, so comparisons expose
+framing rather than depend on the unfinished key derivation. Independent Python
+CRC32 and Base64 decoding confirm the bytes; output-buffer guards and short-buffer
+tests pass. The reference wrapper returns zero for these successful cases.
+No real passwords, router settings or hardware are accessed.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_frame.sh
+```
+
+The CRC is part of format compatibility, not cryptographic authentication.
+Decryption validation, key derivation and complete wrapper behavior remain pending.
