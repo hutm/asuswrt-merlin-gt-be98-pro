@@ -635,3 +635,24 @@ the complete key; unlike the reference, the source does not truncate names to
 value is withheld. This delegates policy to the existing shared library, whose
 remaining proprietary components still require replacement. Firmware selection
 of the source CLI awaits backup/erase and ordinary-command review.
+
+## Bounded HDR2 backup writer
+
+`nv_profile_write` emits the reference HDR2 header, 24-bit little-endian payload
+length, caller-selected format salt (0..29), and a payload padded to the next
+1024-byte boundary. Empty inputs still produce a 1024-byte payload. Padding and
+record separators use the valid 0xfe encoding. Input remains unchanged. This is
+format obfuscation, not encryption or protection for exported credentials.
+
+The writer validates record termination and padded size before writing, rejects
+bytes whose encoding would be mistaken for a NUL marker, and checks write/flush
+errors. The caller owns the stream and must check close errors. Native sanitizer
+and ARM tests cover all salts, round trips, exact block boundaries, malformed
+input, input preservation and output failure. The complete original firmware CLI
+restores a source-generated profile under ARM/QEMU; its setter/filter transcript
+matches the source CLI and an explicit expected transcript. No router is involved.
+
+The writer is not yet selected by `save` or `fb_save`. Their encrypted-setting
+conversion and feedback-secret filtering still need validation before integration.
+The reference profile uses next-block padding; the older generic GPL writer has
+an additional 3072-byte minimum that this reference-compatible primitive omits.

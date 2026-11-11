@@ -26,7 +26,9 @@ Path("/tmp/HDR1").write_bytes(b"HDR1"+struct.pack("<I",len(p))+p)
 Path("/tmp/HDR2").write_bytes(b"HDR2"+struct.pack("<I",len(p))[:3]+bytes([7])+bytes((255-c+7)&255 if c else 254 for c in p))
 Path("/tmp/expected").write_text("ASET\nSET[lan_ipaddr]=[192.0.2.1]\nASET\nSET[wl_test]=[value]\nASET\nSET[wgc1_test]=[keep]\nASET\nSET[test_exact]=[keep]\n")
 PYTHON
-for format in HDR1 HDR2; do
+$compiler -std=c11 -Wall -Wextra -Werror "$component/profile.c" "$component/test_profile_export.c" -o /tmp/export-profile
+qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/export-profile /tmp/source-HDR2
+for format in HDR1 HDR2 source-HDR2; do
   qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
     -E LD_PRELOAD=/tmp/stubs.so /tmp/source-cli restore /tmp/$format >/tmp/source.log
   qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \

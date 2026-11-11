@@ -37,3 +37,34 @@ int nv_profile_read(FILE *input,size_t capacity,int (*apply)(void *,const char *
 done:
     saved=errno;free(data);errno=saved;return result;
 }
+
+int nv_profile_write(FILE *output,const char *settings,size_t capacity,unsigned salt) {
+    size_t count=0,length,i;unsigned char *encoded,header[8]={'H','D','R','2',0,0,0,0};
+    int result=0,saved;
+    if(!output || !settings || !capacity || salt>29) {errno=EINVAL;return -1;}
+    while(count<capacity && settings[count]) {
+        const char *end=memchr(settings+count,0,capacity-count);
+        if(!end) {errno=EPROTO;return -1;}
+        count=(size_t)(end-settings)+1;
+    }
+    if(count>=capacity) {errno=EPROTO;return -1;}
+    /* Always append padding, including when records end on a block boundary. */
+    if(count>0xffffff-1024) {errno=EOVERFLOW;return -1;}
+    length=count+(1024-count%1024);
+    if(length>capacity) {errno=EOVERFLOW;return -1;}
+    encoded=malloc(length);if(!encoded) return -1;
+    memset(encoded,0xfe,length);
+    for(i=0;i<count;++i) {
+        unsigned char c=(unsigned char)settings[i];
+        if(c) {
+            encoded[i]=(unsigned char)(255-c+salt);
+            /* These values decode to NUL; refuse a lossy representation. */
+            if(encoded[i]>=0xfd) {free(encoded);errno=EILSEQ;return -1;}
+        }
+    }
+    header[4]=(unsigned char)length;header[5]=(unsigned char)(length>>8);
+    header[6]=(unsigned char)(length>>16);header[7]=(unsigned char)salt;
+    if(fwrite(header,1,sizeof header,output)!=sizeof header ||
+       fwrite(encoded,1,length,output)!=length || fflush(output)) result=-1;
+    saved=errno;free(encoded);errno=saved;return result;
+}
