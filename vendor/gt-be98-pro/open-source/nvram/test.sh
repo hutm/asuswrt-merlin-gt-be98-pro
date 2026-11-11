@@ -41,6 +41,12 @@ timeout 30 /tmp/test-storage-binding
 /toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror -pthread \
   storage_binding.c storage_lock.c test_storage_binding.c -o /tmp/test-storage-binding-arm
 timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-storage-binding-arm
+gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined \
+  cli_kernel.c test_cli_kernel.c -o /tmp/test-cli-kernel
+timeout 30 /tmp/test-cli-kernel
+/toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
+  cli_kernel.c test_cli_kernel.c -o /tmp/test-cli-kernel-arm
+timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-cli-kernel-arm
 mkdir /tmp/core-native /tmp/core-arm
 gcc -std=c11 -Wall -Wextra -Werror -g -fsanitize=address,undefined \
   -pthread -fPIC -shared core.c adapter.c -o /tmp/core-native/libnvcore.so

@@ -471,3 +471,25 @@ scripts. A reference test shows `restore_mfg` opens `/mnt/nvram/nvram.nvm`; it i
 not simply the newline settings loader. Other proprietary userspace, kernel,
 radio and boot components remain. This image is experimental and unvalidated on
 router hardware.
+
+## Source CLI kernel-command adapter
+
+`cli_kernel.c` implements command dispatch for `kget`, `kset`, `kunset`,
+`kcommit` and `kernelset`, ready for integration with the existing GPL CLI.
+Reference CLI runs with synthetic backend stubs established that `kget` calls
+the ASUS getter, `kset` calls the ASUS setter followed by the direct kernel
+setter, and `kunset` calls ASUS unset followed by a NULL kernel SET. `kcommit`
+checks presence of `asus_stop_commit` before kernel-only persistence.
+
+The adapter preserves those sequences and reports missing arguments, file errors
+and backend failures. Unlike the reference it stops the second write if the first
+fails, and opens input settings read-only. File loading uses the already tested
+bounded newline parser, preserves duplicate ordering and stops on failure with
+possible partial updates. The legacy pointer-only getter still cannot reliably
+distinguish missing values from read errors; this ambiguity remains for `kget`
+and the CLI `kcommit` control check.
+
+Native sanitizer and ARM/QEMU tests cover routing, NULL values, first-write
+failure, commit suppression, settings loading and invalid input. This adapter is
+not yet selected as the firmware CLI: manufacturing restore and the rest of the
+existing CLI integration remain outstanding. The packaged CLI is still prebuilt.

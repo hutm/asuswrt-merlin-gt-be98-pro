@@ -6,13 +6,13 @@
 #include <string.h>
 typedef int (*nv_setting_fn)(void *,const char *,const char *);
 /* Match the observed loader's space/quote trimming, not generic isspace(). */
-static char *nv_trim_key(char *key) {
+static inline char *nv_trim_key(char *key) {
     size_t length=strlen(key);
     while(length && (key[length-1]==' ' || key[length-1]=='"' || key[length-1]=='\n')) key[--length]=0;
     while(*key==' ' || *key=='"') ++key;
     return key;
 }
-static int nv_settings_load(FILE *input,nv_setting_fn apply,void *context) {
+static inline int nv_settings_load(FILE *input,nv_setting_fn apply,void *context) {
     char line[1024];
     if(!input || !apply) { errno=EINVAL;return -1; }
     while(fgets(line,sizeof line,input)) {
@@ -34,7 +34,7 @@ static int nv_settings_load(FILE *input,nv_setting_fn apply,void *context) {
     }
     return ferror(input)?-1:0;
 }
-static int nv_settings_write(FILE *output,const void *data,size_t size) {
+static inline int nv_settings_write(FILE *output,const void *data,size_t size) {
     const char *bytes=data;
     size_t offset=0;
     if(!output || (!data && size)) { errno=EINVAL;return -1; }
