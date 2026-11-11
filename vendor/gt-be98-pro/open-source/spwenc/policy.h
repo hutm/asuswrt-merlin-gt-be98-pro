@@ -6,4 +6,5 @@ extern struct ASUS_PP_table ASUS_PP_t[];
 int get_ASUS_privacy_policy_state(int id);
 int get_ASUS_privacy_policy(void);
 int get_ASUS_privacy_policy_ver(int id);
+void init_asus_pp_eula(void);
 #endif

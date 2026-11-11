@@ -505,3 +505,28 @@ candidate is not yet selected in firmware.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_timestamps.sh
 ```
+
+## Policy timestamp initialization candidate
+
+`policy_init.c` supplies `init_asus_pp_eula`. It snapshots the EULA timestamp,
+loads the EULA version (using 1 when that value is zero), and wraps a nonempty
+ASCII digit-only timestamp as `<version>timestamp`. It then applies the same
+normalization to the policy timestamp using the policy version, including zero.
+Already structured timestamps and other nondigit values are unchanged. Version
+text retains at most seven characters, input snapshots at most 1023, and output
+records at most 1023, matching the original limits. The function does not commit
+settings and, like the original void interface, does not propagate write errors.
+
+The suite links the real source settings-name lookup and compares 119 native/
+ARM/reference write traces: 112 combinations of timestamp forms and versions,
+plus seven long-value boundaries through 1100 input characters. Cases cover
+missing/empty values, leading zeros, signs/whitespace, existing records, malformed
+text, negative versions and version truncation. Native sanitizer checks pass.
+Reads/writes use synthetic fixtures; persistence, concurrent changes and backend
+errors are not covered. The source policy initialization and timestamp exports
+are now candidates, but the full object still requires its remaining interfaces
+and firmware integration before removal.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_policy_init.sh
+```
