@@ -680,3 +680,9 @@ and `EXTRALDFLAGS` rather than `LDFLAGS`. That recipe now also consumes
 `OPEN_SHARED_LDFLAGS` to resolve the new shared-library dependencies. The next
 full-image retry is still required; no image from these failed retries is a
 validation artifact.
+
+The httpd retry passed that link and stopped at rstats, which also resets
+`LDFLAGS`. The rstats, infosvr and ntpclient overrides now retain
+`OPEN_SHARED_LDFLAGS`; the latter two were identified by inspecting their source
+Makefiles for the same reset pattern. These are link-time paths only and expand
+to nothing outside the experimental profile. Full-image validation remains open.

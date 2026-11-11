@@ -12,7 +12,7 @@ CFLAGS += -Wall -O
 
 CFLAGS += -DASUS
 CFLAGS += -I$(TOP)/shared -I$(SRCBASE)/include
-LDFLAGS = -L$(TOP)/shared -lshared -L$(TOP_PLATFORM)/nvram${BCMEX}${EX7} -lnvram
+LDFLAGS = -L$(TOP)/shared -lshared -L$(TOP_PLATFORM)/nvram${BCMEX}${EX7} -lnvram $(OPEN_SHARED_LDFLAGS)
 ifeq ($(RTCONFIG_BCMARM),y)
 CFLAGS += -I$(SRCBASE)/shared/bcmwifi/include -DTYPEDEF_FLOAT_T
 CFLAGS += -I$(SRCBASE)/common/include
