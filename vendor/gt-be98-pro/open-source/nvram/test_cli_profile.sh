@@ -213,4 +213,22 @@ printf "GET[key]\n" >/tmp/expected-chain
 cmp /tmp/raw-chain.log /tmp/expected-chain
 echo "raw save: bypasses decryption and preserves following commands"
 
+for pair in "source /tmp/source-cli" "reference /firmware/bin/nvram"; do
+  set -- $pair
+  qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+    -E LD_PRELOAD=/tmp/stubs.so -E FEEDBACK_MATRIX=1 $2 fb_save /tmp/$1-matrix
+done
+python3 - <<"PYTHON"
+from pathlib import Path
+def records(path):
+    data=Path(path).read_bytes()
+    assert data[:4]==b"HDR2" and len(data)==8+int.from_bytes(data[4:7],"little")
+    return dict(item.split(b"=",1) for item in bytes(0 if c>=253 else (255+data[7]-c)&255 for c in data[8:]).rstrip(b"\0").split(b"\0"))
+a=records("/tmp/source-matrix");b=records("/tmp/reference-matrix")
+differences=[(k.decode(),a[k].decode(),b[k].decode()) for k in a if a[k]!=b[k]]
+print("wireless feedback differences:",differences)
+assert a==b
+print("wireless feedback: 735 credential-pattern records match")
+PYTHON
+
 '

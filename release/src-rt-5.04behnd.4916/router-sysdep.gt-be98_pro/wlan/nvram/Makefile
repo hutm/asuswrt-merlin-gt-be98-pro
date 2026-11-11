@@ -191,7 +191,14 @@ libnvram: nvram_shared.o brcm_generic_lock.o $(WLCSM_LIB)
 	install -m 755 libnvram.so $(INSTALL_DIR)/lib
 endif
 
-ifeq ($(wildcard ./*.c),)
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+.PHONY: nvram
+nvram: libnvram
+	$(MAKE) -f $(BUILD_DIR)/../../vendor/gt-be98-pro/open-source/nvram/Makefile cli \
+	  CC="$(CC)" SHARED_DIR="$(TOP)/shared" ROUTER_DIR="$(TOP)" \
+	  PLATFORM_DIR="$(BUILD_DIR)" NVRAM_DIR="$(CURDIR)" INSTALL_DIR="$(INSTALL_DIR)" \
+	  CLI_OUTPUT="$(CURDIR)/nvram"
+else ifeq ($(wildcard ./*.c),)
 nvram:
 	cp -f ./prebuilt/nvram .
 else

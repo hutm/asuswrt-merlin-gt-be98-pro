@@ -797,3 +797,18 @@ records. A synthetic failing decrypt backend confirms raw mode does not invoke
 it, while a chained getter confirms argument consumption. The full CLI comparison
 suite passes. Broader feedback-pattern coverage and final firmware integration
 remain pending.
+
+## Source CLI build selection
+
+The experimental `ASUS_OPEN_COMPONENTS=y` GT-BE98_PRO path now builds the GPL
+frontend plus source adapters instead of copying the prebuilt executable. It
+links against the source runtime and existing shared dependencies. The CLI target
+is forced and depends on the library target so stale prebuilt timestamps cannot
+skip compilation. Other models and default builds retain their existing selection.
+Full-image build and packaged-executable verification are pending for this change.
+
+Expanded ARM feedback comparisons cover 735 wireless names: five radio indices,
+base names and subunits 0..19, with PSK, WEP keys, passphrase and RADIUS-key suffixes.
+The source and reference outputs match throughout this matrix. Matching includes
+names both retain unmasked; this is compatibility evidence, not proof that feedback
+exports remove every credential. The fixed-list redaction policy remains limited.

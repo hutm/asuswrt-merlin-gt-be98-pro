@@ -66,6 +66,15 @@ int nvram_getall(char *out,int size) {const char data[]="key=one\0empty=\0equals
   for(int i=0;i<70;++i){memcpy(next,item,sizeof item);next+=sizeof item;}
   *next=0;return 0;
  }
+ if(getenv("FEEDBACK_MATRIX")) {
+  const char *suffixes[]={"wpa_psk","key1","key2","key3","key4","phrase_x","radius_key"};
+  char *next=out;
+  for(int radio=0;radio<5;++radio)for(int sub=-1;sub<20;++sub)for(unsigned i=0;i<sizeof suffixes/sizeof suffixes[0];++i){
+   int n=sub<0?snprintf(next,size-(int)(next-out),"wl%d_%s=secret",radio,suffixes[i]):snprintf(next,size-(int)(next-out),"wl%d.%d_%s=secret",radio,sub,suffixes[i]);
+   if(n<0 || n+1>=size-(next-out))abort();next+=n+1;
+  }
+  *next=0;return 0;
+ }
  if(getenv("FEEDBACK_EXPANSION")) {
   const char item[]="http_username=a";char *next=out;
   for(int i=0;i<14000;++i){memcpy(next,item,sizeof item);next+=sizeof item;}
