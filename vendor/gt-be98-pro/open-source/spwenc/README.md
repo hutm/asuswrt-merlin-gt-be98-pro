@@ -126,3 +126,29 @@ accepting partial scans. It is not selected in firmware.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_key.sh
 ```
+
+## Complete explicit-input encryption candidate
+
+`nv_pw_encrypt` composes the source sizing, framing, key derivation and AES helpers
+with OpenSSL Base64 encoding. It takes explicit device inputs and output capacity,
+returns an empty string for empty plaintext, and leaves output unchanged on error.
+Frame, ciphertext scratch and the local derived key are cleared before freeing or
+returning. This is a separate checked API, not the public `pw_enc` ABI or its
+runtime settings adapter. It is not selected in firmware.
+
+Native sanitizer and ARM runs match the original wrapper byte-for-byte for 1026
+cases: all plaintext lengths 0..512 in salted and unsalted modes, varied printable
+contents, synthetic MACs/products and salt/product truncation boundaries. The
+reference harness uses real reference AES and complete wrapping, with only device
+reads intercepted. Its decoder recovers every original plaintext. Source tests
+also cover short destinations, invalid device inputs, NULL arguments and empty
+input. These checks establish format compatibility for the tested cases, not
+complete behavior under allocation faults or missing runtime settings.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_password.sh
+```
+
+Complete checked decryption, public ABI adapters, runtime lookup/retry behavior,
+settings migration and remaining policy/helper exports still require work before
+removing `spwenc.o`.
