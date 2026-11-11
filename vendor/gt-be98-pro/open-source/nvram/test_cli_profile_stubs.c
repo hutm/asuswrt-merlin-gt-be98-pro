@@ -27,8 +27,9 @@ int dec_nvram(char *name,char *input,char *output) {
  if(fault && !strcmp(fault,"expansion")){memset(output,120,4095);output[4095]=0;return 0;}
  strcpy(output,"decrypted");return 0;
 }
-void sync(void) {}
-int system(const char *command) { (void)command;abort(); }
+void sync(void) {if(getenv("ERASE_FIXTURE")) puts("SYNC");}
+int system(const char *command) {if(!getenv("ERASE_FIXTURE")) abort();printf("SYSTEM[%s]\n",command);return getenv("ERASE_FAILURE")?256:0;}
+int unlink(const char *path) {if(!getenv("ERASE_FIXTURE")) abort();printf("UNLINK[%s]\n",path);return 0;}
 static void print_escaped(const char *s) {
     if(!s) { printf("NULL");return; }
     for(;*s;++s) {

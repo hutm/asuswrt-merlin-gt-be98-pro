@@ -692,3 +692,20 @@ unterminated decrypt output and aggregate expansion beyond capacity. Each return
 failure before opening the destination and preserves an existing backup. The
 ordinary source/reference backup comparison still passes. This does not complete
 feedback redaction or mode-export auditing; the source CLI remains unselected.
+
+## Erase command routing
+
+The opt-in CLI routes exact `erase` to the fixed `hnd-erase nvram` command,
+matching the reference CLI. The generic GPL CLI previously used `nvram_erase`.
+The existing router-control source dispatches `hnd-erase nvram` through reset
+flags and commit handling before `hnd_nvram_erase`, which removes settings files.
+Keeping that helper preserves its platform-specific reset sequence. No user
+arguments are interpolated into the command string.
+
+The source propagates command-launch errors and treats nonzero helper exit or
+signal status as failure. Native sanitizer and ARM tests cover success, nonzero
+exit, signal status and launch failure. Complete CLI comparisons intercept
+`system`, `unlink` and `sync`; they verify the helper route and error reporting
+without executing an erase helper or touching router settings. This establishes
+command routing, not successful hardware reset or complete helper provenance.
+The reference also exposes `godefault`, which still requires separate validation.

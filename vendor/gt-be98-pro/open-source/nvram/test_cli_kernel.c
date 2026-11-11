@@ -35,6 +35,8 @@ int nvram_getall(char *out,int capacity){
  memcpy(out,data,sizeof data);return 0;
 }
 int invalid_nvram_get_name(char *name){return !strcmp(name,"restricted") || (strlen(name)==160 && strspn(name,"q")==160);}
+static int erase_result;
+int system(const char *command){assert(!strcmp(command,"hnd-erase nvram"));event("ERASE","",NULL);if(erase_result==-1)errno=EAGAIN;return erase_result;}
 static void reset(void){used=0;events[0]=0;}
 int main(void){
  FILE *out=tmpfile();assert(out);char *set[]={"kset","key=a=b"};assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"A:key:a=b;K:key:a=b;"));
@@ -78,6 +80,10 @@ int main(void){
  assert(nv_cli_kernel(1,set,view)==1 && ftell(view)==0);fclose(view);
  snapshot_mode=0;view=fopen("/dev/full","w");assert(view);assert(!setvbuf(view,NULL,_IONBF,0));
  assert(nv_cli_kernel(1,set,view)==-1 && errno==ENOSPC);fclose(view);
+ reset();set[0]="erase";assert(nv_cli_kernel(1,set,out)==1&&!strcmp(events,"ERASE::<NULL>;"));
+ erase_result=256;assert(nv_cli_kernel(1,set,out)==-1&&errno==EIO);
+ erase_result=9;assert(nv_cli_kernel(1,set,out)==-1&&errno==EIO);
+ erase_result=-1;assert(nv_cli_kernel(1,set,out)==-1&&errno==EAGAIN);erase_result=0;
  set[0]="unknown";assert(!nv_cli_kernel(1,set,out));fclose(out);
  puts("Kernel CLI: routing order, NULL values, stop control, file loading and failures passed");return 0;
 }

@@ -108,4 +108,17 @@ for fault in readfail unterminated oversized decryptfail decryptunterminated exp
   echo "backup input failure $fault: rejected before destination changes"
 done
 
+for executable in /tmp/source-cli /firmware/bin/nvram; do
+  qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+    -E LD_PRELOAD=/tmp/stubs.so -E ERASE_FIXTURE=1 $executable erase >/tmp/erase.log
+  printf "SYSTEM[hnd-erase nvram]\n" >/tmp/expected-erase
+  cmp /tmp/erase.log /tmp/expected-erase
+done
+if qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+  -E LD_PRELOAD=/tmp/stubs.so -E ERASE_FIXTURE=1 -E ERASE_FAILURE=1 /tmp/source-cli erase; then
+  echo "erase ignored helper failure" >&2
+  exit 1
+fi
+echo "erase: reference helper route matches and source reports helper failure (all operations intercepted)"
+
 '
