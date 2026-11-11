@@ -454,3 +454,26 @@ name-lookup helper still require replacement before this object can be removed.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_policy.sh
 ```
+
+## Settings-name lookup and character append candidates
+
+`names.c` supplies `webapi_get_b` as a direct eleven-entry mapping. Valid IDs
+return the copied name length, truncated to destination capacity minus one;
+unknown IDs clear the supplied destination and return 0. NULL or zero-capacity
+buffers return 0 without writing. The exported `c` helper appends promoted
+character values until a zero low byte, preserving bounded truncation. The source
+also refuses to append to a buffer without a terminator inside its capacity.
+
+The lookup suite matches 495 native/ARM/reference cases (IDs -1..13, capacities
+1..33), plus 13 append cases including truncated and low-byte character values.
+NULL destinations match; zero-capacity and unterminated buffers have source-only
+checks. Native sanitizer runs pass. `test_policy_names.sh` then links the real
+source lookup to the policy queries and compares 15 value and 180 state/version
+cases against the original complete path, using synthetic settings only. The
+original mocked lookup suite remains available to exercise lookup failures.
+These functions remain outside firmware until the other object exports are ready.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_names.sh
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_policy_names.sh
+```

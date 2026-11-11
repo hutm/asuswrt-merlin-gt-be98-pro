@@ -6,8 +6,16 @@
 #include <stdlib.h>
 #include <string.h>
 static char *setting;static int gateway;static unsigned reads;
+#ifndef REAL_NAMES
 int webapi_get_b(int id,char *out,size_t size){assert(id==3&&size==32);strcpy(out,"policy_setting");return gateway;}
-char *nvram_get(const char *name){assert(!strcmp(name,"policy_setting"));++reads;return setting;}
+#endif
+char *nvram_get(const char *name){
+#ifdef REAL_NAMES
+ assert(!strcmp(name,"68feaaa3"));
+#else
+ assert(!strcmp(name,"policy_setting"));
+#endif
+++reads;return setting;}
 int nvram_get_int(const char *name){char *s=nvram_get(name);long n=s?strtol(s,NULL,10):0;return n>INT_MAX?INT_MAX:n<INT_MIN?INT_MIN:(int)n;}
 #ifdef REFERENCE
 #include <dlfcn.h>
@@ -25,7 +33,12 @@ int main(void){
 #endif
  unsigned n=0;for(;table[n].name;++n)printf("T %s %s %d %d\n",table[n].name,table[n].version,table[n].id,table[n].force_sign);assert(n==8);
  char *values[]={NULL,"","0","1","2","3","4","5","6","-1","  +4tail","invalid","99999999999999999999999999999999999999","-9999999999999999999999999999999999999","00000000000000000000000000000001"};
- for(gateway=-1;gateway<=2;++gateway)for(unsigned v=0;v<15;++v){
+ #ifdef REAL_NAMES
+ for(gateway=1;gateway<=1;++gateway)
+#else
+ for(gateway=-1;gateway<=2;++gateway)
+#endif
+for(unsigned v=0;v<15;++v){
   setting=values[v];reads=0;int p=policy();assert(reads==(gateway>0?1U:0U));printf("P %d %u %d\n",gateway,v,p);
   for(int id=-1;id<=10;++id){reads=0;int s=state(id);assert(reads==(gateway>0?1U:0U));printf("S %d %u %d %d %d\n",gateway,v,id,s,version(id));}
  }
