@@ -24,6 +24,7 @@ support. No router or real storage device is accessed.
 | frame.h | Netlink/WLCSM framing and length validation |
 | transport.h | Deadline-bounded socket exchange and sender validation |
 | client.h | GET, SET and UNSET request/reply validation |
+| cache.h | Bounded retained-value storage and explicit refresh results |
 | getall.h | Indexed page assembly, preserving caller output on failure |
 | settings.h | Existing newline settings format and ordered loading |
 | persist.h | File sync, backup/installation and recovery-file handling |
@@ -42,10 +43,28 @@ persisted. Readback can observe state but cannot make concurrent updates atomic.
 
 ## Remaining integration work
 
-The public library API still needs pointer-lifetime/cache behavior, notification
+The public library API still needs cache integration and synchronization, notification
 handling, ASUS large-value/JFFS hooks, commit controls, locking, CLI/startup
 integration and complete export coverage. The GET helper currently returns a
 malloc-owned value; it must not be exposed directly as nvram_get.
+
+The cache reserves a 1024-byte value buffer for each stored key so growth does
+not relocate an exposed pointer. It never evicts entries, applies a caller-set
+memory limit, and reports exhaustion without changing prior data. A confirmed
+missing value clears the retained buffer and returns NULL; an empty value returns
+a non-NULL pointer. Refresh errors preserve previous data but return an error,
+so callers must explicitly decide whether stale data is usable. Returned pointers
+remain allocated until cache destruction. All access, including reads through
+retained pointers, requires external serialization; this helper alone does not
+make concurrent callers safe.
+
+This deliberately differs from the reference library's growth behavior observed
+with a synthetic response peer: a short update reused the pointer, while a
+600-byte update returned the old value once and a new pointer on the next read.
+The source cache applies a valid growth update immediately. Compatibility with
+real consumers still needs evaluation. Cache tests cover address retention,
+growth, aliases, missing/empty distinctions, memory limits, refresh errors and
+multiple keys on native sanitizer builds and ARM emulation.
 
 The transport option for the vendor kernel's recipient-as-sender convention is
 based on its source and remains untested on hardware. The protocol has no
