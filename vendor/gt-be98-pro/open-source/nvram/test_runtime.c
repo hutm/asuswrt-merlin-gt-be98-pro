@@ -13,14 +13,18 @@
 #include <sys/wait.h>
 #include <unistd.h>
 static char path[]="/tmp/nv-runtime-XXXXXX",small[64],large[64];
-static int present,deny,fail_init=1,requests,reenter,commits,commit_fail,data_fail;
+static int present,deny,fail_init=1,requests,reenter,commits,commit_fail,data_fail,syncs,markers,stop_fail,marker_fail;
+static const char *stop_value;
 int nv_runtime_test_directory(void){if(fail_init){fail_init=0;errno=ENOENT;return -1;}return open(path,O_RDONLY|O_DIRECTORY);}
 int nv_runtime_test_data_directory(void){if(data_fail){errno=ENOENT;return -1;}return open(path,O_RDONLY|O_DIRECTORY);}
+void nv_runtime_test_sync(void){++syncs;}
+FILE *nv_runtime_test_commit_marker(void){char name[256];++markers;if(marker_fail){errno=EACCES;return NULL;}snprintf(name,sizeof name,"%s/commit_ret",path);return fopen(name,"w");}
 int nv_runtime_test_exchange(void *context,const void *request,size_t size,void *reply,size_t capacity,size_t *returned){
  (void)context;struct nv_frame_view f;struct nv_pair_view p;unsigned char payload[1024];size_t n=0;
  assert(!nv_frame_decode(request,size,&f));++requests;
  if(reenter){assert(!nvram_get("key")&&errno==EDEADLK);}
- if(f.type==3){assert(!strcmp((const char *)f.payload,"key"));if(present)assert(!nv_pair_encode(payload,sizeof payload,"key",small,strlen(small)+1,&n));}
+ if(f.type==3&&!strcmp((const char *)f.payload,"asus_stop_commit")){if(stop_fail){errno=ETIMEDOUT;return -1;}if(stop_value)assert(!nv_pair_encode(payload,sizeof payload,"asus_stop_commit",stop_value,strlen(stop_value)+1,&n));}
+ else if(f.type==3){assert(!strcmp((const char *)f.payload,"key"));if(present)assert(!nv_pair_encode(payload,sizeof payload,"key",small,strlen(small)+1,&n));}
  else if(f.type==2||f.type==4){assert(!nv_pair_decode(f.payload,f.length,&p)&&!strcmp(p.name,"key"));present=f.type==2;if(present){assert(p.value_len<=sizeof small);memcpy(small,p.value,p.value_len);}memcpy(payload,f.payload,f.length);n=f.length;}
  else if(f.type==7){char lock[256];snprintf(lock,sizeof lock,"%s/nvram.lock",path);assert(!access(lock,F_OK));assert(!f.length);++commits;if(commit_fail){errno=ETIMEDOUT;return -1;}}
  else {assert(f.type==5);memcpy(payload,"key=one",8);n=8;}
@@ -61,6 +65,16 @@ int main(void){
  assert(read(settings,saved,sizeof saved)==8&&!strcmp(saved,"key=one\n"));close(settings);
  assert(faccessat(directory,"nvram.lock",F_OK,0)==-1&&errno==ENOENT);
  assert(!wlcsm_nvram_commit()&&commits==3);
+ before=commits;
+ const char *stops[]={"", "0", "1"};
+ for(unsigned i=0;i<3;++i){stop_value=stops[i];assert(!nvram_commit()&&commits==before&&!syncs&&!markers);}stop_value=NULL;
+ stop_fail=1;assert(nvram_commit()==1&&errno==ETIMEDOUT&&commits==before&&!syncs);stop_fail=0;
+ deny=1;assert(nvram_commit()==1&&errno==EACCES&&commits==before&&!syncs);deny=0;
+ assert(!nvram_commit()&&commits==before+1&&syncs==1&&markers==1);
+ memset(saved,0,sizeof saved);settings=openat(directory,"commit_ret",O_RDONLY);assert(settings>=0);assert(read(settings,saved,sizeof saved)==11&&!strcmp(saved,"commit: OK\n"));close(settings);
+ commit_fail=1;assert(nvram_commit()==1&&errno==ETIMEDOUT&&syncs==2&&markers==1);commit_fail=0;
+ marker_fail=1;assert(!nvram_commit()&&syncs==3&&markers==2);marker_fail=0;
+ assert(!unlinkat(directory,"commit_ret",0));
  assert(!unlinkat(directory,".kernel_nvram.setting",0));assert(!unlinkat(directory,".kernel_nvram.setting_old",0));close(directory);
  assert(!rmdir(path));puts("NVRAM runtime: exported APIs, initialization retry, storage policy/locks, reentry guard, threads and post-fork use passed");return 0;
 }

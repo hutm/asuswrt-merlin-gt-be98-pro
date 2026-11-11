@@ -1,4 +1,5 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
+#define _DEFAULT_SOURCE
 #define _POSIX_C_SOURCE 200809L
 #include "runtime.h"
 #include "storage_binding.h"
@@ -14,6 +15,8 @@ static struct nv_transport transport={31,5000,0,1};
 extern int nv_runtime_test_exchange(void *,const void *,size_t,void *,size_t,size_t *);
 extern int nv_runtime_test_directory(void);
 extern int nv_runtime_test_data_directory(void);
+extern void nv_runtime_test_sync(void);
+extern FILE *nv_runtime_test_commit_marker(void);
 #endif
 static pthread_mutex_t runtime_mutex=PTHREAD_MUTEX_INITIALIZER;
 static struct nv_core *core;
@@ -92,11 +95,10 @@ int wlcsm_nvram_getall(char *output,int capacity) {
 /* Serialize source writers with the same exclusive lock used for JFFS storage.
  * Original binaries do not necessarily take this lock when committing; mixing
  * implementations cannot provide cross-process commit serialization. */
-int wlcsm_nvram_commit(void) {
+static int commit_locked(void) {
     int directory,result,saved,released;
     struct nv_storage_hooks *storage=&adapter.storage;
-    if(enter()) return 1;
-    if(storage->lock(storage->context)) {leave();return 1;}
+    if(storage->lock(storage->context)) return 1;
 #ifdef NV_RUNTIME_TEST
     directory=nv_runtime_test_data_directory();
 #else
@@ -113,5 +115,39 @@ int wlcsm_nvram_commit(void) {
     released=storage->unlock(storage->context);
     if(result) errno=saved;
     else if(released) result=-1;
-    leave();return result?1:0;
+    return result?1:0;
+}
+
+int wlcsm_nvram_commit(void) {
+    int result;if(enter()) return 1;
+    result=commit_locked();leave();return result;
+}
+int nvram_commit(void) {
+    char *stop=NULL;FILE *marker;int result,saved;
+    if(enter()) return 1;
+    /* Refuse to write if the control cannot be read. Any present value,
+     * including empty or "0", suppresses the operation in the vendor ABI. */
+    if(adapter.storage.deny_get(adapter.storage.context,"asus_stop_commit")) {
+        errno=EACCES;leave();return 1;
+    }
+    result=nv_core_get_copy(core,"asus_stop_commit",&stop);
+    if(result<0) {leave();return 1;}
+    if(stop) {free(stop);leave();return 0;}
+    result=commit_locked();saved=errno;
+#ifdef NV_RUNTIME_TEST
+    nv_runtime_test_sync();
+#else
+    sync();
+#endif
+    if(!result) {
+#ifdef NV_RUNTIME_TEST
+        marker=nv_runtime_test_commit_marker();
+#else
+        marker=fopen("/var/log/commit_ret","w");
+#endif
+        /* This is a best-effort status file, as in the reference. Failure
+         * cannot undo the already successful settings transaction. */
+        if(marker) {fputs("commit: OK\n",marker);fclose(marker);}
+    }
+    errno=saved;leave();return result;
 }

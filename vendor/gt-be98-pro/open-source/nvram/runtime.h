@@ -15,4 +15,5 @@ int wlcsm_nvram_getall(char *output,int capacity);
 /* Zero on saved-and-acknowledged success, one on failure. A failure may follow
  * successful persistence; errno carries the immediate error, not rollback. */
 int wlcsm_nvram_commit(void);
+int nvram_commit(void);
 #endif

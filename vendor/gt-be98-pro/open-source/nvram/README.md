@@ -318,6 +318,16 @@ Runtime tests cover missing data directory, occupied staging path, successful
 commit, notification timeout after persistence, lock cleanup and a subsequent
 successful retry. Native sanitizer and ARM/QEMU tests pass. Source writers share
 the exclusive storage lock, but original-library committers need not acquire it;
-mixed implementations are not protected against concurrent commits. The ASUS
-`nvram_commit` wrapper still needs its stop control and status marker. The firmware
-continues to use the original main NVRAM library.
+mixed implementations are not protected against concurrent commits. The firmware continues to use the original main NVRAM library.
+
+The runtime also exports `nvram_commit`. Any present `asus_stop_commit` value,
+including empty or `"0"`, suppresses the operation. Otherwise it commits, calls
+`sync()` even after commit failure, and on success writes `commit: OK\n` to
+`/var/log/commit_ret`. Marker errors remain best-effort, matching the reference.
+An ARM reference-library test confirmed presence-based suppression, commit/sync
+ordering and success-only marker creation. Runtime sanitizer and ARM/QEMU tests
+also cover marker contents, marker-open failure, notification failure and retry.
+Unlike the reference's ambiguous NULL getter, a denied or failed control read
+fails the operation rather than proceeding with a write. The control is read
+from the kernel backend, consistent with this model's storage routing table.
+No hardware persistence or power-loss testing has been performed.
