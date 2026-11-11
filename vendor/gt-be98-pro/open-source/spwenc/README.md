@@ -402,3 +402,31 @@ Other exports from `spwenc.o` still prevent selecting its complete replacement.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_lifecycle.sh
 ```
+
+## Settings access-check candidates
+
+`access.c` provides `invalid_nvram_get_t`, `invalid_nvram_get_name`,
+`invalid_program_check` and `invalid_nvram_get_program`. The 20 protected names
+and NULL exclusion fields match the original table. Name matching is exact.
+`nvram_salt` is always denied through the general program check. Other protected
+names are allowed for executable paths beginning with `/usr/`, `/bin/` or
+`/sbin/`; ordinary names bypass executable inspection. NULL names return 0.
+This preserves a path-based compatibility policy, not a general authentication
+or executable-integrity guarantee.
+
+The source denies protected-name access if `/proc/self/exe` cannot be read or the
+127-byte path read may be truncated. This intentionally differs from the
+reference's permissive read-error behavior and prefix handling for truncated
+paths. It also omits the reference debug message for rejected paths.
+
+The suite compares all table entries and 322 native/ARM/reference name/path
+cases, including NULL names, near-match names, directory boundaries and ordinary
+names. It compares readlink-call counts as well as results. Native sanitizer runs
+and source-only missing/truncated identity tests pass. Executable paths are
+intercepted in the harness; these tests do not establish enforcement by every
+settings consumer. These candidates remain outside the firmware build pending
+the remaining shared-object interfaces.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_access.sh
+```
