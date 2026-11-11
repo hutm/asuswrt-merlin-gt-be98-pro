@@ -6,12 +6,20 @@
 #include "manufacturing.h"
 #include <stdlib.h>
 static int apply(void *unused,const char *key,const char *value) {
-    (void)unused;return nvram_kset(key,value);
+    return unused?wlcsm_nvram_set(key,value):nvram_kset(key,value);
 }
 int nv_cli_kernel(int argc,char *const argv[],FILE *output) {
     const char *command;char *copy,*value;int result,saved;FILE *input;
     if(argc<=0 || !argv || !argv[0] || !output) {errno=EINVAL;return -1;}
+    result=nv_cli_flags(argc,argv,output);if(result) return result;
     command=argv[0];
+    if(!strcmp(command,"loadfile")) {
+        const char *path=argc>1 && argv[1]?argv[1]:"/data/nvramdefault.txt";
+        input=fopen(path,"r");if(!input) return -1;
+        result=nv_settings_load(input,apply,&result);saved=errno;
+        if(fclose(input) && !result) return -1;
+        errno=saved;return result?-1:(argc>1?2:1);
+    }
     if(!strcmp(command,"restore_mfg")) {
         if(argc<2 || !argv[1]) {errno=EINVAL;return -1;}
         return nv_mfg_restore("/mnt/nvram/nvram.nvm",argv[1],"/proc/nvram/BaseMacAddr")?-1:2;

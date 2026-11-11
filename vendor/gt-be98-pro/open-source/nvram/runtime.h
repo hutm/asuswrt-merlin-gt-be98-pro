@@ -29,4 +29,6 @@ char *wlcsm_nvram_xfr(const char *input);
 char *nvram_xfr(const char *input);
 /* Zero acknowledges a manager response, not proof that hardware restarted. */
 int wlcsm_mngr_restart(unsigned radio,unsigned source,int persist,int wait);
+char *wlcsm_nvram_get_bitflag(const char *key,unsigned bit);
+int wlcsm_nvram_set_bitflag(const char *key,unsigned bit,int enabled);
 #endif

@@ -560,3 +560,21 @@ Run the complete CLI profile comparison with
 It compiles the adapted GPL CLI and synthetic backend stubs in non-root Docker,
 runs both executables under ARM emulation and checks their output against each
 other and an explicit expected transcript. It does not write settings to a router.
+
+## Flag commands and text loading
+
+The CLI adapter now supports `getflag name bit`, `setflag name bit=value` and
+`loadfile [path]`. Flag commands route to the existing WLCSM helpers and preserve
+the reference's value-before/value-after output. They reject nondecimal indices,
+indices outside 0..31 and overflowing values rather than relying on `atoi`.
+Inputs remain unmodified. Getter failure retains the existing missing-value
+ambiguity. Native sanitizer and ARM/QEMU tests cover dispatch, output, invalid
+arguments and setter failure. The linked CLI reference comparison includes both
+flag commands with synthetic backends and matches their transcripts.
+
+`loadfile` uses the direct WLCSM setter; `kernelset` continues to use the direct
+kernel setter. Omitted loadfile paths select `/data/nvramdefault.txt`, matching
+the reference. The source opens files read-only and reports parse/setter errors.
+Tests distinguish the two setter routes and preserve duplicate/empty values.
+`savefile`, dump/restart variants and remaining ordinary-command error handling
+still need work before selecting the source CLI in firmware.

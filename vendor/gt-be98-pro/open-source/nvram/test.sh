@@ -54,11 +54,15 @@ timeout 30 /tmp/test-manufacturing
   manufacturing.c test_manufacturing.c -o /tmp/test-manufacturing-arm
 timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-manufacturing-arm
 gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined \
-  cli_kernel.c manufacturing.c test_cli_kernel.c -o /tmp/test-cli-kernel
+  cli_kernel.c cli_flags.c manufacturing.c test_cli_kernel.c -o /tmp/test-cli-kernel
 timeout 30 /tmp/test-cli-kernel
 /toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
-  cli_kernel.c manufacturing.c test_cli_kernel.c -o /tmp/test-cli-kernel-arm
+  cli_kernel.c cli_flags.c manufacturing.c test_cli_kernel.c -o /tmp/test-cli-kernel-arm
 timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-cli-kernel-arm
+gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined cli_flags.c test_cli_flags.c -o /tmp/test-cli-flags
+timeout 30 /tmp/test-cli-flags
+/toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror cli_flags.c test_cli_flags.c -o /tmp/test-cli-flags-arm
+timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-cli-flags-arm
 mkdir /tmp/core-native /tmp/core-arm
 gcc -std=c11 -Wall -Wextra -Werror -g -fsanitize=address,undefined \
   -pthread -fPIC -shared core.c adapter.c -o /tmp/core-native/libnvcore.so

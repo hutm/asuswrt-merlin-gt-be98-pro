@@ -5,4 +5,5 @@
 /* argv starts at the command. Return consumed arguments, 0 if not recognized,
  * or -1 on failure. Incremental operations are not rolled back on error. */
 int nv_cli_kernel(int argc,char *const argv[],FILE *output);
+int nv_cli_flags(int argc,char *const argv[],FILE *output);
 #endif

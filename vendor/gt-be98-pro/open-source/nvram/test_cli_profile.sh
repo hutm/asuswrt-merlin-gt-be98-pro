@@ -13,7 +13,7 @@ compiler=/toolchain/bin/arm-buildroot-linux-gnueabi-gcc
 $compiler -std=gnu99 -Os -DASUS_OPEN_NVRAM_CLI -DHND_ROUTER \
   -I"$component" -I/source/release/src/router/shared \
   -I/source/release/src-rt-5.04behnd.4916/bcmdrivers/broadcom/net/wl/impl103/main/src/include \
-  /source/release/src/router/nvram/nvram.c "$component/cli_kernel.c" \
+  /source/release/src/router/nvram/nvram.c "$component/cli_kernel.c" "$component/cli_flags.c" \
   "$component/manufacturing.c" "$component/profile.c" \
   -L/firmware/lib -L/firmware/usr/lib -Wl,-rpath-link,/firmware/lib:/firmware/usr/lib \
   -lnvram -lshared -o /tmp/source-cli
@@ -35,4 +35,13 @@ for format in HDR1 HDR2; do
   cmp /tmp/source.log /tmp/expected
   echo "$format: source/reference setters and filtering match"
 done
+for args in "getflag flags 3" "setflag flags 3=1"; do
+  qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+    -E LD_PRELOAD=/tmp/stubs.so /tmp/source-cli $args >/tmp/source.log
+  qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+    -E LD_PRELOAD=/tmp/stubs.so /firmware/bin/nvram $args >/tmp/reference.log
+  cmp /tmp/source.log /tmp/reference.log
+  echo "$args: source/reference command behavior matches"
+done
+
 '
