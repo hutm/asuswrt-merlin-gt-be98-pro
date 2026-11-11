@@ -2,9 +2,10 @@
 #include "cache.h"
 #include <assert.h>
 #include <stdio.h>
-struct reply {int state;const char *value;};
+struct reply {int state;const char *value;struct nv_cache *invalidate;};
 static int fetch(void *context,const char *key,char **value) {
     struct reply *reply=context;assert(!strcmp(key,"key"));
+    if(reply->invalidate) nv_cache_invalidate(reply->invalidate,key);
     if(reply->state<0) {errno=ETIMEDOUT;return -1;}
     if(reply->value) {
         *value=malloc(strlen(reply->value)+1);assert(*value);
@@ -45,7 +46,7 @@ int main(void) {
     assert(nv_cache_store(&cache,"unknown",NULL,&value)==0 && !value);
     assert(nv_cache_store(&cache,"key","existing",&value)==1 && value==first);
     {
-        struct reply reply={-1,NULL};value=(char *)"unchanged";
+        struct reply reply={-1,NULL,NULL};value=(char *)"unchanged";
         assert(nv_cache_refresh(&cache,fetch,&reply,"key",&value)==-1 && errno==ETIMEDOUT);
         assert(!strcmp(value,"unchanged") && !strcmp(first,"existing"));
         reply.state=1;reply.value="fresh";
@@ -56,6 +57,16 @@ int main(void) {
         reply.state=1;value=(char *)"unchanged";
         assert(nv_cache_refresh(&cache,fetch,&reply,"key",&value)==-1 && errno==EPROTO);
         assert(!strcmp(value,"unchanged"));
+        reply.value="race";reply.invalidate=&cache;
+        assert(nv_cache_refresh(&cache,fetch,&reply,"key",&value)==-1 && errno==EAGAIN);
+        assert(!strcmp(value,"unchanged") && !*first);
+        assert(nv_cache_lookup(&cache,"key",&value)==-1 && errno==EAGAIN);
+        reply.invalidate=NULL;
+        assert(nv_cache_refresh(&cache,fetch,&reply,"key",&value)==1 && value==first);
+        assert(!strcmp(first,"race"));
+        nv_cache_invalidate(&cache,NULL);
+        assert(nv_cache_lookup(&cache,"key",&value)==-1 && errno==EAGAIN);
+        assert(nv_cache_lookup(&cache,"key-50",&value)==-1 && errno==EAGAIN);
     }
     nv_cache_destroy(&cache);assert(!cache.used);
     assert(nv_cache_lookup(&cache,"key",&value)==0 && !value);

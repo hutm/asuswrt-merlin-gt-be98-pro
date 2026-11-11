@@ -14,7 +14,7 @@ ulimit -c 0
 cp -r /tests /tmp/source
 python3 /tmp/source/make-reference.py /source /tmp/source/reference.h
 cd /tmp/source
-for name in pair frame getall settings persist client cache transport client_transport; do
+for name in pair frame getall settings persist client cache notification listener transport client_transport; do
   gcc -std=c11 -Wall -Wextra -Werror -pthread -g \
     -fsanitize=address,undefined -fno-omit-frame-pointer \
     "test_$name.c" -o "/tmp/test_$name"

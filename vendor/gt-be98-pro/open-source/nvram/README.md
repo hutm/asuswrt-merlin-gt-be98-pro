@@ -25,6 +25,8 @@ support. No router or real storage device is accessed.
 | transport.h | Deadline-bounded socket exchange and sender validation |
 | client.h | GET, SET and UNSET request/reply validation |
 | cache.h | Bounded retained-value storage and explicit refresh results |
+| notification.h | Validated notification dispatch to cache invalidation |
+| listener.h | Nonblocking subscription and checked receive/loss handling |
 | getall.h | Indexed page assembly, preserving caller output on failure |
 | settings.h | Existing newline settings format and ordered loading |
 | persist.h | File sync, backup/installation and recovery-file handling |
@@ -43,8 +45,8 @@ persisted. Readback can observe state but cannot make concurrent updates atomic.
 
 ## Remaining integration work
 
-The public library API still needs cache integration and synchronization, notification
-handling, ASUS large-value/JFFS hooks, commit controls, locking, CLI/startup
+The public library API still needs cache integration and synchronization, listener
+lifecycle management, ASUS large-value/JFFS hooks, commit controls, locking, CLI/startup
 integration and complete export coverage. The GET helper currently returns a
 malloc-owned value; it must not be exposed directly as nvram_get.
 
@@ -65,6 +67,27 @@ The source cache applies a valid growth update immediately. Compatibility with
 real consumers still needs evaluation. Cache tests cover address retention,
 growth, aliases, missing/empty distinctions, memory limits, refresh errors and
 multiple keys on native sanitizer builds and ARM emulation.
+
+Notifications mark values stale instead of accepting the broadcast payload as
+applied state. The kernel broadcasts requests without propagating update errors.
+An invalidation preserves retained storage, while new cache lookups return
+EAGAIN until refreshed. A generation change during a fetch rejects its result;
+this conservatively includes unrelated-key events. This check assumes externally
+serialized state access and does not itself implement concurrent locking.
+
+The persistent listener subscribes to multicast group 1 and checks recvmsg sender
+metadata for kernel port 0 and group 1. The header pid is the initiating process
+and is not used as authentication. Truncation, malformed trusted frames and
+receive loss invalidate all cached entries; EINTR and EAGAIN do not. The listener
+must subscribe before initial cache population, and reopening after a gap must
+invalidate existing state. Notification loss that the kernel never reports is
+not detectable, so freshness still requires an explicit refresh policy.
+
+Notification decoding and listener error handling pass native sanitizer and ARM
+tests. Listener socket operations in these tests are mocked; the existing real
+usersock tests exercise the separate request transport. Actual vendor multicast
+delivery, event-loop/thread shutdown, fork behavior and on-router synchronization
+remain untested. None of these components is yet the installed library.
 
 The transport option for the vendor kernel's recipient-as-sender convention is
 based on its source and remains untested on hardware. The protocol has no
