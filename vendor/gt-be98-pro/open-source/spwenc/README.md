@@ -477,3 +477,31 @@ These functions remain outside firmware until the other object exports are ready
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_names.sh
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_policy_names.sh
 ```
+
+## NTP timestamp update candidate
+
+`timestamps.c` supplies `update_ntp_ts`. It skips updates when `ntp_ready` equals
+1; otherwise it examines the EULA and policy timestamps, updating nonzero values
+older than the supplied pre-adjustment time. It writes both the adjusted decimal
+value and the corresponding `rfctime` string, using the source settings-name
+lookup for the policy keys. No commit is performed.
+
+For compatibility, input and stored decimal output use the reference's ten-
+character limit. Parsing, signed comparisons and addition reproduce ARM 32-bit
+behavior using explicit unsigned arithmetic and bit conversion, avoiding signed
+C overflow. This includes legacy wraparound and truncated negative output; the
+function is not a redesign of timestamp storage for dates beyond that range.
+Like the original void interface, settings-write results are not propagated.
+
+The suite compares 576 native/ARM/reference update traces across readiness
+values 0/1/2, sixteen stored-value forms, three comparison times and four time
+offsets. Cases include missing/empty values, malformed numeric text, threshold
+boundaries, truncation, negative values and signed/unsigned 32-bit boundaries.
+Native sanitizer checks pass. Settings writes and `rfctime` are intercepted, so
+the evidence proves update decisions and formatter inputs, not production time
+formatting or persistence. Policy initialization remains to be implemented; this
+candidate is not yet selected in firmware.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_timestamps.sh
+```
