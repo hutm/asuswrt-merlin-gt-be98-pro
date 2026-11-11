@@ -171,3 +171,29 @@ checked API returns 0 on success and -1 on failure, unlike the vendor's 1/0
 valid/fallback result. A public wrapper still must implement those ABI semantics,
 including pass-through of undecodable inputs and runtime device lookup.
 This candidate remains outside the firmware build.
+
+## Runtime device-input candidate
+
+`nv_pw_inputs_load` accepts callbacks for salt, product, LAN MAC and delay. It
+copies each borrowed string before calling the next getter, limits salt/product/
+MAC to 32/63/17 characters, and retries empty product and MAC reads up to three
+attempts with 500 microsecond delays between attempts. Missing product stays
+empty; missing MAC becomes `00:00:00:00:00:00` for key derivation. This copies
+values safely but does not provide an atomic snapshot of changing settings.
+
+The test compares 64 native/ARM/reference cases: immediate, second, third and
+never-successful product/MAC reads, salted/unsalted operation, NULL/empty missing
+values, and oversized strings in a reused getter buffer. Both the complete call
+trace and derived key match the original wrapper. Native tests use address and
+undefined-behavior sanitizers. The source adapter also rejects a denied-salt
+sentinel with EACCES without dereferencing it or changing the output; this safety
+case is not executed against the reference. The key helper still requires a
+canonical MAC rather than accepting partially parsed malformed addresses.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_inputs.sh
+```
+
+This callback adapter is not yet connected to the public password ABI or selected
+in firmware. Remaining work includes wrapper fallback semantics, migration and
+policy/helper exports before the original object can be removed.
