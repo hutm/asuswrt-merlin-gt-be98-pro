@@ -292,3 +292,21 @@ modules passed the available static checks against the matching packaged kernel.
 FIT payload integrity passed. These results do not establish hardware behavior,
 private ABI compatibility or complete provenance. Other binary objects still
 contribute to libshared.so, and libnvram.so remains the original implementation.
+
+## Internal commit transaction
+
+`nv_core_commit_at` saves the kernel settings and then sends the type-7 commit
+notification while holding the core mutex. The kernel handler only echoes and
+broadcasts that message; it does not write settings. External cross-process
+writer serialization remains required. Return values distinguish pre-install
+failure (-1), installed but final directory sync failed (-2), and installed and
+synced but notification unconfirmed (-3). Notification failure does not roll back
+the saved file, and a timeout may still mean the notification was delivered.
+
+Native sanitizer and ARM/QEMU tests cover successful notification, timeout, wrong
+message type, nonempty and oversized replies, retained settings after notification
+failure, and suppression of notification after empty enumeration or an existing
+staging file. The lower-level persistence tests cover write/sync/rename failures.
+This internal API is not yet wired to the exported commit functions: ASUS stop
+controls, markers and cross-process serialization still need integration. The
+firmware continues to use the original main NVRAM library.

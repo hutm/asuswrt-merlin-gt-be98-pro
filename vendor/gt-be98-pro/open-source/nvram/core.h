@@ -33,4 +33,9 @@ int nv_core_load_verified(struct nv_core *core,FILE *input,size_t *confirmed);
  * uncertain. Empty replies are refused: kernel allocation failure looks empty.
  * This is not nvram_commit: ASUS controls and commit notification are separate. */
 int nv_core_save_at(struct nv_core *core,int directory,size_t capacity);
+/* Save then notify under the core mutex; external writer serialization required.
+ * Save statuses apply, plus -3: installed and synced, notification unconfirmed.
+ * Notification may have arrived on failure; no rollback. Zero confirms only an
+ * echo, not subscriber receipt. ASUS suppression/markers belong in the wrapper. */
+int nv_core_commit_at(struct nv_core *core,int directory,size_t capacity);
 #endif

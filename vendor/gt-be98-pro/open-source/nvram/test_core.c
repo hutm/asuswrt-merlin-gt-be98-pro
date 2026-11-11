@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-struct peer {char value[1024];int present,fail,ignore,gets,empty;};
+struct peer {char value[1024];int present,fail,ignore,gets,empty,commits,commit_error;};
 static int exchange(void *context,const void *request,size_t size,void *reply,size_t capacity,size_t *returned) {
     struct peer *peer=context;struct nv_frame_view frame;struct nv_pair_view pair;
     unsigned char payload[1024];size_t length=0;unsigned type;
@@ -27,6 +27,12 @@ static int exchange(void *context,const void *request,size_t size,void *reply,si
             if(peer->present) memcpy(peer->value,pair.value,pair.value_len);
         }
         memcpy(payload,frame.payload,frame.length);length=frame.length;
+    } else if(type==7) {
+        assert(!frame.length);++peer->commits;
+        if(peer->commit_error==1) {errno=ETIMEDOUT;return -1;}
+        if(peer->commit_error==2) type=6;
+        if(peer->commit_error==3) {payload[0]=0;length=1;}
+        if(peer->commit_error==4) {*returned=capacity+1;return 0;}
     } else {
         assert(type==5);type=6;
         if(!peer->empty) {memcpy(payload,"key=value",10);length=10;}
@@ -97,6 +103,22 @@ int main(void) {
         assert(read(fd,contents,sizeof contents)==10 && !strcmp(contents,"key=value\n"));close(fd);
         memset(contents,0,sizeof contents);fd=openat(directory,".kernel_nvram.setting_old",O_RDONLY);assert(fd>=0);
         assert(read(fd,contents,sizeof contents)==9 && !strcmp(contents,"previous\n"));close(fd);
+        peer.empty=1;
+        assert(nv_core_commit_at(core,directory,4096)==-1 && errno==ENODATA && !peer.commits);
+        peer.empty=0;
+        fd=openat(directory,".kernel_nvram.setting_new",O_CREAT|O_WRONLY,0600);assert(fd>=0);close(fd);
+        assert(nv_core_commit_at(core,directory,4096)==-1 && errno==EEXIST && !peer.commits);
+        unlinkat(directory,".kernel_nvram.setting_new",0);
+        for(int failure=0;failure<=4;++failure) {
+            peer.commit_error=failure;
+            assert(nv_core_commit_at(core,directory,4096)==(failure?-3:0));
+            if(failure) assert(errno==(failure==1?ETIMEDOUT:EPROTO));
+            assert(peer.commits==failure+1);
+            memset(contents,0,sizeof contents);
+            fd=openat(directory,".kernel_nvram.setting",O_RDONLY);assert(fd>=0);
+            assert(read(fd,contents,sizeof contents)==10 && !strcmp(contents,"key=value\n"));close(fd);
+        }
+        peer.commit_error=0;
         unlinkat(directory,".kernel_nvram.setting",0);unlinkat(directory,".kernel_nvram.setting_old",0);
         close(directory);assert(!rmdir(path));
     }

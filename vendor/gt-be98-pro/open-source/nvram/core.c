@@ -104,16 +104,39 @@ int nv_core_load_verified(struct nv_core *core,FILE *input,size_t *confirmed) {
     result=nv_settings_load(input,apply_verified,&load);
     unlock(core);return result;
 }
-int nv_core_save_at(struct nv_core *core,int directory,size_t capacity) {
+static int save_locked(struct nv_core *core,int directory,size_t capacity) {
     unsigned char *data;size_t used=0;int result,saved;
     if(directory<0 || !capacity || capacity>INT_MAX) {errno=EINVAL;return -1;}
-    if(lock(core)) return -1;
     data=malloc(capacity);
-    if(!data) {unlock(core);return -1;}
+    if(!data) return -1;
     result=nv_getall_pages(core->exchange,core->context,0,data,capacity,&used);
     if(!result) {
         if(!used || !data[0]) {errno=ENODATA;result=-1;}
         else result=nv_persist_at(directory,data,used);
     }
-    saved=errno;free(data);errno=saved;unlock(core);return result;
+    saved=errno;free(data);errno=saved;return result;
+}
+
+int nv_core_save_at(struct nv_core *core,int directory,size_t capacity) {
+    int result;if(lock(core)) return -1;
+    result=save_locked(core,directory,capacity);
+    unlock(core);return result;
+}
+int nv_core_commit_at(struct nv_core *core,int directory,size_t capacity) {
+    unsigned char request[32],reply[1280];size_t size,received=0;
+    struct nv_frame_view frame;int result;
+    if(lock(core)) return -1;
+    result=save_locked(core,directory,capacity);
+    if(!result) {
+        /* The kernel only echoes and broadcasts: save before notifying. */
+        if(nv_frame_encode(request,sizeof request,7,0,0,NULL,0,&size)) {
+            errno=EOVERFLOW;result=-3;
+        } else if(core->exchange(core->context,request,size,reply,sizeof reply,&received)) {
+            result=-3;
+        } else if(received>sizeof reply || nv_frame_decode(reply,received,&frame) ||
+                  frame.consumed!=received || frame.type!=7 || frame.length) {
+            errno=EPROTO;result=-3;
+        }
+    }
+    unlock(core);return result;
 }
