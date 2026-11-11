@@ -4,7 +4,7 @@ These experimental components implement the published BCM4916 kernel NVRAM
 message format and supporting settings-file operations. The client core is not selected by
 the firmware build and does not yet replace libnvram.so or libwlcsm.so. The
 experimental profile now selects the source shared-library storage object;
-full-image validation of that selection is pending.
+the full-image static validation results are recorded below.
 
 Run from the repository root:
 
@@ -182,7 +182,25 @@ possible; the existing void API provides no structured error result.
 
 Sources live in release/src/router/shared/source. The shared-library Makefile
 selects them only for ASUS_OPEN_COMPONENTS=y with GT-BE98_PRO and rebuilds the
-object when switching profiles. Native sanitizer and ARM tests pass; full-image
-linking, packaged-object verification and hardware storage tests remain pending.
+object when switching profiles. Native sanitizer and ARM tests pass. Full-image
+linking and packaged-library checks passed; hardware storage tests remain pending.
 The table is specific to this model and input version and must be checked again
 when changing the ASUS baseline.
+
+## Full-image storage build
+
+Commit `b1d49a0b33` built successfully on 2026-11-11. The normal image is
+76,719,844 bytes with SHA-256
+`92e80003ec7b54e4dcbeb94ecc0b4f75b184eb5a63a9017b3a6480773b240756`.
+Its packaged libshared.so exactly matches the stripped build library and differs
+from the prior image. The compiled source storage object exports all eight
+expected functions; their sizes match the packaged library's dynamic symbols.
+The packaged library SHA-256 is
+`5f9b8d58a0fb585d0ced5ff094768f072dfca48c6fa891128ecca2b8b22ebfb4`.
+
+The userspace scan covered 647 ELF objects with no new or changed dependency
+flags relative to the baseline's 81 standalone/plugin-scope flags. All 151 kernel
+modules passed the available static checks against the matching packaged kernel.
+FIT payload integrity passed. These results do not establish hardware behavior,
+private ABI compatibility or complete provenance. Other binary objects still
+contribute to libshared.so, and libnvram.so remains the original implementation.
