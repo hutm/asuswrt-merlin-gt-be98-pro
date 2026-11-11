@@ -762,3 +762,21 @@ ASUS setter results remain accepted because that ABI can return a byte count.
 As with kget, the pointer getter still cannot distinguish absence from failure.
 All component tests and the full CLI reference suite pass. The CLI is not yet
 selected in firmware; mode export and broader feedback coverage remain to review.
+
+## Exact command dispatch and mode-export scope
+
+Direct ARM execution confirms that this router's reference CLI rejects `save_ap`,
+`save_rp_2g`, `save_rp_5g` and `save_rp_5g2` without creating an export. These are
+older generic-frontend features, not commands of the target executable. The
+opt-in source frontend now rejects them before collecting settings. Default GPL
+builds retain their existing mode-export paths. Earlier mode-export fault tests
+have been replaced with explicit unsupported-command tests.
+
+After the adapter handles recognized commands, only exact `save`, `restore` and
+`fb_save` reach the remaining generic frontend. Unknown prefixes such as `setter`,
+`showmore` and `restoremore` return an error without backend calls or destination
+changes. Missing filenames also fail immediately. The complete ARM CLI suite
+passes these rejection checks and all earlier valid-command comparisons. The
+reference sometimes exits zero for rejected commands; the source intentionally
+uses a nonzero exit so scripts can detect errors. Raw-backup options and broader
+feedback-pattern coverage still need review before firmware integration.

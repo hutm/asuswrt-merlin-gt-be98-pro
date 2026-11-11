@@ -95,7 +95,7 @@ fi
 echo "save: output failure returns nonzero"
 
 for fault in readfail unterminated oversized decryptfail decryptunterminated expansion; do
-  for command in save fb_save save_ap save_rp; do
+  for command in save fb_save; do
     printf "existing backup" >/tmp/preserved
     if qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
       -E LD_PRELOAD=/tmp/stubs.so -E SAVE_FIXTURE=1 -E SAVE_FAULT=$fault \
@@ -167,5 +167,25 @@ if qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
 fi
 test "$(cat /tmp/preserved)" = "existing backup"
 echo "feedback: oversized redaction rejected without replacing backup"
+
+for command in save_ap save_rp_2g save_rp_5g save_rp_5g2 setter getter unsetter showmore restoremore fb_save_more; do
+  printf "existing backup" >/tmp/preserved
+  if qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+    -E LD_PRELOAD=/tmp/stubs.so /tmp/source-cli $command /tmp/preserved >/tmp/unknown.log; then
+    echo "$command unexpectedly accepted" >&2
+    exit 1
+  fi
+  test ! -s /tmp/unknown.log
+  test "$(cat /tmp/preserved)" = "existing backup"
+done
+for command in get set unset save restore fb_save; do
+  if qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+    -E LD_PRELOAD=/tmp/stubs.so /tmp/source-cli $command >/tmp/missing.log; then
+    echo "$command accepted missing arguments" >&2
+    exit 1
+  fi
+  test ! -s /tmp/missing.log
+done
+echo "dispatch: unsupported modes, command prefixes and missing arguments rejected without backend calls"
 
 '

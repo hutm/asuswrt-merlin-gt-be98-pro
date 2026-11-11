@@ -996,10 +996,20 @@ main(int argc, char **argv)
             argv += consumed - 1;
             continue;
         }
+        /* Only these exact commands remain in the generic frontend. */
+        if (strcmp(*argv, "save") && strcmp(*argv, "restore") && strcmp(*argv, "fb_save")) {
+            fprintf(stderr, "Unsupported NVRAM command: %s\n", *argv);
+            free(buf);
+            return 1;
+        }
+        if (remaining < 2) {
+            fprintf(stderr, "Missing filename for %s\n", *argv);
+            free(buf);
+            return 1;
+        }
 #endif
 #ifdef ASUS_OPEN_NVRAM_CLI
-        if (!strcmp(*argv, "save") || !strncmp(*argv, "save_ap", 7) ||
-            !strncmp(*argv, "save_rp", 7) || !strncmp(*argv, "fb_save", 7)) {
+        if (!strcmp(*argv, "save") || !strcmp(*argv, "fb_save")) {
             size_t used;
             int fetched;
             memset(buf, 0xff, nvram_space);
