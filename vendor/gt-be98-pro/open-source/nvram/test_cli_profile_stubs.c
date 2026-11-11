@@ -66,6 +66,15 @@ int nvram_getall(char *out,int size) {const char data[]="key=one\0empty=\0equals
   for(int i=0;i<70;++i){memcpy(next,item,sizeof item);next+=sizeof item;}
   *next=0;return 0;
  }
+ if(getenv("FEEDBACK_EXPANSION")) {
+  const char item[]="http_username=a";char *next=out;
+  for(int i=0;i<14000;++i){memcpy(next,item,sizeof item);next+=sizeof item;}
+  *next=0;return 0;
+ }
+ if(getenv("FEEDBACK_FIXTURE")) {
+  const char sample[]="http_username=admin\0http_passwd=secret\0custom_password=secret\0wl0_wpa_psk=secret\0acc_list=<alice>secret<bob>pwd\0vpnc_clientlist=<desc>type>1>alice>secret\0cloud_sync=<type>user>secret>url>rule>dir>1\0wan_pppoe_username=alice@example.test\0lan_ipaddr=192.0.2.1\0\0";
+  memcpy(out,sample,sizeof sample);return 0;
+ }
  if(getenv("SAVE_FIXTURE")) {
   const char save[]="lan_ipaddr=192.0.2.1\0test_exact=ciphertext\0empty=\0equals=a=b\0\0";
   memcpy(out,save,sizeof save);return 0;

@@ -141,4 +141,31 @@ printf "UNLINK[/data/.kernel_nvram.setting]\n" >/tmp/expected-default
 cmp /tmp/default.log /tmp/expected-default
 echo "godefault: reference sequence matches; absent file and deletion failures handled (intercepted)"
 
+for pair in "source /tmp/source-cli" "reference /firmware/bin/nvram"; do
+  set -- $pair
+  qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+    -E LD_PRELOAD=/tmp/stubs.so -E FEEDBACK_FIXTURE=1 $2 fb_save /tmp/$1-feedback
+done
+python3 - <<"PYTHON"
+from pathlib import Path
+def records(path):
+    data=Path(path).read_bytes()
+    assert data[:4]==b"HDR2" and len(data)==8+int.from_bytes(data[4:7],"little")
+    return bytes(0 if c>=253 else (255+data[7]-c)&255 for c in data[8:]).rstrip(b"\0").split(b"\0")
+a=records("/tmp/source-feedback"); b=records("/tmp/reference-feedback")
+assert a==b,(a,b)
+expected=[b"http_username=xxxxxxxx",b"http_passwd=xxxxxxxx",b"custom_password=xxxxxx",b"wl0_wpa_psk=xxxxxx",b"acc_list=xxxxxxxx>xxxxxxxx",b"vpnc_clientlist=<desc>type>1>alice>xxxxxx",b"cloud_sync=<type>user>xxxxxx>xxx>rule>xxx>1",b"wan_pppoe_username=xxxxx@example.test",b"lan_ipaddr=192.0.2.1"]
+assert a==expected,a
+print("feedback: source/reference records match explicit redaction expectations")
+PYTHON
+
+printf "existing backup" >/tmp/preserved
+if qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+  -E LD_PRELOAD=/tmp/stubs.so -E FEEDBACK_EXPANSION=1 /tmp/source-cli fb_save /tmp/preserved; then
+  echo "feedback export ignored redaction expansion" >&2
+  exit 1
+fi
+test "$(cat /tmp/preserved)" = "existing backup"
+echo "feedback: oversized redaction rejected without replacing backup"
+
 '

@@ -724,3 +724,22 @@ failure. Complete source/reference CLI comparisons intercept file deletion and
 sync and match the exact path and sequence. No settings files are deleted by
 these tests. Feedback redaction, mode exports and remaining ordinary command
 behavior still need review before selecting the source CLI in firmware.
+
+## Feedback redaction comparison
+
+The opt-in feedback exporter now replaces the complete `acc_list` value with
+`xxxxxxxx>xxxxxxxx`, matching the reference and avoiding the older GPL behavior
+that retained account names. ARM comparisons independently decode source and
+reference backups and check explicit expected records for HTTP credentials,
+password-named keys, a wireless PSK, account lists, VPN client lists, cloud-sync
+fields, PPPoE usernames and an ordinary LAN setting. These covered cases match.
+This fixture is not an exhaustive audit of every sensitive NVRAM name.
+
+The source rejects records that exceed the feedback converter's fixed key/value
+buffers and checks remaining output capacity before advancing the output pointer.
+The CLI propagates redaction failure before opening its destination. An ARM test
+with 14000 short HTTP-username records exercises aggregate expansion from fixed
+placeholder substitution and confirms failure preserves an existing backup.
+The full CLI comparison suite passes, including earlier backup and command checks.
+Mode exports and remaining ordinary-command cases still need review; no new
+firmware build or hardware validation is implied by these component results.

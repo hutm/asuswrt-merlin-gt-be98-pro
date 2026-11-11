@@ -413,6 +413,13 @@ static int _convert_data(const char *name, char *value, size_t value_len)
 	if(!value)
 		return 0;
 
+#ifdef ASUS_OPEN_NVRAM_CLI
+    if (!strcmp(name, "acc_list")) {
+        strlcpy(value, "xxxxxxxx>xxxxxxxx", value_len);
+        return 1;
+    }
+#endif
+
 	//change http login username and password as xxxxxxxx
 	for(i = 0; http_token[i]; ++i)
 	{
@@ -539,6 +546,16 @@ static int _secure_conf(char* buf, size_t len)
 	
 	while(1)
 	{
+#ifdef ASUS_OPEN_NVRAM_CLI
+        if (*p) {
+            char *separator = strchr(p, '=');
+            if (separator && ((size_t)(separator-p) >= sizeof(name) ||
+                              strlen(separator+1) >= CKN_STR_MAX)) {
+                free(tmp); free(value); errno = EOVERFLOW; return -1;
+            }
+        }
+#endif
+
 		p = _get_attr(p, name, sizeof(name), value, CKN_STR_MAX);
 
 		if(name[0] != '\0')
@@ -552,6 +569,11 @@ static int _secure_conf(char* buf, size_t len)
 			else
 				tmp_len = snprintf(b, len - (b - tmp), "%s=", name);
 			
+#ifdef ASUS_OPEN_NVRAM_CLI
+            if (tmp_len < 0 || (size_t)tmp_len + 1 >= len - (size_t)(b-tmp)) {
+                free(tmp); free(value); errno = EOVERFLOW; return -1;
+            }
+#endif
 			b += (tmp_len + 1);	//Add NULL at the end of the value
 		}
 		else
@@ -1117,7 +1139,11 @@ main(int argc, char **argv)
 #else
 				memcpy(tmpbuf, buf, nvram_space);
 #endif
-				_secure_conf(tmpbuf, nvram_space);
+#ifdef ASUS_OPEN_NVRAM_CLI
+                if (_secure_conf(tmpbuf, nvram_space)) { perror(*argv); free(tmpbuf); free(buf); return 1; }
+#else
+                _secure_conf(tmpbuf, nvram_space);
+#endif
 				#ifdef ASUS_OPEN_NVRAM_CLI
                 if (nvram_save_new(*argv, tmpbuf)) { perror(*argv); free(tmpbuf); free(buf); return 1; }
 #else
