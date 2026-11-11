@@ -7,4 +7,8 @@
  * unchanged on failure. Input/output buffers must not overlap. */
 int nv_pw_encrypt(const char *input,const char *salt,const char *product,
                   const char *mac,char *output,size_t capacity);
+/* Checked decryption of canonical Base64 and complete validated frames.
+ * Returns 0 on success, -1 on failure; does not implement vendor pass-through. */
+int nv_pw_decrypt(const char *input,const char *salt,const char *product,
+                  const char *mac,char *output,size_t capacity);
 #endif

@@ -152,3 +152,22 @@ ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open
 Complete checked decryption, public ABI adapters, runtime lookup/retry behavior,
 settings migration and remaining policy/helper exports still require work before
 removing `spwenc.o`.
+
+## Complete checked decryption candidate
+
+`nv_pw_decrypt` validates canonical Base64, decodes whole AES blocks, derives the
+explicit-input key, decrypts through OpenSSL and validates the complete frame
+before copying plaintext. It rejects noncanonical pad bits, malformed characters,
+partial blocks, bad CRC/padding and short output buffers. Failure leaves the
+destination unchanged. Temporary decoded frames, canonical encodings and the
+local key are cleared during cleanup. Empty input yields an empty string.
+
+The password suite now tests source decryption for all 1026 ciphertext cases
+already matched to the original wrapper, including exact-size destinations and
+one-byte-short failures. Native sanitizer and ARM tests also cover malformed
+Base64/padding, wrong salt, changed ciphertext and NULL/empty arguments. All pass;
+the original decoder still round-trips every valid reference ciphertext. The
+checked API returns 0 on success and -1 on failure, unlike the vendor's 1/0
+valid/fallback result. A public wrapper still must implement those ABI semantics,
+including pass-through of undecodable inputs and runtime device lookup.
+This candidate remains outside the firmware build.

@@ -20,5 +20,5 @@ $compiler -std=c11 -Wall -Wextra -Werror -DREFERENCE -rdynamic test_password.c -
 qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib /tmp/reference >/tmp/reference.txt
 cmp /tmp/native.txt /tmp/arm.txt
 cmp /tmp/arm.txt /tmp/reference.txt
-echo "Password encryption: 1026 complete native/ARM/reference ciphertext cases match; original decrypt round trips and source error checks pass"
+echo "Password encryption: 1026 complete native/ARM/reference ciphertext cases match; original/source decrypt round trips, exact capacities and malformed-input checks pass"
 '
