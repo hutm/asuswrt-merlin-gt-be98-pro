@@ -510,3 +510,25 @@ rejects overlong records and unterminated final records instead of relying on
 unbounded string reads. It reports I/O errors; partial output remains possible.
 This stream converter still needs the CLI file-opening/cleanup integration and
 full CLI selection. No manufacturing data from router hardware was read or changed.
+
+## GPL CLI integration candidate
+
+The existing `release/src/router/nvram/nvram.c` now has an opt-in
+`ASUS_OPEN_NVRAM_CLI` adapter hook. Kernel commands are consumed before the
+legacy parser, including chained commands. This mode uses the GT-BE98 Pro
+262144-byte settings capacity instead of the legacy `get_nvram_space` backend,
+which is unavailable in this model's runtime library. Other builds keep their
+existing path. Manufacturing restore opens the fixed manufacturing source and
+optional base-MAC source, appends to the requested destination, checks close and
+flush errors, and fsyncs successful output. Partial writes are not rolled back;
+concurrent callers must serialize destination writes.
+
+File-level native sanitizer and ARM/QEMU tests cover append, MAC fallback,
+missing sources, invalid destinations and malformed records. The adapted GPL
+CLI cross-compiled and linked against the source-library firmware's libraries;
+its usage path executed under ARM emulation. A synthetic-backend integration
+run verified chained `kset`, `kunset`, `kcommit` and `kernelset` operations and
+matched the earlier captured settings sequence. The candidate is not selected
+in firmware yet: remaining command parity and full-image integration still need
+validation. The existing GPL CLI's backup/restore and erase behavior also need
+review before replacing the packaged executable.

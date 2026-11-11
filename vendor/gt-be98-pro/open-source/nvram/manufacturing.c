@@ -1,5 +1,7 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
+#define _POSIX_C_SOURCE 200809L
 #include "manufacturing.h"
+#include <unistd.h>
 #include <errno.h>
 #include <string.h>
 int nv_mfg_append(FILE *input,FILE *output,FILE *base_mac) {
@@ -29,4 +31,19 @@ int nv_mfg_append(FILE *input,FILE *output,FILE *base_mac) {
         if(size && fprintf(output,"et0macaddr=%s\n",mac)<0) return -1;
     }
     return ferror(output)?-1:0;
+}
+
+int nv_mfg_restore(const char *source,const char *destination,const char *base_mac) {
+    FILE *input,*output,*mac=NULL;int result,saved;
+    if(!source || !destination) {errno=EINVAL;return -1;}
+    input=fopen(source,"rb");if(!input) return -1;
+    output=fopen(destination,"a");
+    if(!output) {saved=errno;fclose(input);errno=saved;return -1;}
+    if(base_mac) mac=fopen(base_mac,"rb"); /* Optional, as in the reference. */
+    result=nv_mfg_append(input,output,mac);saved=errno;
+    if(!result && (fflush(output) || fsync(fileno(output)))) {result=-1;saved=errno;}
+    if(mac && fclose(mac) && !result) {result=-1;saved=errno;}
+    if(fclose(input) && !result) {result=-1;saved=errno;}
+    if(fclose(output) && !result) {result=-1;saved=errno;}
+    errno=saved;return result;
 }

@@ -44,6 +44,9 @@
 #include <shared.h>
 
 #include "nvram_mode.h"
+#ifdef ASUS_OPEN_NVRAM_CLI
+#include "cli_kernel.h"
+#endif
 
 #define PROTECT_CHAR	'x'
 #define DEFAULT_LOGIN_DATA	"xxxxxxxx"
@@ -875,8 +878,13 @@ main(int argc, char **argv)
 	if (!*argv) 
 		usage();
 
+#ifdef ASUS_OPEN_NVRAM_CLI
+    /* GT-BE98 Pro kernel settings capacity, shared with the source runtime. */
+    nvram_space = 262144;
+#else
 	extern unsigned int get_nvram_space(void);
 	nvram_space = get_nvram_space();
+#endif
 	if(nvram_space == 0)
 		nvram_space = MAX_NVRAM_SPACE;
 
@@ -888,6 +896,20 @@ main(int argc, char **argv)
 	
 	/* Process the remaining arguments. */
 	for (; *argv; argv++) {
+#ifdef ASUS_OPEN_NVRAM_CLI
+        int remaining = 0, consumed;
+        while (argv[remaining]) ++remaining;
+        consumed = nv_cli_kernel(remaining, argv, stdout);
+        if (consumed < 0) {
+            perror(*argv);
+            free(buf);
+            return 1;
+        }
+        if (consumed) {
+            argv += consumed - 1;
+            continue;
+        }
+#endif
 		if (!strncmp(*argv, "get", 3)) {
 			if (*++argv) {
 				if ((value = nvram_get(*argv)))
