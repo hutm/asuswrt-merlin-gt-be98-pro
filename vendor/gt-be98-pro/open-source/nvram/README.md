@@ -307,6 +307,17 @@ Native sanitizer and ARM/QEMU tests cover successful notification, timeout, wron
 message type, nonempty and oversized replies, retained settings after notification
 failure, and suppression of notification after empty enumeration or an existing
 staging file. The lower-level persistence tests cover write/sync/rename failures.
-This internal API is not yet wired to the exported commit functions: ASUS stop
-controls, markers and cross-process serialization still need integration. The
-firmware continues to use the original main NVRAM library.
+The experimental runtime now exports `wlcsm_nvram_commit`, taking the storage
+lock around the save and notification, opening `/data` directly, and mapping
+internal failures to the vendor ABI's return value of one. It releases the lock
+on every exit and reports release failures. Errors can follow successful writes;
+callers must not interpret a nonzero return as rollback. The 262144-byte snapshot
+limit matches the reference. There is no environment-based path override.
+
+Runtime tests cover missing data directory, occupied staging path, successful
+commit, notification timeout after persistence, lock cleanup and a subsequent
+successful retry. Native sanitizer and ARM/QEMU tests pass. Source writers share
+the exclusive storage lock, but original-library committers need not acquire it;
+mixed implementations are not protected against concurrent commits. The ASUS
+`nvram_commit` wrapper still needs its stop control and status marker. The firmware
+continues to use the original main NVRAM library.

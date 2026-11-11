@@ -13,6 +13,7 @@ static struct nv_transport transport={31,5000,0,1};
 #else
 extern int nv_runtime_test_exchange(void *,const void *,size_t,void *,size_t,size_t *);
 extern int nv_runtime_test_directory(void);
+extern int nv_runtime_test_data_directory(void);
 #endif
 static pthread_mutex_t runtime_mutex=PTHREAD_MUTEX_INITIALIZER;
 static struct nv_core *core;
@@ -86,4 +87,31 @@ int wlcsm_nvram_getall(char *output,int capacity) {
     if(!result && used>=(size_t)capacity) {errno=ENOSPC;result=-1;}
     if(!result) {memcpy(output,scratch,(size_t)capacity);result=(int)used;}
     saved=errno;free(scratch);errno=saved;leave();return result;
+}
+
+/* Serialize source writers with the same exclusive lock used for JFFS storage.
+ * Original binaries do not necessarily take this lock when committing; mixing
+ * implementations cannot provide cross-process commit serialization. */
+int wlcsm_nvram_commit(void) {
+    int directory,result,saved,released;
+    struct nv_storage_hooks *storage=&adapter.storage;
+    if(enter()) return 1;
+    if(storage->lock(storage->context)) {leave();return 1;}
+#ifdef NV_RUNTIME_TEST
+    directory=nv_runtime_test_data_directory();
+#else
+    directory=open("/data",O_RDONLY|O_DIRECTORY|O_CLOEXEC);
+#endif
+    if(directory<0) result=-1;
+    else {
+        result=nv_core_commit_at(core,directory,262144);
+        saved=errno;
+        if(close(directory) && !result) result=-1;
+        else errno=saved;
+    }
+    saved=errno;
+    released=storage->unlock(storage->context);
+    if(result) errno=saved;
+    else if(released) result=-1;
+    leave();return result?1:0;
 }

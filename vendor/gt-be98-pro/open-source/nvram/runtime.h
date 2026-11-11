@@ -12,4 +12,7 @@ char *wlcsm_nvram_get(const char *key);
 int wlcsm_nvram_set(const char *key,const char *value);
 int wlcsm_nvram_unset(const char *key);
 int wlcsm_nvram_getall(char *output,int capacity);
+/* Zero on saved-and-acknowledged success, one on failure. A failure may follow
+ * successful persistence; errno carries the immediate error, not rollback. */
+int wlcsm_nvram_commit(void);
 #endif
