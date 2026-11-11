@@ -493,3 +493,20 @@ Native sanitizer and ARM/QEMU tests cover routing, NULL values, first-write
 failure, commit suppression, settings loading and invalid input. This adapter is
 not yet selected as the firmware CLI: manufacturing restore and the rest of the
 existing CLI integration remain outstanding. The packaged CLI is still prebuilt.
+
+## Manufacturing settings conversion
+
+`manufacturing.c` converts the NUL-separated manufacturing records into newline
+settings, preserving order and appending to the supplied output stream. An empty
+record terminates input. If no record begins with `et0macaddr=`, an optional
+base-MAC stream supplies up to 18 bytes for the added setting. The reference CLI
+uses `/mnt/nvram/nvram.nvm` as input, opens the command's destination in append
+mode and consults `/proc/nvram/BaseMacAddr` for that fallback.
+
+An isolated ARM reference CLI test confirmed append behavior, termination at an
+empty record and the MAC-present/MAC-absent cases using synthetic files. Native
+sanitizer and ARM/QEMU source tests match those output bytes. The source also
+rejects overlong records and unterminated final records instead of relying on
+unbounded string reads. It reports I/O errors; partial output remains possible.
+This stream converter still needs the CLI file-opening/cleanup integration and
+full CLI selection. No manufacturing data from router hardware was read or changed.

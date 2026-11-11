@@ -42,6 +42,12 @@ timeout 30 /tmp/test-storage-binding
   storage_binding.c storage_lock.c test_storage_binding.c -o /tmp/test-storage-binding-arm
 timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-storage-binding-arm
 gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined \
+  manufacturing.c test_manufacturing.c -o /tmp/test-manufacturing
+timeout 30 /tmp/test-manufacturing
+/toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
+  manufacturing.c test_manufacturing.c -o /tmp/test-manufacturing-arm
+timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-manufacturing-arm
+gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined \
   cli_kernel.c test_cli_kernel.c -o /tmp/test-cli-kernel
 timeout 30 /tmp/test-cli-kernel
 /toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
