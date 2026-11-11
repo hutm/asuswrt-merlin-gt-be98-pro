@@ -812,3 +812,26 @@ base names and subunits 0..19, with PSK, WEP keys, passphrase and RADIUS-key suf
 The source and reference outputs match throughout this matrix. Matching includes
 names both retain unmasked; this is compatibility evidence, not proof that feedback
 exports remove every credential. The fixed-list redaction policy remains limited.
+
+## Full-image source CLI verification
+
+The non-root Docker build at source snapshot `bc9a75124d` completed successfully
+(run `20261111T225638Z-wn6qvlo6`). The normal image is
+`GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb`, 76719844 bytes, SHA256
+`165b282838becb526d3a43f3b11d52700fa81e46d67886ecb55caae2e40f4a73`.
+FIT SHA256 payload checks passed before extraction.
+
+Extracted `/bin/nvram` matches the stripped source build output: 22404 bytes,
+SHA256 `21b321f64d8908bbba2e7df8d9050e1dfd461fcedf1187b6809633d51ad14801`.
+Extracted `/lib/libnvram.so` likewise matches: 26184 bytes,
+SHA256 `6bf0184eb6db1b126e2190e0dba0a7c48484f7660e4d81e14a30d8a7111f1508`.
+The extracted CLI loads with extracted libraries under ARM emulation and returns
+the expected unsupported-command error without accessing settings.
+
+The static userspace check covers 647 ELFs with no walk errors and no new or
+changed failure flags relative to the previous source-runtime image. There are
+80 pre-existing flags; this is not a clean whole-image ABI verdict. This run's
+kernel modules have not yet been separately re-audited. No hardware validation
+or installable release is claimed. Shared proprietary dependencies, wireless and
+accelerator components, and all other remaining blob categories still require
+replacement. This result proves packaging of the source CLI and runtime.
