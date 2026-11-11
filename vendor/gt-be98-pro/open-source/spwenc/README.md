@@ -668,3 +668,9 @@ bash vendor/gt-be98-pro/open-source/spwenc/test_linked.sh
 ```
 
 Full-image integration and packaged-library verification remain pending.
+
+The subsequent retry linked `write_smb_conf` successfully, then stopped at
+`wps_pbcd` because `rc/Makefile` replaces the common `LDFLAGS` value. The common
+search-path expression is now named `OPEN_SHARED_LDFLAGS`, and rc appends it after
+its override. It remains empty outside the experimental model/profile. This
+also reaches rc's derived `LDFLAGS2`; full-build validation is still pending.

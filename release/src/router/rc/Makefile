@@ -370,7 +370,7 @@ LDFLAGS += -ffunction-sections -fdata-sections -Wl,--gc-sections
 ifeq ($(STATIC),1)
 LDFLAGS += -static
 endif
-LDFLAGS += $(EXTRA_LDFLAGS)
+LDFLAGS += $(EXTRA_LDFLAGS) $(OPEN_SHARED_LDFLAGS)
 
 ifeq ($(RTCONFIG_TRACEROUTE),y)
 CFLAGS += -DRTCONFIG_TRACEROUTE
