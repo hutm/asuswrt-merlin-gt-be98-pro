@@ -13,6 +13,10 @@ void nv_core_destroy(struct nv_core *core);
 /* Fresh GET every time. Return 1 with caller-owned allocation, 0 with NULL for
  * missing, -1 with output unchanged. Caller frees successful non-NULL values. */
 int nv_core_get_copy(struct nv_core *core,const char *key,char **value);
+/* Compatibility-only borrowed view. Storage lasts until destroy, but a later
+ * refresh of this key may overwrite it. Caller must serialize retained reads
+ * with operations that refresh the same key. Prefer get_copy for new callers. */
+int nv_core_get_borrowed(struct nv_core *core,const char *key,char **value);
 /* Echo acknowledgement only, not applied-state or persistence confirmation. */
 int nv_core_change_ack(struct nv_core *core,const char *key,const char *value,int unset);
 int nv_core_getall(struct nv_core *core,void *output,size_t capacity,size_t *used);

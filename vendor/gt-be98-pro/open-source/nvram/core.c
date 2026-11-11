@@ -52,6 +52,13 @@ int nv_core_get_copy(struct nv_core *core,const char *key,char **value) {
     } else if(!result) *value=NULL;
     unlock(core);return result;
 }
+int nv_core_get_borrowed(struct nv_core *core,const char *key,char **value) {
+    int result;
+    if(!key || !value) {errno=EINVAL;return -1;}
+    if(lock(core)) return -1;
+    result=nv_cache_refresh(&core->cache,fetch,core,key,value);
+    unlock(core);return result;
+}
 int nv_core_change_ack(struct nv_core *core,const char *key,const char *value,int unset) {
     size_t length;int result;
     if(nv_key_length(key,&length)) return -1;

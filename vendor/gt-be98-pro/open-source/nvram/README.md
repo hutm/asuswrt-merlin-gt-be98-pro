@@ -30,6 +30,7 @@ support. No router or real storage device is accessed.
 | notification.h | Validated notification dispatch to cache invalidation |
 | listener.h | Nonblocking subscription and checked receive/loss handling |
 | core.c / core.h | Serialized client core with owned-copy reads and updates |
+| adapter.c / adapter.h | Backend routing and borrowed-value compatibility interface |
 | shared/source/nvpriv.c | GT-BE98_PRO storage routing, migration and enumeration |
 | compat/ | Bit flags, trimming, wireless-name parsing and numeric conversion |
 | getall.h | Indexed page assembly, preserving caller output on failure |
@@ -61,6 +62,29 @@ The public library API still needs retained-pointer compatibility, listener
 lifecycle management, ASUS large-value/JFFS hooks, commit controls, locking, CLI/startup
 integration and complete export coverage. The GET helper currently returns a
 malloc-owned value; it must not be exposed directly as nvram_get.
+
+The adapter now connects the core to an explicit storage-hook interface. Ordinary
+keys use the kernel protocol; large keys use the storage get/set/unset callbacks
+under a supplied cross-process lock. Access-policy callbacks are required rather
+than silently bypassed. Enumeration appends the storage entries to kernel data
+and returns the used byte count, zero-filling unused output on success. Errors
+preserve the caller buffer. This improves failure handling compared with callers
+that might otherwise treat a partial enumeration as complete. GETALL is still
+not an atomic snapshot across backends.
+
+`nv_core_get_borrowed` supplies the adapter's kernel-backed pointer lifetime.
+The address persists until core destruction and later refreshes may overwrite
+its contents. Borrowed-pointer reads require caller serialization; the core mutex
+only protects operations inside the API. The owned-copy API remains available
+for concurrent consumers. JFFS pointers retain the storage callback's lifetime.
+
+Adapter tests link to the actual core/adapter shared library on native sanitizer
+and ARM builds. They use a synthetic kernel peer and mock storage/policy/lock
+callbacks to cover routing, missing versus empty values, retained pointers,
+SET(NULL) as UNSET, positive storage-write results, denied calls, failed locks,
+byte-count enumeration and output preservation. Binding the real shared-library
+hooks, global process lifecycle and exported nvram/wlcsm wrappers is still pending;
+the adapter is not yet a replacement for libnvram.so.
 
 The combined core is built as a shared library during tests. It serializes
 GET/SET/UNSET/GETALL and notification handling with a mutex, refreshes every GET,
