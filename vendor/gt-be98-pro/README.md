@@ -1,8 +1,18 @@
 # GT-BE98 Pro downstream maintenance
 
 Status: development only. No firmware is approved for publication or installation.
+Enable the opt-in compatibility profile with `ASUS_PUBLIC_GPL_38984=y` in the
+Docker build environment; see [COMPATIBILITY.md](COMPATIBILITY.md) for precise
+feature limitations and the three supplemental userspace inputs.
+
 The current source baseline is Merlin 3006.102.9, commit
 `69838e4a60564e5550e97f11d8a8cf2c6260c4f0`.
+
+## Build iterations
+
+See [ITERATION.md](ITERATION.md) for the three-command local workflow, evidence
+folders, recovery preparation and hardware test gates. `iterate.py build` never
+flashes a router. The build kit is still a local prerequisite.
 
 ## Keep the fork small
 
@@ -35,8 +45,9 @@ python3 vendor/gt-be98-pro/provenance.py release-check
 python3 -m unittest discover -s vendor/gt-be98-pro -p 'test_*.py'
 ```
 
-The manifest currently covers 280 userspace inputs, not the whole image. `verify`
-only checks those entries. `release-check` deliberately fails regardless of the
+The two manifests currently cover 280 userspace inputs in total, not the whole image. `verify`
+only checks those entries across both manifests. Stage both pinned archives;
+`stage` chooses the appropriate manifest by the archive checksum. `release-check` deliberately fails regardless of the
 JSON status until complete input/link tracking and final-image verification exist.
 No release workflow or automatic firmware upload is enabled.
 
