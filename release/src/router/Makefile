@@ -3813,7 +3813,7 @@ openssl-3.5/Makefile:
 	@touch $@
 
 openssl-3.5: openssl-3.5/Makefile
-	$(MAKE) -C openssl-3.5 $(PARALLEL_BUILD) && $(MAKE) $@-stage
+	$(MAKE) -C openssl-3.5 $(PARALLEL_BUILD) EX_LIBS="-Wl,-Bstatic -latomic -Wl,-Bdynamic" && $(MAKE) $@-stage
 
 openssl-3.5-clean:
 	[ ! -f openssl-3.5/Makefile ] || $(MAKE) -C openssl-3.5 clean
