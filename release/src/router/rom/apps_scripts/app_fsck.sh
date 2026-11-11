@@ -34,7 +34,48 @@ _get_fsck_logfile(){
 if [ -z "$1" ] || [ -z "$2" ]; then
 	echo "Usage: app_fsck.sh [filesystem type] [device's path]"
 	exit 0
-elif [ "$1" == "vfat" ] || [ "$1" == "msdos" ] || [ "$1" == "fuseblk" ]; then
+fi
+
+# Source tools are installed only by the experimental capability profile.
+case " $(nvram get rc_support) " in
+*" open_fs_format "*)
+	case "$1" in
+	tfat|vfat|msdos)
+		if [ "$(nvram get usb_fatfs_mod)" = "open" ]; then
+			log_file=$(_get_fsck_logfile "$2")
+			_set_fsck_code "$2" 2
+			free_caches -w 0
+			check_option=-n
+			[ "$(nvram get apps_state_autofix)" = "1" ] && check_option=-a
+			dosfsck "$check_option" "$2" > "$log_file" 2>&1
+			check_result=$?
+			# Exit 1 can mean repaired errors; verify instead of assuming success.
+			if [ "$check_option" = "-a" ] && [ "$check_result" = "1" ]; then
+				dosfsck -n "$2" >> "$log_file" 2>&1
+				check_result=$?
+			fi
+			if [ "$check_result" = "0" ]; then
+				_set_fsck_code "$2" 0
+			else
+				_set_fsck_code "$2" 1
+			fi
+			free_caches -w 0 -c 0
+			exit 0
+		fi
+		;;
+	ntfs|tntfs|fuseblk)
+		if [ "$(nvram get usb_ntfs_mod)" = "open" ]; then
+			log_file=$(_get_fsck_logfile "$2")
+			echo "Full NTFS consistency checking is not available in this build." > "$log_file"
+			_set_fsck_code "$2" 3
+			exit 0
+		fi
+		;;
+	esac
+	;;
+esac
+
+if [ "$1" == "vfat" ] || [ "$1" == "msdos" ] || [ "$1" == "fuseblk" ]; then
 	_set_fsck_code $2 3
 	exit 0
 fi

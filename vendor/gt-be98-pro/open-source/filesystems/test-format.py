@@ -17,3 +17,8 @@ with tempfile.TemporaryDirectory() as tmp:
                     'set -eu; gcc -std=c99 -Wall -Wextra -Werror -Wno-unused-value -Wno-sign-compare '
                     '-fsanitize=address,undefined -DASUS_OPEN_COMPONENTS /tests/test.c -o /tmp/test; /tmp/test'], check=True)
 subprocess.run(['node', str(here / 'test-ui.js'), str(root / 'release/src/router/www/device-map/disk_format.asp')], check=True)
+
+subprocess.run(['docker', 'run', '--rm', '--network', 'none', '--user', f'{os.getuid()}:{os.getgid()}',
+                '-v', f'{here}:/tests:ro',
+                '-v', f'{root / "release/src/router/rom/apps_scripts"}:/source:ro',
+                'amng-build', 'bash', '/tests/test-fsck.sh'], check=True)
