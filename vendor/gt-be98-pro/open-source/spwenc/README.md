@@ -103,3 +103,26 @@ encoded input to output. That fallback must be handled by the eventual wrapper;
 it must not be mistaken for successful decryption. The frame helper deliberately
 rejects it with EBADMSG instead. No real encryption key or settings access occurs
 in these tests. `test_frame.sh` now includes both encoding and decoding checks.
+
+## Explicit-input legacy key derivation
+
+`nv_pw_key` derives the existing 32-byte ASCII-hex AES key from an optional salt,
+product identifier and six-byte LAN MAC. It reproduces the reference's formatting,
+32-byte salt and 63-byte product truncation, and lowercase MD5 output through
+OpenSSL EVP. Inputs are explicit: the helper performs no NVRAM access, sleeps or
+hardware calls. Invalid MAC syntax and missing required pointers fail without
+changing output. This preserves compatibility with an existing legacy format;
+it is not a recommendation for a new key-derivation scheme.
+
+The reference harness intercepts device/settings reads and captures the key at
+AES initialization. Native sanitizer and ARM/OpenSSL outputs match 512 reference
+cases across 256 synthetic device identifiers, salted and unsalted modes, empty
+salts, and strings exceeding both truncation limits. No real device identifiers,
+passwords or keys are used. Runtime lookup/retry behavior, denied-salt handling,
+missing identifiers and permissive malformed-MAC behavior remain separate work.
+The helper deliberately requires canonical MAC syntax rather than silently
+accepting partial scans. It is not selected in firmware.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_key.sh
+```
