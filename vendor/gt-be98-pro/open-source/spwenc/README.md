@@ -674,3 +674,9 @@ The subsequent retry linked `write_smb_conf` successfully, then stopped at
 search-path expression is now named `OPEN_SHARED_LDFLAGS`, and rc appends it after
 its override. It remains empty outside the experimental model/profile. This
 also reaches rc's derived `LDFLAGS2`; full-build validation is still pending.
+
+The rc retry passed its links and reached httpd, whose link recipe uses `LIBS`
+and `EXTRALDFLAGS` rather than `LDFLAGS`. That recipe now also consumes
+`OPEN_SHARED_LDFLAGS` to resolve the new shared-library dependencies. The next
+full-image retry is still required; no image from these failed retries is a
+validation artifact.

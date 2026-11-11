@@ -441,7 +441,7 @@ all: httpd #test_apps
 
 httpd: $(OBJS)
 	@echo " [httpd] CC $@"
-	$(CC) -o $@ $(OBJS) $(LIBS) $(EXTRALDFLAGS)
+	$(CC) -o $@ $(OBJS) $(LIBS) $(EXTRALDFLAGS) $(OPEN_SHARED_LDFLAGS)
 
 	$(SIZECHECK)
 	$(CPTMP)
