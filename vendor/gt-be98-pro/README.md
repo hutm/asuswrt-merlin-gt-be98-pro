@@ -52,6 +52,11 @@ Maintain a small linear downstream series on a stable Merlin tag. Track upstream
 main for upcoming changes, but do not automatically release development snapshots.
 Work in a clean source checkout, never the checkout with staged blobs/build output.
 
+Run `python3 vendor/gt-be98-pro/check-upstream.py` to resolve the latest stable
+3006.102 tag and compare its commit to the manifest pin. It excludes prerelease
+tags, sorts version numbers numerically, and makes no local changes. This command
+does not establish authenticity of upstream Git tags or binary inputs.
+
 ```sh
 git remote add upstream https://github.com/RMerl/asuswrt-merlin.ng.git # once
 git fetch upstream --tags
