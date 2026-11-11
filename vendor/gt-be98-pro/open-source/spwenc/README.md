@@ -249,3 +249,29 @@ until the complete object replacement is ready.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_helpers.sh
 ```
+
+## Settings encryption candidate
+
+`settings.c` implements `enc_nvram` plus a capacity-aware `nv_enc_setting` API.
+Ordinary values use salted password encryption. The three account-list settings
+(`acc_list`, `pptpd_clientlist`, `vpn_serverx_clientlist`) retain usernames and
+encrypt the second field, skipping records without a second field and ignoring
+later fields. Each resulting record is prepended, preserving the original's
+reversal of record order. Empty input returns 0; nonempty processed input returns
+1, including lists with no usable records. Errors return -1 without modifying the
+output. The legacy entry point requires a 4096-byte destination.
+
+The suite matches original-library output and return values on native sanitizer
+and ARM runs for 45 setting/list fixtures and 512 ordinary-value lengths. It
+covers malformed/empty fields, extra fields, multiple records and ordinary values
+that contain list delimiters. Source-only checks cover short destinations, denied
+salt, oversized ciphertext and oversized assembled lists. The source deliberately
+rejects over-capacity results rather than silently truncating account data or
+allowing an oversized encryption write. Temporary plaintext copies and result
+buffers are cleared on cleanup. Allocation failures are not injected. Settings
+decryption, conditional updates and migration still need replacements; this
+candidate remains outside firmware.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_settings.sh
+```
