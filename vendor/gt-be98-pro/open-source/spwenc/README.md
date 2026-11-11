@@ -314,3 +314,33 @@ Short destinations also preserve output. The legacy void lookup helper cannot
 distinguish missing values from allocation failure; injected allocation failures
 and concurrent settings changes remain untested. All candidates are still outside
 the firmware build pending migration and the other remaining object interfaces.
+
+## Migration entry-point candidates
+
+`migration.c` supplies `start_enc_nvram` and `start_dec_nvram`. It walks the
+platform defaults table, processes only entries whose `enc` field equals 1,
+writes their converted values in table order, then sets `nvram_encrypt` to 1 or
+0 respectively. It does not commit settings. The standalone tuple declaration
+matches the platform `bcmnvram.h`; ARM size and encryption-field offset are
+compile-time checked. Production integration must use a single compatible tuple
+declaration with the platform headers.
+
+Unlike the reference, the source stages all conversions before any writes and
+returns -1 on conversion/allocation/write failure. A conversion failure therefore
+causes no writes. A write failure stops subsequent writes, but previously written
+settings cannot be rolled back through this interface; migration is not atomic.
+The final mode flag is attempted only after every value write succeeds. Temporary
+converted values are cleared when freed. Concurrent setting changes and commit/
+power-loss behavior have not been validated.
+
+The migration suite intercepts settings reads, writes and value converters; it
+compares 16 native/ARM/reference write traces across table selections, missing
+values and both directions. It separately injects a conversion failure and each
+of the three write failures in both source directions. Native sanitizer checks
+pass. These tests verify orchestration, not end-to-end encryption or a live NVRAM
+backend. Startup initialization and the remaining object interfaces still need
+work before firmware integration.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_migration.sh
+```
