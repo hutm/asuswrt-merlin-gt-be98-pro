@@ -1,3 +1,28 @@
+# GT-BE98 Pro: ASUS-verified inputs experiment
+
+Experimental fork of Asuswrt-Merlin for **ASUS GT-BE98 Pro only** (not GT-BE98).
+This is an independent project, not an ASUS or upstream Merlin release.
+
+**No installable firmware release is available.** The first integration build
+fails to link, input provenance is incomplete, and there has been no hardware test.
+The word “verified” describes individual inputs checked against an ASUS-published
+archive checksum; it is not a claim that the current tree or an image is verified.
+
+Our target is open-source components built from source plus unchanged proprietary
+inputs from publicly downloadable ASUS archives with published checksums. ASUS
+objects from multiple releases are allowed when compatibility is established.
+We preserve upstream security fixes rather than suppressing missing APIs with stubs.
+
+See [the build/provenance policy](vendor/gt-be98-pro/README.md),
+[input manifest](vendor/gt-be98-pro/inputs.json), and
+[release blockers](vendor/gt-be98-pro/release-status.json).
+Upstream retains other models in its source tree; this fork's entry point accepts
+only `gt-be98_pro`. Other models are unsupported.
+
+Report fork-specific problems to this repository, not upstream Merlin support.
+
+---
+
 asuswrt-merlin New Gen (version 382.xx and higher)
 ==================================================
 

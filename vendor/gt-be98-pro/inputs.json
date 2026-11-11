@@ -1,0 +1,1413 @@
+{
+  "schema": 1,
+  "model": "GT-BE98_PRO",
+  "merlin_base": "69838e4a60564e5550e97f11d8a8cf2c6260c4f0",
+  "coverage": "partial",
+  "archive": {
+    "version": "3.0.0.6.102_38984",
+    "url": "https://dlcdnets.asus.com/pub/ASUS/wireless/GT-BE98_Pro/GPL_GT_BE98_PRO_300610238984.zip",
+    "sha256": "5454a49ae63c8bf8aeffdbccab9d3eac34f5046bd4666fe085f8df379955db5c"
+  },
+  "inputs": [
+    {
+      "destination": "release/src/router/amas-utils/prebuild/GT-BE98_PRO/amas-utils-cli",
+      "archive_member": "asuswrt/release/src/router/amas-utils/prebuild/amas-utils-cli",
+      "sha256": "e59d1adb26c92c17d48054757ee99b4e51a03f8967ef6dc5b216a97eab2ddcfa"
+    },
+    {
+      "destination": "release/src/router/amas-utils/prebuild/GT-BE98_PRO/libamas-utils.so",
+      "archive_member": "asuswrt/release/src/router/amas-utils/prebuild/libamas-utils.so",
+      "sha256": "2d0f3502d358f95167285598b6765b88f5319e1867530d7c28e1e709fc9cbd8e"
+    },
+    {
+      "destination": "release/src/router/dblog/commands/prebuild/GT-BE98_PRO/dblogcmd",
+      "archive_member": "asuswrt/release/src/router/dblog/commands/prebuild/dblogcmd",
+      "sha256": "ccbdebd420683af59bc0d4afc0d8f96b523d3250aeae425b377a8ca0270cc308"
+    },
+    {
+      "destination": "release/src/router/dblog/daemon/prebuild/GT-BE98_PRO/dblog",
+      "archive_member": "asuswrt/release/src/router/dblog/daemon/prebuild/dblog",
+      "sha256": "33a361dd66bb73bfca1380c92f7c52927855d2ab750d002278e722e81ee2a70c"
+    },
+    {
+      "destination": "release/src/router/dblog/daemon/prebuild/GT-BE98_PRO/colog",
+      "archive_member": "asuswrt/release/src/router/dblog/daemon/prebuild/colog",
+      "sha256": "5ab21128a5a640fab066b3d9c57b2179ded99419110377997122e9ecbb679e02"
+    },
+    {
+      "destination": "release/src/router/sysstate/log_daemon/prebuild/GT-BE98_PRO/sysstate",
+      "archive_member": "asuswrt/release/src/router/sysstate/log_daemon/prebuild/sysstate",
+      "sha256": "cdfc39fb3cb649dd743b721cc79d4cbdcbdc53abc3382f3c8ee669ade49bd978"
+    },
+    {
+      "destination": "release/src/router/sysstate/commands/prebuild/GT-BE98_PRO/asuslog",
+      "archive_member": "asuswrt/release/src/router/sysstate/commands/prebuild/asuslog",
+      "sha256": "f17c994167753e3337724a4a15fa209980d0bb7911fca98b09047ab9a700dfaa"
+    },
+    {
+      "destination": "release/src/router/vpmstats/prebuilt/GT-BE98_PRO/vpmstats",
+      "archive_member": "asuswrt/release/src/router/vpmstats/prebuilt/vpmstats",
+      "sha256": "8051bb9b21a853fcdb3f74acb22ae423a8fcc7ae5f3bb26f2719db22576710b8"
+    },
+    {
+      "destination": "release/src/router/webdav_client/prebuild/GT-BE98_PRO/webdav_client",
+      "archive_member": "asuswrt/release/src/router/webdav_client/prebuild/webdav_client",
+      "sha256": "1931bd42a24b44b8b30321102c1070aa084a6292dcd77023f9b47ebcc106ccc7"
+    },
+    {
+      "destination": "release/src/router/dropbox_client/prebuild/GT-BE98_PRO/dropbox_client",
+      "archive_member": "asuswrt/release/src/router/dropbox_client/prebuild/dropbox_client",
+      "sha256": "23cb661da3d142490041e3fb91c61118e75baadbde4eebd3c28944f791c7211b"
+    },
+    {
+      "destination": "release/src/router/dnsspoof/prebuilt/GT-BE98_PRO/dnsspoof",
+      "archive_member": "asuswrt/release/src/router/dnsspoof/prebuilt/dnsspoof",
+      "sha256": "e6ea76c9b28d065e323553535eccf3d5aec4e8d9be570c59d549bad44a799f64"
+    },
+    {
+      "destination": "release/src/router/asd/prebuild/GT-BE98_PRO/asd",
+      "archive_member": "asuswrt/release/src/router/asd/prebuild/asd",
+      "sha256": "ae13d491ea40d87bca31d1e17847d723e80b831fc6d001a5da31a186fd7ef623"
+    },
+    {
+      "destination": "release/src/router/asd/prebuild/GT-BE98_PRO/libasd.so",
+      "archive_member": "asuswrt/release/src/router/asd/prebuild/libasd.so",
+      "sha256": "15579a1d107a4a26fbc98b20308e650d2944051be5f1fae02852b535510c4ad5"
+    },
+    {
+      "destination": "release/src/router/protect_srv/prebuild/GT-BE98_PRO/req_ptcsrv",
+      "archive_member": "asuswrt/release/src/router/protect_srv/prebuild/req_ptcsrv",
+      "sha256": "f588df54d07b76efea2940f78b673f9eb26658989d5db5d15ca941ddc2bd1337"
+    },
+    {
+      "destination": "release/src/router/protect_srv/prebuild/GT-BE98_PRO/protect_srv",
+      "archive_member": "asuswrt/release/src/router/protect_srv/prebuild/protect_srv",
+      "sha256": "b941eaf340892ecd3595ffef2d8c01ae1fcf70ada64e107e15b483c04071bc1e"
+    },
+    {
+      "destination": "release/src/router/protect_srv/prebuild/GT-BE98_PRO/Send_Event2ptcsrv",
+      "archive_member": "asuswrt/release/src/router/protect_srv/prebuild/Send_Event2ptcsrv",
+      "sha256": "e1e3ea1643d38b1a6eddffdc03dce760841fae07217db5ed55b612f67013ea98"
+    },
+    {
+      "destination": "release/src/router/protect_srv/lib/prebuild/GT-BE98_PRO/libptcsrv.so",
+      "archive_member": "asuswrt/release/src/router/protect_srv/lib/prebuild/libptcsrv.so",
+      "sha256": "c819dece21274fee1b014d6491a8278a8b3ccc0e5e33ad15b738e2a9a0a05a9e"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/notify_ahs.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/notify_ahs.o",
+      "sha256": "65d73786f5239e77aaceed041a703428b0dc1d2fd62f913c451b1848286e39a4"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/amas_utils.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/amas_utils.o",
+      "sha256": "e84bdb96123dbe750fde7e09bde0f92cd0215e38e1728fa006178287c03b878a"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/uu_utils.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/uu_utils.o",
+      "sha256": "769827f06de00fc94408c1e4403e21c564f46d1a07aca88a2f382c576b9a3493"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/notify_rc.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/notify_rc.o",
+      "sha256": "31a5f69b8ebacc6a5daade1503c30ab50cc75a94c93e601b888c4c60491faa32"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/amas_apg_shared.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/amas_apg_shared.o",
+      "sha256": "39855bb50a96f14e64ed2a98986fdec39f4d23ad4e8f79cc1a281aa2625d4b0e"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/api-broadcom.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/api-broadcom.o",
+      "sha256": "917252a9877fdd0bf4f8b4d307e87c7aa5f9530ecd276c19e50e40da6cfa6bc5"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/private.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/private.o",
+      "sha256": "776b69ae0ea7e2b9522db66608e77b1d5f912e4f830f5d2516bc051c07f685d0"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/ethswctl.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/ethswctl.o",
+      "sha256": "e44e9c5ba6da1d04601303af73e08559b9bc41d875aa9411e34c080dc401bf18"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/spwenc.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/spwenc.o",
+      "sha256": "6f81e07642c69c545874f6e644eff8d6e57129e6855a4f9a9966d1124737d77a"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/ethctl_cmd.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/ethctl_cmd.o",
+      "sha256": "424a4caee66376cd9f621f02c183dc90dde70692ceb2175701f4b8da94f17d2d"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/amas_wgn_shared.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/amas_wgn_shared.o",
+      "sha256": "60a3bb76bfa3f7643460dbbe1b98341d982884bd7c724e10d5da9b387a98f94f"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/shutils_private.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/shutils_private.o",
+      "sha256": "cb47a6e2ecf3bab24cad688f0d54cf8b3f2b2eaad23725d927487a60036256af"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/amas_dwb.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/amas_dwb.o",
+      "sha256": "6277025f093eed49ef42ab7807a0ec711a96370abcac21905536e91bfa7799c8"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/bcmwifi_channels.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/bcmwifi_channels.o",
+      "sha256": "65064abbc6a924c90c9a00abe7b5879af95ace1ea6da1a7b5160eaa4cb2ab2dc"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/nvpriv.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/nvpriv.o",
+      "sha256": "e9e73c3c4002f3d5ce3207e6042a7772d791b96b05e742cd5221d7f188119a1d"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/bcmutils.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/bcmutils.o",
+      "sha256": "241fbf38b2ae700a1580d1d51e66144401908aa15b6794b632f708fcebb81589"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/bcmxtlv.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/bcmxtlv.o",
+      "sha256": "4a30f98bbd0424e7d52b2363777998d3ff39445e6f9ef13d9fb48bcb72069ff7"
+    },
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/tcode.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/tcode.o",
+      "sha256": "e3fb2039b7a50e219e5f0547530d43918708d18785fa1f29940fe602063f8791"
+    },
+    {
+      "destination": "release/src/router/httpd/prebuild/GT-BE98_PRO/web_hook.o",
+      "archive_member": "asuswrt/release/src/router/httpd/prebuild/web_hook.o",
+      "sha256": "54dbded1ef995d59e9e43e47ef8b1c6abd98ef478afaac15f988b6d79cd08e47"
+    },
+    {
+      "destination": "release/src/router/httpd/prebuild/GT-BE98_PRO/pwenc.o",
+      "archive_member": "asuswrt/release/src/router/httpd/prebuild/pwenc.o",
+      "sha256": "47bc8cb74854bb71a0f0d990f84c340fd776e6861b652615a26ed915a05d9422"
+    },
+    {
+      "destination": "release/src/router/httpd/prebuild/GT-BE98_PRO/web-broadcom.o",
+      "archive_member": "asuswrt/release/src/router/httpd/prebuild/web-broadcom.o",
+      "sha256": "502fa9237b1b11245eab54f36574c84b18cb9a3781b0a749d25a113868a8e34b"
+    },
+    {
+      "destination": "release/src/router/httpd/prebuild/GT-BE98_PRO/web-broadcom_private.o",
+      "archive_member": "asuswrt/release/src/router/httpd/prebuild/web-broadcom_private.o",
+      "sha256": "d18285feda3692fcfdac32254aaa848b00928bbc57e2e8b43f4f8a7502508600"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/pwdec.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/pwdec.o",
+      "sha256": "5b16bc5725ace43d5d46db4c515278167ba4a8e9d485eb5e98967985f0b1dcd5"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/wps_pbcd_be.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/wps_pbcd_be.o",
+      "sha256": "c737f73588dd2cd4f3cb70b4ef069743ae14e2bed237f819d1399a33f1da9211"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/s46comm.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/s46comm.o",
+      "sha256": "7cc148e8994ad6d82ba4fe270c6b016f144ef4531369903c8570ea10b08b9247"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/roamast.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/roamast.o",
+      "sha256": "29831d42be11b03e4b2c9a6f7de9e149378cb9e81a329a4d4645ed02a6f2b3c2"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/obd_eth.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/obd_eth.o",
+      "sha256": "798dce648037741697de72f6d866960afc8519364a279ce5e854d4b7063a91ca"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/bwdpi_db_10.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/bwdpi_db_10.o",
+      "sha256": "bd8722e2ca54d0a908d30a5c770759eb0d5f5ff11011429c957e6b267dfcce54"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas_lanctrl.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas_lanctrl.o",
+      "sha256": "8cb675d7eb71b235e0441d115533633369f62a16b042bb24f67dbcabee020c88"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas_ipc.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas_ipc.o",
+      "sha256": "934fe13227282432037656d975df39889f155d0bc16099bdfdaddb7e03ee87c3"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/ate-broadcom.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/ate-broadcom.o",
+      "sha256": "93ace8c91fa69202474edb0fcd182711c3863049ff507d0f0b2c615c832983c5"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas_ssd_cd.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas_ssd_cd.o",
+      "sha256": "b1b2c7ff568b0b886c1a72cf2075cb5fc31e56fcdccdb103bb5df77f2db4b14b"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/bwdpi.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/bwdpi.o",
+      "sha256": "40d4e595f04d931e435fa8d9faf31e3b04007ce66a0f1fa32b749d47af42032b"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/private.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/private.o",
+      "sha256": "d7dd69bcb219f15615e06baa6a4725d3847b39b01f1c179764c463c9c0abcd9f"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/dsl_fb.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/dsl_fb.o",
+      "sha256": "3bb84f5682cf53b33b5cfed9f1ddfdfc2de0e81debfad6aecf26b690b04d6cd4"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/obd_monitor.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/obd_monitor.o",
+      "sha256": "30973d86e8a4b2d3ff1710b24b1051ac2ec4fd7ddb9f8121108a5450b6b7c551"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/ocnvcd.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/ocnvcd.o",
+      "sha256": "f938f3a5b3758da81ab971990ee759e47ad581f80974f29c7b4717835df429d3"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas-ssd-broadcom.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas-ssd-broadcom.o",
+      "sha256": "bebe978ec31ae07d5b64970d5cef822d62470358ada3a34a7ace9ce6b0a99695"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas_ssd.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas_ssd.o",
+      "sha256": "56d9c895e41032e973e6af00b0a171b6a6d7d11625e593d00cd682b1f3943b54"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/rtkmonitor.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/rtkmonitor.o",
+      "sha256": "d6afcb85b603ac6406b0d5ffd4d195f7fa8c40d7a6fd6b8775158673cc3ceab4"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/dslited.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/dslited.o",
+      "sha256": "858c03c35cf66edd4280c4cd14c27b693d52daa628604b39559687800a8d1899"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas-ssd-cd-broadcom.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas-ssd-cd-broadcom.o",
+      "sha256": "301ead877d69206638ef2dfced0b49a64fcd8a47ac63b7b9de522cc48f05a741"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/bwdpi_check.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/bwdpi_check.o",
+      "sha256": "95d338086b592a424d9d1252126b983b3a36fac28bfc4f9b0a43d5515f8c9b1c"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/agg_brcm.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/agg_brcm.o",
+      "sha256": "7662337c09fda3465e35348d02157945c32dd494155d475a4b2f27acda25e398"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/hostapd_config_be.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/hostapd_config_be.o",
+      "sha256": "a5f8128868f3bedc234ddb44f619e88618c913c823f484c5836628c056952e53"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/gpy211_war.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/gpy211_war.o",
+      "sha256": "0fd8382a787e10bf3ed8a0c56a25f290d5d1ceae8f9cbd8cd166d7a6628a9810"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/nt_mail.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/nt_mail.o",
+      "sha256": "e85e5d943182865f9db1e170bd0948c6a976aa6a3b1d45eb2f5c26f076343e2a"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/conn_diag-broadcom.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/conn_diag-broadcom.o",
+      "sha256": "8e032b1e370cc59e0462f5fbecd8d5e7951ed62922762258efb5beb8f3a8b229"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/bwdpi_wred_alive.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/bwdpi_wred_alive.o",
+      "sha256": "5fda93fec2bca485a6975803920ebdef3cd6d96ec4d0d479e672eb4408962d12"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/tcode_brcm.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/tcode_brcm.o",
+      "sha256": "1fcfb57e075b12688aa37ff415cd5ae059dc643cd91cd0c26f8b8d4968b6fb5e"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/dns_dpi_check.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/dns_dpi_check.o",
+      "sha256": "89e2527e29f3c40e3cce27c38e930c6396f08831e445098afc643360ad54db19"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/ate.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/ate.o",
+      "sha256": "08c083ff98f6c7e446cb3d0b19d077a8e8db688e9c10ef117ed32270da910f37"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/frs_service.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/frs_service.o",
+      "sha256": "632cbe8b190139a351ed48af6b8797bf33a46bab89ea58d59b6f726c4f49ce6e"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/sdn-interface-broadcom.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/sdn-interface-broadcom.o",
+      "sha256": "ff53288434025130c87f142f1c554df5d872727d52cc9663f8a0c86631498ba5"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas_misc.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas_misc.o",
+      "sha256": "a13d1853e8e2906b91d50b05a8c71aff43a562a1634fb8726b5a9daa077330d6"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/tpvpn.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/tpvpn.o",
+      "sha256": "236164ff49ee35203f264e3a67d70573dda7cdbf9524cdd2d8deb97253ea6931"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas_status.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas_status.o",
+      "sha256": "88944da94b47e4ead039e0e33bbf566caf43cbe2d09f01c242c8a3ac45916c49"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas_lib.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas_lib.o",
+      "sha256": "86298872508f1f0be469ba0e82a707575dc70dc0993001ceaa70edd491521483"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/roamast-broadcom.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/roamast-broadcom.o",
+      "sha256": "7d9ab8f7471c6b7930be1df47754b0974d797305952a60f3737fb17b12634342"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/conn_diag-sql.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/conn_diag-sql.o",
+      "sha256": "195305313c8fc064c6ee7c7ff22f365c55579675b874ed0c5bd7d2495a4db01d"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/ledg.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/ledg.o",
+      "sha256": "e081ea3fcd976a4458979683de659bb3407bf9b5a63b1595a2d6989e06ba3ff4"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/tcode_rc.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/tcode_rc.o",
+      "sha256": "7fe275f4c1260415fea8207fb2ac305daaedbdeaf6d609cacac6af00014e07cc"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas_wlcconnect.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas_wlcconnect.o",
+      "sha256": "80b25dd8e938b09429261a20c14c6a738394c44da2b67ea3dac4df06b49154bf"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/conn_diag.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/conn_diag.o",
+      "sha256": "2b5e0f92be4a4de4ae936ec41644510120bc7daa05476e423f37f333cfe95cbc"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/v6plusd.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/v6plusd.o",
+      "sha256": "2fcb0074856ae0de40cb1421b95b614fb4b897d49b46de26c6d2d19054c4431c"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/obd.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/obd.o",
+      "sha256": "c1cd92614d78da2985e99095a765dae2a12ed98c474bf8d00cbb509ef06f1841"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas_bhctrl.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas_bhctrl.o",
+      "sha256": "51d7467c1b9edcd4b9318e1bb7d83f0d8cfd922e2f804733fa691064273ae4ce"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/dhcpc_vc_query.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/dhcpc_vc_query.o",
+      "sha256": "eb53305311fcca01a6a0b9e9787f39ebc5a608ff365ae51d4e8bfd2fe601583a"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/broadcom.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/broadcom.o",
+      "sha256": "9951291aca2e44e08de9ee5fe9335c659dde645339adcab24a61c97763ceb0d6"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/obd-broadcom.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/obd-broadcom.o",
+      "sha256": "0fc0aa89e157969c2115b4a612c7d18fa5f5497471bfc52717911eb226be24b8"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/psta_monitor.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/psta_monitor.o",
+      "sha256": "7e91a418de7b3056b366468dda31683ad37821d98effd8ae0621514bae561aee"
+    },
+    {
+      "destination": "release/src/router/rc/prebuild/GT-BE98_PRO/amas_apg.o",
+      "archive_member": "asuswrt/release/src/router/rc/prebuild/amas_apg.o",
+      "sha256": "5d94c954c363d033f39dbc0e4cedcfe2aba6f59a90885327bc6f45ad2d525916"
+    },
+    {
+      "destination": "release/src/router/libasc/prebuild/GT-BE98_PRO/libasc.so",
+      "archive_member": "asuswrt/release/src/router/libasc/prebuild/libasc.so",
+      "sha256": "bcac43669afa7361699cf6afb3ba88957cd5e14fe8e2064a8f3c790440af9816"
+    },
+    {
+      "destination": "release/src/router/aaews/prebuild/GT-BE98_PRO/aaews",
+      "archive_member": "asuswrt/release/src/router/aaews/prebuild/aaews",
+      "sha256": "f5a77fd0dc6d8b1db08006a8afaaa114bbe2b1358f21282458084cdcc9edb8bc"
+    },
+    {
+      "destination": "release/src/router/aaews/prebuild/GT-BE98_PRO/aae_ipc.o",
+      "archive_member": "asuswrt/release/src/router/aaews/prebuild/aae_ipc.o",
+      "sha256": "431c5a917d7a5af7550eebf3b9de0211553afec680be3dc570dfc924025ba753"
+    },
+    {
+      "destination": "release/src/router/aaews/prebuild/GT-BE98_PRO/mastiff",
+      "archive_member": "asuswrt/release/src/router/aaews/prebuild/mastiff",
+      "sha256": "7c66e8ae4bd5b1effd61ef84e0e33afecb8ed105fdd3e7a41dd54f66be5ae73c"
+    },
+    {
+      "destination": "release/src/router/libletsencrypt/prebuild/GT-BE98_PRO/libletsencrypt.so",
+      "archive_member": "asuswrt/release/src/router/libletsencrypt/prebuild/libletsencrypt.so",
+      "sha256": "ee94ddeef0867626182ffeac49bfae0c6074d90def876b87aee718931a67baa1"
+    },
+    {
+      "destination": "release/src/router/asuswebstorage/prebuild/GT-BE98_PRO/asuswebstorage",
+      "archive_member": "asuswrt/release/src/router/asuswebstorage/prebuild/asuswebstorage",
+      "sha256": "f24ea3cf3d32843f80602eb8d7fbf44cb132ffd1e197734d2029c096a7f29177"
+    },
+    {
+      "destination": "release/src/router/libasuslog/prebuild/GT-BE98_PRO/libasuslog.so",
+      "archive_member": "asuswrt/release/src/router/libasuslog/prebuild/libasuslog.so",
+      "sha256": "61f5ef1ef563a7f9f360fa5597dc829c7cc0ef994d43a349204cca8792569104"
+    },
+    {
+      "destination": "release/src/router/libwebapi/prebuild/GT-BE98_PRO/priv_webapi.o",
+      "archive_member": "asuswrt/release/src/router/libwebapi/prebuild/priv_webapi.o",
+      "sha256": "2097ce0fb8870c3128f4c74fd3b8de440ffca1c21e8c891b080c65f1788bb78c"
+    },
+    {
+      "destination": "release/src/router/u2ec/prebuild/GT-BE98_PRO/u2ec",
+      "archive_member": "asuswrt/release/src/router/u2ec/prebuild/u2ec",
+      "sha256": "4975fa93b18b4a28b655427f2024fb0705562f4243ac6a402fa5733c020679bb"
+    },
+    {
+      "destination": "release/src/router/dns_ping/prebuild/GT-BE98_PRO/dns_ping",
+      "archive_member": "asuswrt/release/src/router/dns_ping/prebuild/dns_ping",
+      "sha256": "8a8b48625546f76c3f592344df597999cb508ffce28a55ccbdbd49de14161ea6"
+    },
+    {
+      "destination": "release/src/router/libbcm/prebuilt/GT-BE98_PRO/libbcm.so",
+      "archive_member": "asuswrt/release/src/router/libbcm/prebuilt/libbcm.so",
+      "sha256": "0be5614df234413d1c83ea62e888c4ce866512c7e8c98e2637a5a6a828d1e3d7"
+    },
+    {
+      "destination": "release/src/router/bsd/prebuilt/GT-BE98_PRO/bsd",
+      "archive_member": "asuswrt/release/src/router/bsd/prebuilt/bsd",
+      "sha256": "3f1ce0feb4af4ac14d889d3cb5b81ca73f97e69951a3c022a23f615c66d9e0c5"
+    },
+    {
+      "destination": "release/src/router/ahs/prebuild/GT-BE98_PRO/ahs",
+      "archive_member": "asuswrt/release/src/router/ahs/prebuild/ahs",
+      "sha256": "93fd1d85e432e0178c3835e729bb8c8ae79284159c9a82b64b3660a94adf47f7"
+    },
+    {
+      "destination": "release/src/router/wb/prebuild/GT-BE98_PRO/libws.so",
+      "archive_member": "asuswrt/release/src/router/wb/prebuild/libws.so",
+      "sha256": "2cadcc7abadd5134d65581bf52cfcfed035673bf8f0b9df55e273f7b366c7983"
+    },
+    {
+      "destination": "release/src/router/dnsqd/prebuild/GT-BE98_PRO/libdns_app_client.so",
+      "archive_member": "asuswrt/release/src/router/dnsqd/prebuild/libdns_app_client.so",
+      "sha256": "74506e150afcdb04cca9a6840bcf9aeb5ddc3287befdf4872015b9ed78716480"
+    },
+    {
+      "destination": "release/src/router/dnsqd/prebuild/GT-BE98_PRO/dnsqd",
+      "archive_member": "asuswrt/release/src/router/dnsqd/prebuild/dnsqd",
+      "sha256": "6c90fc1d8a5c4ede9a244a3c46d1a3428a66d395e453cde4e4ea61202387b840"
+    },
+    {
+      "destination": "release/src/router/usbclient/prebuild/GT-BE98_PRO/usbclient",
+      "archive_member": "asuswrt/release/src/router/usbclient/prebuild/usbclient",
+      "sha256": "611b8a8165df66d091d007ae951a6ff038561d1aac163f03bf4b1b6f16579ba7"
+    },
+    {
+      "destination": "release/src/router/lighttpd-1.4.39/prebuild/GT-BE98_PRO/mod_aicloud_auth.so",
+      "archive_member": "asuswrt/release/src/router/lighttpd-1.4.39/prebuild/mod_aicloud_auth.so",
+      "sha256": "66b0e4c8128ce46d0b084c7e1341df68ff5e786dc923b24e07f56562db8c0ae2"
+    },
+    {
+      "destination": "release/src/router/lighttpd-1.4.39/prebuild/GT-BE98_PRO/mod_captive_portal_uam.so",
+      "archive_member": "asuswrt/release/src/router/lighttpd-1.4.39/prebuild/mod_captive_portal_uam.so",
+      "sha256": "369f881a4cbd3ca45bc6c81814a04d86c2f976b3a47f3836a5869f0020c0ea05"
+    },
+    {
+      "destination": "release/src/router/lighttpd-1.4.39/prebuild/GT-BE98_PRO/mod_query_field_json.so",
+      "archive_member": "asuswrt/release/src/router/lighttpd-1.4.39/prebuild/mod_query_field_json.so",
+      "sha256": "3f8dad3b79182390b2b727d3044de4a27a1ebe9612a4a1212b933fb6e205a2de"
+    },
+    {
+      "destination": "release/src/router/lighttpd-1.4.39/prebuild/GT-BE98_PRO/mod_smbdav.so",
+      "archive_member": "asuswrt/release/src/router/lighttpd-1.4.39/prebuild/mod_smbdav.so",
+      "sha256": "dd27083185a2f3d1bc54306e2ba9db4a97484bd9b24b82889aac7da5c0cead9a"
+    },
+    {
+      "destination": "release/src/router/lighttpd-1.4.39/prebuild/GT-BE98_PRO/mod_create_captcha_image.so",
+      "archive_member": "asuswrt/release/src/router/lighttpd-1.4.39/prebuild/mod_create_captcha_image.so",
+      "sha256": "6a08d9d91ba3313ba942510120a125c0152f749d54ae3f93d2bdddb3acf5a330"
+    },
+    {
+      "destination": "release/src/router/lighttpd-1.4.39/prebuild/GT-BE98_PRO/mod_aicloud_sharelink.so",
+      "archive_member": "asuswrt/release/src/router/lighttpd-1.4.39/prebuild/mod_aicloud_sharelink.so",
+      "sha256": "91d62acb1b237415f38d1b93afc2b1eb7d17cf7aaffaec77ec678c8921d92fc4"
+    },
+    {
+      "destination": "release/src/router/lighttpd-1.4.39/prebuild/GT-BE98_PRO/mod_aicloud_invite.so",
+      "archive_member": "asuswrt/release/src/router/lighttpd-1.4.39/prebuild/mod_aicloud_invite.so",
+      "sha256": "e5054fce9b6b5927c472d4d1f65176ef04089de65544fe5f88e897aefa1dca74"
+    },
+    {
+      "destination": "release/src/router/lighttpd-1.4.39/prebuild/GT-BE98_PRO/mod_aidisk_access.so",
+      "archive_member": "asuswrt/release/src/router/lighttpd-1.4.39/prebuild/mod_aidisk_access.so",
+      "sha256": "82316234826babcef25fcc77138314319bc17ff1a4ba3e401a2749074a75ca7d"
+    },
+    {
+      "destination": "release/src/router/inotify/prebuild/GT-BE98_PRO/inotify",
+      "archive_member": "asuswrt/release/src/router/inotify/prebuild/inotify",
+      "sha256": "d9d45768ee87e6ae3a48d9949a2900dd40dd311c7cf0ba125bb37a536ae864e9"
+    },
+    {
+      "destination": "release/src/router/infosvr/prebuild/GT-BE98_PRO/interface.o",
+      "archive_member": "asuswrt/release/src/router/infosvr/prebuild/interface.o",
+      "sha256": "3c77e3a85158220ece09b1896cb6e5bf280a96a4e11202b27c2cd961e7a6e366"
+    },
+    {
+      "destination": "release/src/router/nt_center/prebuild/GT-BE98_PRO/Notify_Event2NC",
+      "archive_member": "asuswrt/release/src/router/nt_center/prebuild/Notify_Event2NC",
+      "sha256": "ca4c3c86488ef0a995a179ca2c14cdb6ae21572f17a06764360c16310f6ea6a8"
+    },
+    {
+      "destination": "release/src/router/nt_center/prebuild/GT-BE98_PRO/nt_monitor",
+      "archive_member": "asuswrt/release/src/router/nt_center/prebuild/nt_monitor",
+      "sha256": "ee292480c2ebc4a35dbc5bfe4a6fac4e2e62a4864344ffa71117929a71faeab9"
+    },
+    {
+      "destination": "release/src/router/nt_center/prebuild/GT-BE98_PRO/nt_center",
+      "archive_member": "asuswrt/release/src/router/nt_center/prebuild/nt_center",
+      "sha256": "a389e73774f897deddf416aac2f2be3351ae1a37c8e8ad250368b16ed12168c4"
+    },
+    {
+      "destination": "release/src/router/nt_center/lib/prebuild/GT-BE98_PRO/nt_db",
+      "archive_member": "asuswrt/release/src/router/nt_center/lib/prebuild/nt_db",
+      "sha256": "a543e94ab1d8a94a23aa7d00d5b776cea2a392caa2ed2d503d95bda7fd873803"
+    },
+    {
+      "destination": "release/src/router/nt_center/lib/prebuild/GT-BE98_PRO/libnt.so",
+      "archive_member": "asuswrt/release/src/router/nt_center/lib/prebuild/libnt.so",
+      "sha256": "0447350c2c2b47cb7c555db96e7844f9824da98c33e9b6e93856bd9cf2b306f4"
+    },
+    {
+      "destination": "release/src/router/fsmd/prebuild/GT-BE98_PRO/fsmd",
+      "archive_member": "asuswrt/release/src/router/fsmd/prebuild/fsmd",
+      "sha256": "db41b4653136bc9bc381d0a8427501b7a4b7c256ae461ea5973c53d3ffd11bed"
+    },
+    {
+      "destination": "release/src/router/fsmd/prebuild/GT-BE98_PRO/req_fsm",
+      "archive_member": "asuswrt/release/src/router/fsmd/prebuild/req_fsm",
+      "sha256": "85f36f13426ed5783fa6254345e3db1b093474a6b3db1a441ebb87c39397f19a"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/shn_ctrl",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/shn_ctrl",
+      "sha256": "7112af86953e58f3ab31a9235d15e3894cb81c81c9398dab3806495525c60a18"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/wred_set_wbl",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/wred_set_wbl",
+      "sha256": "0873cc557d148d696df41c5ae637046cf01a5045bf2631b3e93873fe771d5780"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/tcd",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/tcd",
+      "sha256": "a3b8444410a95eefa9b1d748d128ee141660237299444e393119d8103b2aa299"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/tdts_udb.ko",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/tdts_udb.ko",
+      "sha256": "9db2c41e76d7afad4afb86d356fc122a99e6c5014deb4142924661414cd8d314"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/libshn_pctrl.so",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/libshn_pctrl.so",
+      "sha256": "c5525d0dc82a39a5922ebcef39af95f3a92c636e8e662984afb9e8861cb0c3ff"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/tdts_udbfw.ko",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/tdts_udbfw.ko",
+      "sha256": "7b890a0aed2f69a960b15b357c356ba767e5eafd9937daa8a9a3eb2430c7ad83"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/wred",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/wred",
+      "sha256": "3dd4aab2bba1cc7fe6137c94d2a735ce5b7b3cc58fb1415a866a6e31bb200f44"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/sample.bin",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/sample.bin",
+      "sha256": "7112af86953e58f3ab31a9235d15e3894cb81c81c9398dab3806495525c60a18"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/wred_set_conf",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/wred_set_conf",
+      "sha256": "0f2dcc4f130a8a58b002162158d2ddfac34d36f18f8222f5c74298d590c73cc5"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/dcd",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/dcd",
+      "sha256": "b97437babb1a0e10fcaac5221068dfe8289aa5e857e719b36bbfae747934d761"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/libshn_utils.so",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/libshn_utils.so",
+      "sha256": "59949e5fe12ff484737c08003961d7307e2de53afb0cdb8a909f6e074aa15d95"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/tdts.ko",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/tdts.ko",
+      "sha256": "63fd2c1038854dc4fce59bbcf4023dcb47b6ebbfc1cdb1abb3c16a20990c4d52"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/prebuild/GT-BE98_PRO/tdts_rule_agent",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/prebuild/tdts_rule_agent",
+      "sha256": "f5a8d509dabdcf44d73a273340c6e7f651c1076c19eb47d4043b088aeec1c3a2"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/asus/prebuild/GT-BE98_PRO/hwinfo",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/asus/prebuild/hwinfo",
+      "sha256": "b0c1ea8bc04178fa500a651ec614767d4bdd541ba4c135434d254b80f8246aee"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/asus/prebuild/GT-BE98_PRO/libbwdpi.so",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/asus/prebuild/libbwdpi.so",
+      "sha256": "c83dfb8a5286a9ab1a2078de17f2411b069ad0c6c8e217ec4657ad2bc2b34778"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/asus_sql/prebuild/GT-BE98_PRO/bwdpi_sqlite",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/asus_sql/prebuild/bwdpi_sqlite",
+      "sha256": "fd729920448fd981cc8f53e2d71aee58ef4a5bedab0e295a0e3c2ea77d2416ce"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/asus_sql/prebuild/GT-BE98_PRO/libbwdpi_sql.so",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/asus_sql/prebuild/libbwdpi_sql.so",
+      "sha256": "025b73a3c0377d1e28e0bae8a60fde07d33105dbd7d88aee99037287a4269ed7"
+    },
+    {
+      "destination": "release/src/router/nmp-api/networkmap/prebuild/GT-BE98_PRO/libnmpapi.so",
+      "archive_member": "asuswrt/release/src/router/nmp-api/networkmap/prebuild/libnmpapi.so",
+      "sha256": "ac0f0d668f27711c915526fd350434991b54f87c15171b06fda297ae6bc35693"
+    },
+    {
+      "destination": "release/src/router/eventd/prebuilt/GT-BE98_PRO/eventd",
+      "archive_member": "asuswrt/release/src/router/eventd/prebuilt/eventd",
+      "sha256": "e08d75594d0980c6394b0785f604745d8267948338ca84aefa0cb9989a43330e"
+    },
+    {
+      "destination": "release/src/router/sambaclient/prebuild/GT-BE98_PRO/sambaclient",
+      "archive_member": "asuswrt/release/src/router/sambaclient/prebuild/sambaclient",
+      "sha256": "e84092789a5137dce8829343d4582a70b8b3a7f0a076cc3f9249ea14520a8361"
+    },
+    {
+      "destination": "release/src/router/wlceventd/prebuilt/GT-BE98_PRO/wlceventd",
+      "archive_member": "asuswrt/release/src/router/wlceventd/prebuilt/wlceventd",
+      "sha256": "45643f85b676e56beafeeb259e1486095bd019e78bc1d519a36912b05484e5a1"
+    },
+    {
+      "destination": "release/src/router/cfg_mnt/prebuild/GT-BE98_PRO/libcfgmnt.so",
+      "archive_member": "asuswrt/release/src/router/cfg_mnt/prebuild/libcfgmnt.so",
+      "sha256": "2e429792be51ad4e13c30b0cd424c62d1512529aaf35f0af1f34ce1a25157d1b"
+    },
+    {
+      "destination": "release/src/router/cfg_mnt/prebuild/GT-BE98_PRO/cfg_client",
+      "archive_member": "asuswrt/release/src/router/cfg_mnt/prebuild/cfg_client",
+      "sha256": "f5f8eff20098f8460d41d705dec26cf31a2a3aba7250587b66acfefdb2af9be3"
+    },
+    {
+      "destination": "release/src/router/cfg_mnt/prebuild/GT-BE98_PRO/cfg_reportstatus",
+      "archive_member": "asuswrt/release/src/router/cfg_mnt/prebuild/cfg_reportstatus",
+      "sha256": "d98d1835eb563f4f266526a7eb098f3d189b51678563652c0796e58c649374af"
+    },
+    {
+      "destination": "release/src/router/cfg_mnt/prebuild/GT-BE98_PRO/cfg_server",
+      "archive_member": "asuswrt/release/src/router/cfg_mnt/prebuild/cfg_server",
+      "sha256": "c75d329fb2fe09e1a8ebe9ff387f46e43db35cdcaf540e3d0a4542008dcaa6d9"
+    },
+    {
+      "destination": "release/src/router/wlc_nt/prebuild/GT-BE98_PRO/wlc_monitor",
+      "archive_member": "asuswrt/release/src/router/wlc_nt/prebuild/wlc_monitor",
+      "sha256": "8905d37dea4b7ce5d95c8e98563d65a429feb03693eb1ceb63cded9989d8adb3"
+    },
+    {
+      "destination": "release/src/router/wlc_nt/prebuild/GT-BE98_PRO/libwlc_nt_client.so",
+      "archive_member": "asuswrt/release/src/router/wlc_nt/prebuild/libwlc_nt_client.so",
+      "sha256": "7148d7c4c26745cd83da301dd42cf1e886ac116d92623e4f1e4edd83a4ffff07"
+    },
+    {
+      "destination": "release/src/router/wlc_nt/prebuild/GT-BE98_PRO/wlc_nt",
+      "archive_member": "asuswrt/release/src/router/wlc_nt/prebuild/wlc_nt",
+      "sha256": "23cc8f684461f96545200dadb4289dafa6a0fa57039df720af4ea2ab5a5fc75e"
+    },
+    {
+      "destination": "release/src/router/sw-hw-auth/prebuild/GT-BE98_PRO/sw_auth.o",
+      "archive_member": "asuswrt/release/src/router/sw-hw-auth/prebuild/sw_auth.o",
+      "sha256": "eb6c4408ec2701428b9f7caf85da18e6fb20c0fd63d7a7dda7568d51d644f6bc"
+    },
+    {
+      "destination": "release/src/router/sw-hw-auth/prebuild/GT-BE98_PRO/hw_auth.o",
+      "archive_member": "asuswrt/release/src/router/sw-hw-auth/prebuild/hw_auth.o",
+      "sha256": "2ad060c8c447d84d12bd521e61193cca1b05a8d0444b321fd265e86fb6c9444b"
+    },
+    {
+      "destination": "release/src/router/asusnatnl/natnl/prebuild/GT-BE98_PRO/libasusnatnl.so",
+      "archive_member": "asuswrt/release/src/router/asusnatnl/natnl/prebuild/libasusnatnl.so",
+      "sha256": "cbeafc101ae1294fecd43601919baf98b96ddcebb557a127339dac78e7cf1783"
+    },
+    {
+      "destination": "release/src/router/ftpclient/prebuild/GT-BE98_PRO/ftpclient",
+      "archive_member": "asuswrt/release/src/router/ftpclient/prebuild/ftpclient",
+      "sha256": "b5a52a7b70f19976cff5374cb20a4d9e1918cde93019877e80d6f21e79159d5c"
+    },
+    {
+      "destination": "release/src/router/networkmap/prebuild/GT-BE98_PRO/arpstorm",
+      "archive_member": "asuswrt/release/src/router/networkmap/prebuild/arpstorm",
+      "sha256": "abb9d74de162cf320ae06ca1c5f02d0ce618d83d8ae645639abe7a2cb2db9bfc"
+    },
+    {
+      "destination": "release/src/router/networkmap/prebuild/GT-BE98_PRO/find_cap",
+      "archive_member": "asuswrt/release/src/router/networkmap/prebuild/find_cap",
+      "sha256": "5f8dc7f2702be2a572472cbc2e6a96ccd2933a925504c7e1843ba0a0d8a5c2bf"
+    },
+    {
+      "destination": "release/src/router/networkmap/prebuild/GT-BE98_PRO/asusdiscovery",
+      "archive_member": "asuswrt/release/src/router/networkmap/prebuild/asusdiscovery",
+      "sha256": "5a27e8622ff64f715864b2453ab2a9621cd0d22a1d5b946f713cacf49d672f4a"
+    },
+    {
+      "destination": "release/src/router/networkmap/prebuild/GT-BE98_PRO/networkmap",
+      "archive_member": "asuswrt/release/src/router/networkmap/prebuild/networkmap",
+      "sha256": "e2c9cce42e57d30d5e3b9794c432dca600e0c74341eff5fdb2ac839be1886395"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/tmctl/prebuilt/tmctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/tmctl/prebuilt/tmctl",
+      "sha256": "9aa2298499f89236d7344301676901ef65b35b4722f553cda633b61592b561be"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/iqctl/prebuilt/iqctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/iqctl/prebuilt/iqctl",
+      "sha256": "edc900ebd74330d66f29c7bcc263981f8cd8fd61729947e45df2ef1a151c85b4"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bcm_boot_launcher/prebuilt/bcm_boot_launcher",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bcm_boot_launcher/prebuilt/bcm_boot_launcher",
+      "sha256": "9eaf0e382f2af10043f649362f853bee2e08f1c7c068b74e92d9d3349a4cf81a"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bp3hal/prebuilt/libbp3hal.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bp3hal/prebuilt/libbp3hal.so",
+      "sha256": "1a305bf65e1cc9fb060a8be3e6ee655ff8c0e7c2b260384a7a6015150eafff16"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/envram_bin/envram/envram",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/envram_bin/envram/envram",
+      "sha256": "84f82af4648c501e7a0f9de189154b7ad259a8310e134b59dd4204ce9249c7c1"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/envram_bin/envram/envrams",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/envram_bin/envram/envrams",
+      "sha256": "d24e897428597ca46c7bb4f7f3b536c7045ef48d51d92a7a95f46a9158f26fa6"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bcm_util/prebuilt/libbcm_util.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bcm_util/prebuilt/libbcm_util.so",
+      "sha256": "369419d6c0d2bc723f43247c97c22ff503542943134db9e8107e734ef9d62832"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/seltctl/seltctl.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/seltctl/seltctl.o.armsfp.save",
+      "sha256": "c3a222c928c5533295dca664e15d7515709231fc92d0be01352dcf4c237d844f"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bridgeutil/prebuilt/libbridgeutil.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bridgeutil/prebuilt/libbridgeutil.so",
+      "sha256": "bc6a7e6d0fa9b248cfd75e6da0f8fbc3da5ac29e28e4a747e83990f2e77351dc"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/hnd_extra/prebuilt/hnd.o",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/hnd_extra/prebuilt/hnd.o",
+      "sha256": "42a3d44b1f6fc368e57aa7d3b7125736a4b46333a930bedad83bcf945e117c93"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/hnd_extra/prebuilt/wl.o",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/hnd_extra/prebuilt/wl.o",
+      "sha256": "9951913fbcbb572a3df413c21962cf0e6bad12f58e012ba9a1c4a7ec12cb88e8"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/hnd_extra/prebuilt/emf.o",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/hnd_extra/prebuilt/emf.o",
+      "sha256": "6cf210a990c1bc901f8ac4796e7d5b4216ae8fe3b9daab95389f8f8fdb2e6728"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/hnd_extra/prebuilt/igs.o",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/hnd_extra/prebuilt/igs.o",
+      "sha256": "5e05f7c2713800757df1ce1dc7c25150ff605710e03d9a4cfc601c025027a4ed"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/hnd_extra/prebuilt/dhd.o",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/hnd_extra/prebuilt/dhd.o",
+      "sha256": "c0f148ffd563c56733981c76f7c3aa1dc292964ac686b286bf8cd782fde2ef33"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/wdtctl/prebuilt/wdtctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/wdtctl/prebuilt/wdtctl",
+      "sha256": "016c2d3406055077cde2a9f5f6a9f7773da8ec171e98a72a39f3048159ffcb2e"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/iqctl_lib/prebuilt/libiqctl.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/iqctl_lib/prebuilt/libiqctl.so",
+      "sha256": "4b05b54aa82c279adfbc4c39432ecb7d0ea151e4a726f4830c2003cdacee904e"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/tmctl_lib/prebuilt/libtmctl.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/tmctl_lib/prebuilt/libtmctl.so",
+      "sha256": "63c9cf8ab19c961fba568bb8e17ff0cc5746f20d5da6790e01a1a582a7118451"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/ethctl_lib/prebuilt/libethctl.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/ethctl_lib/prebuilt/libethctl.so",
+      "sha256": "61980d34911502c45f033e65b9fc03cdcafb94e4bc7097736db8b3ff3e278288"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/httpdshared/prebuilt/libhttpdshared.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/httpdshared/prebuilt/libhttpdshared.so",
+      "sha256": "d95f48efc4ba77f590575447d67ae2ef46b47165aeee2bb34afdfcd0b4631a52"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/rdpactl/prebuilt/librdpactl.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/rdpactl/prebuilt/librdpactl.so",
+      "sha256": "82563ab1bf2ba86b41247e99ae593d2cea45a42248fefc7826ee1a5a81517e72"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bpmctl/prebuilt/bpmctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bpmctl/prebuilt/bpmctl",
+      "sha256": "9c9bfcb0dd3a9701abb55d1627591fe95c8c28c93448ce9e224bf3234c223918"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/ethctl/prebuilt/ethctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/ethctl/prebuilt/ethctl",
+      "sha256": "03cc83a12ae2d91f618acbd59c42a3e0b26a3c9486595732c0b2dc31fdb899b5"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/ethswctl/prebuilt/ethswctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/ethswctl/prebuilt/ethswctl",
+      "sha256": "91c42911ce5f02a33d841b31427d4647e418609b4840614d79035cad8ec5e36a"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/blogctl/prebuilt/blogctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/blogctl/prebuilt/blogctl",
+      "sha256": "7f8b2beeacb6d5d3cb96e2effeebeffbd36c91ed88f88b8672685d17301282ff"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bcm_bootstate/prebuilt/bcm_bootstate",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bcm_bootstate/prebuilt/bcm_bootstate",
+      "sha256": "2b01eb80604ef66aa21a99178c70501eeb8a2c458132d133051a241373c5c845"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bcm_boardctl/prebuilt/libbcm_boardctl.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bcm_boardctl/prebuilt/libbcm_boardctl.so",
+      "sha256": "665d30edbbcdf097caa53b3c05ec5d5d21e2fbade0d28aae97e7a350c5a92e20"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bp3/prebuilt/bp3",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bp3/prebuilt/bp3",
+      "sha256": "98fff269ac91a8e47b350a054c3cadc4be89e945918e5515b1d1ee6146506369"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/stress/prebuilt/stress",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/stress/prebuilt/stress",
+      "sha256": "72b6cf5472d85e33fe179a95d37a7d649354d908802466db786745b634847d77"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bcm_flashutil/prebuilt/libbcm_flashutil.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bcm_flashutil/prebuilt/libbcm_flashutil.so",
+      "sha256": "d36c0aded833fb5784fd104ac31ae3d4398aa2d8e492fd96aad01d32cfefc5b9"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/pwrctl_lib/prebuilt/libpwrctl.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/pwrctl_lib/prebuilt/libpwrctl.so",
+      "sha256": "509a5a1dd7f5d612724b84cc4c5aa137d34a19510a71f6986a12e8f8d907b0a1"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/mcpctl/prebuilt/mcpctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/mcpctl/prebuilt/mcpctl",
+      "sha256": "01767371d51612da02887eaa8d39e44347954854ba9f9872852ad3636ec7d883"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/dhd_monitor/prebuilt/debug_monitor",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/dhd_monitor/prebuilt/debug_monitor",
+      "sha256": "2257152761061ce251f8e52dea27e3d78422e58f5803bf481fd39869bb6061aa"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/tmsctl/tmsctl/tmsctl.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/tmsctl/tmsctl/tmsctl.arm.save",
+      "sha256": "0c93c02a7987d57b3acad5b3baada11ef83840a115cc441ee25d2ebf657984c9"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/tmsctl/tmsctl/tmsctl.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/tmsctl/tmsctl/tmsctl.aarch64.save",
+      "sha256": "74a14ab6436f4296acb2f12b7d9f68664adef00b7fb59b358d5f4c325a591f1b"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/tmsctl/tmsctl/tmsctl.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/tmsctl/tmsctl/tmsctl.armsfp.save",
+      "sha256": "6e0ae5953aa77a9fe92c4d74ab4af89e21e62724396585926a03281f5927b726"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/ethswctl_lib/prebuilt/libethswctl.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/ethswctl_lib/prebuilt/libethswctl.so",
+      "sha256": "4bb514711ca991282c77e3b03e3ecb07d768113a48f3a4383001e4ff20c12cfa"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/vlanctl_lib/prebuilt/libvlanctl.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/vlanctl_lib/prebuilt/libvlanctl.so",
+      "sha256": "076381c7ab70aefd568fb0615bd3afe057c92414fd3601953ea759481bc14b9a"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/mcpd/prebuilt/mcpd",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/mcpd/prebuilt/mcpd",
+      "sha256": "85460026b2eb50c64d74fa4e0cd620f74ec0a9bd2b74fa3ddfe0a2d8e2e0641a"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/wlconf/prebuilt/wlconf",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/wlconf/prebuilt/wlconf",
+      "sha256": "e1b33e19281d0663fe9223f65ce24b87bc67d38c6ba1a09a5e6fa519821b7b56"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/archer_lib/prebuilt/libarcher.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/archer_lib/prebuilt/libarcher.so",
+      "sha256": "2bef1668f5ddd4675c6d2394d29c7788cb97ff0dfa0ee26fd3e61f3508df9dda"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/wlcsm/prebuilt/libwlcsm.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/wlcsm/prebuilt/libwlcsm.so",
+      "sha256": "eac81632da9ff8e373da291526c22f25532d5f8a7e2e2c26c3a71b7938fa96e1"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/emf/igsconf/prebuilt/igs",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/emf/igsconf/prebuilt/igs",
+      "sha256": "f9756d662b7e1f2c7d756a54bec2a29ea323c752162c076f4de871a109a89544"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/emf/emfconf/prebuilt/emf",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/emf/emfconf/prebuilt/emf",
+      "sha256": "946365913086d62b1c431f501f526ec758508c7e057f7bfbbb71fb5c87138d5b"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bcm_flasher/prebuilt/bcm_flasher",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bcm_flasher/prebuilt/bcm_flasher",
+      "sha256": "c029cd3d59a42d23c0bc4508eb8f04b82781c0eb097644f57e5de075c53f570d"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bcmmcastctl/prebuilt/bcmmcastctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bcmmcastctl/prebuilt/bcmmcastctl",
+      "sha256": "5572b9722c290eb613455fa98809f768af7141e00351cbbd5e9328e2a1956e77"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/vlanctl/prebuilt/vlanctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/vlanctl/prebuilt/vlanctl",
+      "sha256": "28e78f5e9c78fa3945046fc239671f5b5df30f92c386a068f4b0dc1fe8d5ca4d"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/vlanctl/prebuilt/rawSocketTest",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/vlanctl/prebuilt/rawSocketTest",
+      "sha256": "8e65525bd909864a8476682fe2dfa445ae743c4abc4ab1adeae3d59c0e23edfa"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/fcctl_lib/prebuilt/libfcctl.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/fcctl_lib/prebuilt/libfcctl.so",
+      "sha256": "95289ae0283251576d1eef432322c8dcc215710a317643b4347a2ff9f4e6f526"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bcmmcast/prebuilt/libbcmmcast.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bcmmcast/prebuilt/libbcmmcast.so",
+      "sha256": "377761290435a6ae103358379a0209f10a56e2686358a34b457d4fd272a19cb9"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bdmf_lib/prebuilt/libbdmf.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bdmf_lib/prebuilt/libbdmf.so",
+      "sha256": "58e6b16c2eae4113e5ac201969b33a35b72b318e2e3c51462fff5e58cd563b30"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/cms_core/linux/rut_beepiptables.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/cms_core/linux/rut_beepiptables.o.armsfp.save",
+      "sha256": "9d9e792d6a0098cf625ff689d827a84ed71a520d41768bd0439477b85cc8418f"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/eapd/linux/prebuilt/eapd",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/eapd/linux/prebuilt/eapd",
+      "sha256": "a77d6dd7ee647aee28ff67bb34f4b1914b8603848e38ae45f7c338ba0a86bc7d"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/gen_util/prebuilt/libgen_util.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/gen_util/prebuilt/libgen_util.so",
+      "sha256": "a188087d826332fe2e6e55300f06bca958885d6622a634c5fd6989f61f67d3d2"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/wlan/nvram/prebuilt/libnvram.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/wlan/nvram/prebuilt/libnvram.so",
+      "sha256": "a2d1f12c8cceb923ab2f208deccd1e59249b8cd8108b6c45a8320b799487d7bc"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/wlan/nvram/prebuilt/nvram",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/wlan/nvram/prebuilt/nvram",
+      "sha256": "7ea7de4161b9b5e7ee27c3e7933467ce2bdb1b9374599b4c1953cfad87652e2f"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/wlan/epittcp/prebuilt/epi_ttcp",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/wlan/epittcp/prebuilt/epi_ttcp",
+      "sha256": "f48e600d0ad690dbad493c499b57b1eb74dedfc53064dfb9b61fca7bf4a5eb20"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/pwrctl/prebuilt/pwrctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/pwrctl/prebuilt/pwrctl",
+      "sha256": "3be44840a196960ccd529cbd4aa11bd2d996429542afc5607d5f809d58a80549"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/bdmf_shell/prebuilt/bdmf_shell",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/bdmf_shell/prebuilt/bdmf_shell",
+      "sha256": "06d35551c6b0c7761a7e62d77e9b79b8874cad8b74ac40c73c40058c790d69bc"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_local_agent.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_local_agent.o.armsfp.save",
+      "sha256": "c94081e15aef79adec408db4a2e67ea509d91fc4a5b9905ba4c5d063666d2b8c"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_security.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_security.o.armsfp.save",
+      "sha256": "11b51e0076aecb5b8207b861ae6b9b5406b1887b63778611d0ca2cc8396fb99c"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_dsldiag.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_dsldiag.o.aarch64.save",
+      "sha256": "d81348bacfff9cc792a59e71990eea4f1ddc4bf4b1ece430aab18c6884339c59"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_request.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_request.o.aarch64.save",
+      "sha256": "4cc941f9b49c33696cf6b49b33ddec6f9c05bfa2d4e6aaf56a1466d84215d2a7"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_bulkdata.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_bulkdata.o.aarch64.save",
+      "sha256": "39df7eb147bf5d89db504675f96293b33eb77261adf74733572bba5085aa945b"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_mtp.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_mtp.o.aarch64.save",
+      "sha256": "45a636e2addf1bb4125715dfd8212125caef15fd41f9cef2c5e533856dd98d3f"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_ipdiag.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_ipdiag.o.arm.save",
+      "sha256": "66c6732de8e81d07269525f038e3e11cca5dbf5478c2bc8c92fccf3dad9cc286"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_firmware.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_firmware.o.armsfp.save",
+      "sha256": "ab20c9343e6704fdce5139cad22755747892c18d3a12e5e760ca364472439c04"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_subscription.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_subscription.o.arm.save",
+      "sha256": "11c691bb04bfbbfd0592fa4328a13870bf146ddb0c5974469181d3cdf56bd7c9"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_controller.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_controller.o.arm.save",
+      "sha256": "c6977b3ffb3c11cd26986013a4d91840e2c7dd70a7bf9701c8a1759bd282c9fb"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_firmware.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_firmware.o.arm.save",
+      "sha256": "ed47610f96389b923ff8b824e169aff92a72716b29b22cd529018d52195127e6"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_configfile.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_configfile.o.aarch64.save",
+      "sha256": "2fd0cd0150c6888c543e9adac7f3ced8fb94beab81f69bf1f291dfe637eadda3"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_mqtt.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_mqtt.o.arm.save",
+      "sha256": "79bfdee748abb4e336487f7951e0d00400794022f447cec7d6fab1539599b59d"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_modsw.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_modsw.o.arm.save",
+      "sha256": "1fdaaae7e5d218944678ae5320e6d91bd1b12772370241a870c4c62c53f7029b"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_bulkdata.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_bulkdata.o.arm.save",
+      "sha256": "413bf12fe36e1741d3491e3bb177aead8aef8d8977b0cbf021c6665f884febbd"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_configfile.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_configfile.o.armsfp.save",
+      "sha256": "25a5843ce3875e21d609d336a38f5bf4eb5e7dda858364c585a9d7aeac343a60"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_ctrust.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_ctrust.o.arm.save",
+      "sha256": "2e2e54613ca3ded0dea13e64a32b0287681bf5cf16c05eb5405f148d53cf3123"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-bdk_main.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-bdk_main.o.arm.save",
+      "sha256": "a064b48e51a813fee67097598f71df3ee61f165edd17b190d3e2c0a08f6957a3"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_mqtt.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_mqtt.o.aarch64.save",
+      "sha256": "e1db9a67505b1fa531584d60d9f8775b40bf57762a96f18a437eba190b588158"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_mtp.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_mtp.o.arm.save",
+      "sha256": "6aa6139a6243e138d97654828b1d9ec648071d46697dd8527df2ab69addef20f"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-bdk_main.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-bdk_main.o.aarch64.save",
+      "sha256": "1b2cbde2a4555534e75b34d027025a9415eb2e96514f831275db838ba316bcd4"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_request.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_request.o.arm.save",
+      "sha256": "035481a2ed18f63bb3a8ad18ac40278c40a4b67e36a6865fbe997ea4805ba435"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor.o.armsfp.save",
+      "sha256": "aac76415384b0550b5fc6bb8920693f519ef39f4cd5dc1060b056382f067f53a"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_ipdiag.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_ipdiag.o.aarch64.save",
+      "sha256": "0d0e379e577d8195fb5e3200fa1fc4eec40ee6ef937f1b50b1916f14a32b3501"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_httpUpload.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_httpUpload.o.armsfp.save",
+      "sha256": "3dcd8e7a700090da27292a55d17e4b0f1a204647d23e480cbe1af85b18ae943f"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_httpDownload.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_httpDownload.o.aarch64.save",
+      "sha256": "c53f36151331442e7aabe5955b049bccfb85433e8ece6e8177fc0e60d7f4069d"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_stomp.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_stomp.o.armsfp.save",
+      "sha256": "f132be19984daf16eadc91a3f8aa4dfb0d479ad4f09129f596ae07a0845152ff"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_bulkdata.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_bulkdata.o.armsfp.save",
+      "sha256": "f6174f7aaf2c02d2aec5c2f47d363517826ac4d25d0c4586b32269c65c4c6b06"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_httpUpload.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_httpUpload.o.arm.save",
+      "sha256": "5cfe0d426ec7434bed6f92e7842780acfb3aa9316f22ee0ece1046b03570e7bb"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-bdk_main.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-bdk_main.o.armsfp.save",
+      "sha256": "d9f3d947d5cfa53f8cf270d40e21b39a582f51cc08efcc97bc2c4383f92646dc"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_request.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_request.o.armsfp.save",
+      "sha256": "e353958de39206375be510e792ec504957b112e6c8c28fff7966f79a614bcaa3"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_controller.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_controller.o.aarch64.save",
+      "sha256": "14c0ce2e7cf4922129cf5c341166692bf22e08040ff92e8b1013cb0f325e951a"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_controller.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_controller.o.armsfp.save",
+      "sha256": "5f953f15e3bb44337768a071205eb456be8af4fbaa08c5300c85716ac20952a5"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_modsw.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_modsw.o.aarch64.save",
+      "sha256": "1e3847159dc2b1c117dd68386ccc92c53fa352e3be6db5696a0c97c12b1ade5e"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_mqtt.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_mqtt.o.armsfp.save",
+      "sha256": "08adc78bbe08cc8a35c1c39bb2fb270c9bb84a4928450e85ba643144669fe1fa"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_security.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_security.o.aarch64.save",
+      "sha256": "ecef0ce8c89acc932afa246a6e7eed122c4e1570f596c86bcff505fe274402a5"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_firmware.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_firmware.o.aarch64.save",
+      "sha256": "53679eb8a000ce9a28024fc65c4332a2caf2976695ac1eae3e8ba5374c307af4"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_dsldiag.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_dsldiag.o.armsfp.save",
+      "sha256": "3565a8c135b79a677dac918fa0e7f61e04226c94368fedf12cf303bac49aa5bc"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_security.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_security.o.arm.save",
+      "sha256": "218f0a03e74e645fb64436cad8049b40461cfe1320bf963d1666a403ceb30ce3"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_ctrust.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_ctrust.o.armsfp.save",
+      "sha256": "94cf67160ba67bf9438169d3af6ca3aa7714d46921c9562a89aacbdbb063aaaf"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_configfile.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_configfile.o.arm.save",
+      "sha256": "749fa3073c1b0fc6172b124722bb872176d5c4adeaee8f27902ee6e8e09516c0"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_local_agent.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_local_agent.o.arm.save",
+      "sha256": "d8502730f098020a6e4c6baf3a83086b8335c08fa6b8ae3fab2dc7501c155996"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_subscription.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_subscription.o.aarch64.save",
+      "sha256": "7ad5072f3cfbd41d4c282fa5123dcc01f93d33fd945a4389e117b32cf9a8947d"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_dsldiag.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_dsldiag.o.arm.save",
+      "sha256": "0bc4f2a2f2e97937690ac409c11785e9f6a05d854c473a1ce6ee05e607a9ab4f"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor.o.aarch64.save",
+      "sha256": "04128c80b37a17e5cbcaf65da98ccbc38a11321c1d40fe386299d3d546daa526"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_ipdiag.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_ipdiag.o.armsfp.save",
+      "sha256": "684f013a44924ff29043748a94aa724746837ce0eb7173719f97c46c24f2a9fd"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_subscription.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_subscription.o.armsfp.save",
+      "sha256": "77c25ac0b2fa94f7755c0acf2c43e47a3053eb1ef7376d9059aae4b69f340759"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_stomp.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_stomp.o.arm.save",
+      "sha256": "dafa64cdb5138770e5053d39517d8d08a11dd19fc2cda27f0ee457f58433b9ec"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_httpUpload.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_httpUpload.o.aarch64.save",
+      "sha256": "a2ab07f5e761d12f27b8e026bfdff94203beb9b9b1f99203d9eac51dce1a247b"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_stomp.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_stomp.o.aarch64.save",
+      "sha256": "666a71abfe69b7684a31928a0bd59518f2a6622d2fcc95f08a706bc3dcc3bf8a"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_local_agent.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_local_agent.o.aarch64.save",
+      "sha256": "e353e654c0cd453a8904c2e52eb2e788b1b24b51f4ae176ddd294411d11acbef"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor.o.arm.save",
+      "sha256": "d2330e02955bb720a430ec9bee7faaab0379c90972ea53b0abf81af6904070cd"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_httpDownload.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_httpDownload.o.armsfp.save",
+      "sha256": "714ddbeaa95df6301029a0b238eb01e944b60b7d4486d3ff958cbd15b5dade75"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_mtp.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_mtp.o.armsfp.save",
+      "sha256": "5064f13b380cd99b80228e94911d80528d31b00b2b4570f0737e904528dea10b"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_httpDownload.o.arm.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_httpDownload.o.arm.save",
+      "sha256": "95c8a542f57fc7228e7b3112d3f9c956e239f8de906892cacd85fea084094d27"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-vendor_op_modsw.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-vendor_op_modsw.o.armsfp.save",
+      "sha256": "013d7e20ad24295ef93e9646321bcc8e781bec8a9037f4a1f990f2ca352e6d2d"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/obuspa/obuspa/src/vendor/obuspa-device_ctrust.o.aarch64.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/obuspa/obuspa/src/vendor/obuspa-device_ctrust.o.aarch64.save",
+      "sha256": "59fa5966b846b443c62a3558ebacdc3a39ba4d20b9f766dd71fd818c3d08931b"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/archerctl/prebuilt/archerctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/archerctl/prebuilt/archerctl",
+      "sha256": "c52ecce9cebdc46050ff023021e81f411d104f67ab858f10f100a6ea8d6db7a5"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/seltctl_lib/linux/SeltAfeCalibration.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/seltctl_lib/linux/SeltAfeCalibration.o.armsfp.save",
+      "sha256": "acae539936b3010e3e8060ac7225d9b0588d167e5489bed15ff356864bc54172"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/seltctl_lib/linux/seltctl.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/seltctl_lib/linux/seltctl.o.armsfp.save",
+      "sha256": "a4d66e7737ea44ded3a7a112ebc8fee1b606f02aea4dd291b3ee459afca62a61"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/seltctl_lib/linux/SeltUtils.o.armsfp.save",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/seltctl_lib/linux/SeltUtils.o.armsfp.save",
+      "sha256": "403d95e72ea14351444a1c9bf1f6a89f9183593717b81fbefe8943940ac6eedb"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/blogctl_lib/prebuilt/libblogctl.so",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/blogctl_lib/prebuilt/libblogctl.so",
+      "sha256": "459e3a9552a377f26ef7d814ef7711950951455db65b90b6364b6b5ae385703d"
+    },
+    {
+      "destination": "release/src-rt-5.04behnd.4916/router-sysdep.gt-be98_pro/fcctl/prebuilt/fcctl",
+      "archive_member": "asuswrt/release/src-rt-5.04behnd.4916/router-sysdep/fcctl/prebuilt/fcctl",
+      "sha256": "5850979a5e0ddddb9a7b0d854f7eb7e15128cac05cc20428b0b9fbcdc400aca2"
+    }
+  ]
+}

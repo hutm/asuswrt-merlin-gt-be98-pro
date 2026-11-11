@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "version": "0.1.0-dev",
+  "model": "GT-BE98_PRO",
+  "publishable_firmware": false,
+  "blockers": [
+    "Proprietary input coverage incomplete: includes static objects, archives, kernel/driver and radio firmware inputs beyond the current manifest.",
+    "Integration build fails at rc link; nine unresolved symbols remain.",
+    "Final image dependency/provenance audit has not passed.",
+    "No GT-BE98 Pro hardware boot or networking tests performed.",
+    "Portable Docker/toolchain build setup has not yet been imported and validated in this fork."
+  ],
+  "missing_symbols": [
+    "backup_eth_ob_log",
+    "config_mswan_ext_switch_vlan_add",
+    "config_mswan_ext_switch_vlan_del",
+    "ed_thresh_clear",
+    "init_asus_pp_eula",
+    "is_mxl_dual_serdes_war",
+    "is_wan_port_ext_switch",
+    "safe_do_system",
+    "wl_scb"
+  ]
+}
