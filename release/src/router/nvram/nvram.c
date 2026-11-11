@@ -695,12 +695,22 @@ int issyspara(char *p)
 {
 	struct nvram_tuple *t/*eric--, *u*/;
 	extern struct nvram_tuple router_defaults[];
-	
+#ifdef ASUS_OPEN_NVRAM_CLI
+    extern struct nvram_tuple router_prefix_defaults[];
+    for (t = router_prefix_defaults; t->name; ++t) {
+        if (strstr(p, t->name)) {
+            if (!strcmp(t->name, "wl") && strlen(p) >= 3 &&
+                !strncmp(p + 3, "_failed", 7)) return 0;
+            return 1;
+        }
+    }
+#else
 	// skip checking for wl[]_, wan[], lan[]_
 	if(strstr(p, "wl") || strstr(p, "wan") || strstr(p, "lan")
 		|| strstr(p, "vpn_server") || strstr(p, "vpn_client")
 	)
 		return 1;
+#endif
 
 	for (t = router_defaults; t->name; t++)
 	{

@@ -545,9 +545,18 @@ Default CLI builds keep their existing implementation.
 
 Native sanitizer and ARM/QEMU tests cover both formats, oversized/truncated data,
 unterminated records and callback failure. The complete adapted CLI cross-links.
-A short synthetic HDR1 comparison remains unresolved: the source candidate
-applied the two selected settings, but the reference CLI made no setter calls
-with the same fixture and ancillary stubs. This is not a demonstrated behavior
-match. Additional backup-format/reference testing is required before CLI
-selection. The reference usage also identifies missing `getflag`, `setflag`,
+The initial short HDR1 mismatch was traced to empty parameter tables in the
+reference stubs plus a filter difference in the older GPL CLI. The opt-in source
+filter now consults `router_prefix_defaults` and `router_defaults`, matching the
+reference table ordering and the `wl0_failed` exclusion. With populated synthetic
+tables, HDR1 and HDR2 restore produce identical setter transcripts, including
+allowed prefixes, ordinary table entries, unknown-key rejection and that exclusion.
+This does not yet establish compatibility for all backup files. The reference usage also identifies missing `getflag`, `setflag`,
 `loadfile`, `savefile`, `dump` and restart command variants for the parity audit.
+
+
+Run the complete CLI profile comparison with
+`ASUS_CLI_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/nvram/test_cli_profile.sh`.
+It compiles the adapted GPL CLI and synthetic backend stubs in non-root Docker,
+runs both executables under ARM emulation and checks their output against each
+other and an explicit expected transcript. It does not write settings to a router.
