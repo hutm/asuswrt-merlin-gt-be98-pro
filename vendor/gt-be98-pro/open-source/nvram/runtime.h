@@ -16,4 +16,6 @@ int wlcsm_nvram_getall(char *output,int capacity);
  * successful persistence; errno carries the immediate error, not rollback. */
 int wlcsm_nvram_commit(void);
 int nvram_commit(void);
+/* Returns borrowed kernel value, NULL when missing/error, (char *)-1 if denied. */
+char *nvram_get_salt(void);
 #endif

@@ -331,3 +331,16 @@ Unlike the reference's ambiguous NULL getter, a denied or failed control read
 fails the operation rather than proceeding with a write. The control is read
 from the kernel backend, consistent with this model's storage routing table.
 No hardware persistence or power-loss testing has been performed.
+
+## Salt accessor
+
+The runtime exports `nvram_get_salt` for the shared-library consumer. It checks
+the existing program policy and reads the kernel `nvram_salt` key directly.
+The ABI returns a borrowed string, NULL for missing/error, and `(char *)-1` when
+access is denied; callers must check the sentinel before dereferencing. This
+function retrieves an existing value and does not generate or log salt material.
+
+An ARM reference-library test with synthetic values confirmed the key, policy
+gating, denied sentinel, and missing/empty/borrowed return behavior. Native
+sanitizer and ARM/QEMU runtime tests also cover transport failure. This adds
+another required API but does not enable the replacement library in firmware.

@@ -151,3 +151,12 @@ int nvram_commit(void) {
     }
     errno=saved;leave();return result;
 }
+
+char *nvram_get_salt(void) {
+    char *value=NULL;if(enter()) return NULL;
+    /* This ABI uses a distinct denied sentinel. Do not dereference it. */
+    if(adapter.storage.deny_getall(adapter.storage.context)) {
+        errno=EACCES;value=(char *)-1;
+    } else if(nv_core_get_borrowed(core,"nvram_salt",&value)<0) value=NULL;
+    leave();return value;
+}

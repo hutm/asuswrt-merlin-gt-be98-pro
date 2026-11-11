@@ -14,7 +14,8 @@
 #include <unistd.h>
 static char path[]="/tmp/nv-runtime-XXXXXX",small[64],large[64];
 static int present,deny,fail_init=1,requests,reenter,commits,commit_fail,data_fail,syncs,markers,stop_fail,marker_fail;
-static const char *stop_value;
+static const char *stop_value,*salt_value;
+static int salt_fail,salt_gets;
 int nv_runtime_test_directory(void){if(fail_init){fail_init=0;errno=ENOENT;return -1;}return open(path,O_RDONLY|O_DIRECTORY);}
 int nv_runtime_test_data_directory(void){if(data_fail){errno=ENOENT;return -1;}return open(path,O_RDONLY|O_DIRECTORY);}
 void nv_runtime_test_sync(void){++syncs;}
@@ -24,6 +25,7 @@ int nv_runtime_test_exchange(void *context,const void *request,size_t size,void 
  assert(!nv_frame_decode(request,size,&f));++requests;
  if(reenter){assert(!nvram_get("key")&&errno==EDEADLK);}
  if(f.type==3&&!strcmp((const char *)f.payload,"asus_stop_commit")){if(stop_fail){errno=ETIMEDOUT;return -1;}if(stop_value)assert(!nv_pair_encode(payload,sizeof payload,"asus_stop_commit",stop_value,strlen(stop_value)+1,&n));}
+ else if(f.type==3&&!strcmp((const char *)f.payload,"nvram_salt")){++salt_gets;if(salt_fail){errno=ETIMEDOUT;return -1;}if(salt_value)assert(!nv_pair_encode(payload,sizeof payload,"nvram_salt",salt_value,strlen(salt_value)+1,&n));}
  else if(f.type==3){assert(!strcmp((const char *)f.payload,"key"));if(present)assert(!nv_pair_encode(payload,sizeof payload,"key",small,strlen(small)+1,&n));}
  else if(f.type==2||f.type==4){assert(!nv_pair_decode(f.payload,f.length,&p)&&!strcmp(p.name,"key"));present=f.type==2;if(present){assert(p.value_len<=sizeof small);memcpy(small,p.value,p.value_len);}memcpy(payload,f.payload,f.length);n=f.length;}
  else if(f.type==7){char lock[256];snprintf(lock,sizeof lock,"%s/nvram.lock",path);assert(!access(lock,F_OK));assert(!f.length);++commits;if(commit_fail){errno=ETIMEDOUT;return -1;}}
@@ -40,6 +42,11 @@ int invalid_program_check(void){return deny;}
 static void *worker(void *unused){(void)unused;for(int i=0;i<100;++i){char out[64];assert(!nvram_set("key","parallel"));assert(nvram_getall(out,sizeof out)==18);}return NULL;}
 int main(void){
  assert(mkdtemp(path));assert(!nvram_get("key")&&errno==ENOENT);assert(!nvram_get("key"));
+ assert(!nvram_get_salt()&&salt_gets==1);
+ salt_value="example";char *salt=nvram_get_salt();assert(salt&&!strcmp(salt,"example")&&salt_gets==2);
+ salt_value="";assert(nvram_get_salt()==salt&&!*salt&&salt_gets==3);
+ deny=1;assert(nvram_get_salt()==(char *)-1&&errno==EACCES&&salt_gets==3);deny=0;
+ salt_fail=1;assert(!nvram_get_salt()&&errno==ETIMEDOUT);salt_fail=0;
  assert(!nvram_set("key","one"));char *first=nvram_get("key");assert(first&&!strcmp(first,"one"));
  assert(!wlcsm_nvram_set("key","two"));assert(wlcsm_nvram_get("key")==first&&!strcmp(first,"two"));
  int before=requests;assert(nvram_set("large","big")==3&&!strcmp(nvram_get("large"),"big")&&requests==before);
