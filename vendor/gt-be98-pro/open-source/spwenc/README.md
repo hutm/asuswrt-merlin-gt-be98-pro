@@ -344,3 +344,34 @@ work before firmware integration.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_migration.sh
 ```
+
+## Startup initialization candidate
+
+`init.c` supplies `init_enc_nvram`. It first attempts to decode non-encrypted
+default entries with values of length 24..4095, writing only successfully decoded
+values. It loads the default `nvram_encrypt_ver`, sets that version when present,
+and runs decryption migration. For versions above 2 with a missing salt, OpenSSL
+`RAND_bytes` supplies 16 bytes encoded as 32 lowercase hexadecimal characters.
+It then runs encryption migration, restores the default `nvram_encrypt` value
+when present, and commits. An existing empty salt is considered present, matching
+the reference's pointer-based check.
+
+The startup harness matches 20 native/ARM/reference operation traces using
+synthetic default versions, missing/present salt and missing/present mode defaults.
+It intercepts converters, migrations, settings writes, commits and random input;
+no real settings are touched. The deterministic salt matches the reference's
+32-character output (the reference reads 17 bytes but retains only 16 in its
+stored hexadecimal string). Native sanitizer checks pass. Source tests inject
+failure at every operation in the salt-creation path, denied salt access, random
+failure and overflowing version text. The source stops on these errors rather
+than proceeding to later migration/commit steps. The source uses OpenSSL's RNG;
+the tests do not assess entropy quality.
+
+Startup can modify values before a later error and does not provide rollback.
+The successful orchestration tests do not yet prove end-to-end startup with the
+real converters and backend. This completes candidate implementations for the
+migration entry points, but other object exports and firmware integration remain.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_init.sh
+```

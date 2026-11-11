@@ -7,6 +7,7 @@ struct nvram_tuple {
  unsigned short len,type,acc_level,enc;
  struct nvram_tuple *next;
 };
+int init_enc_nvram(void);
 int start_enc_nvram(void);
 int start_dec_nvram(void);
 #endif
