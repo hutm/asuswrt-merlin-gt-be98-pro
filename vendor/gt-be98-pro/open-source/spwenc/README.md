@@ -197,3 +197,31 @@ ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open
 This callback adapter is not yet connected to the public password ABI or selected
 in firmware. Remaining work includes wrapper fallback semantics, migration and
 policy/helper exports before the original object can be removed.
+
+## Public password wrapper candidates
+
+`wrapper.c` implements `pw_enc` and `pw_dec` using the runtime input adapter and
+OpenSSL-backed checked password functions. Empty inputs avoid device reads.
+Encryption preserves the legacy caller-allocated `pw_enc_blen(input)+1` buffer
+contract. Decryption returns 1 for recovered plaintext and 0 for empty input or
+pass-through of an invalid frame, truncating pass-through to `len-1` characters.
+Runtime/input/backend errors return -1 and preserve the output. Device-input
+copies are cleared after use.
+
+The wrapper suite compares 258 native/ARM/reference cases (lengths 0..128, both
+salt modes), complete ciphertexts and decoded values. Wrong-salt fallback and
+truncated fallback are checked against the original, with reference allocations
+kept large enough for its decoded temporary buffer. Source-only tests cover the
+denied salt sentinel, invalid arguments, plaintext pass-through and insufficient
+destination space. Native runs use address/undefined-behavior sanitizers.
+
+Intentional safety differences remain: the source decoder enforces `len` for
+successful plaintext output, rejects noncanonical Base64/frame encodings before
+falling back, and rejects malformed device MACs. It does not reproduce unsafe
+reference buffer handling. Allocation-failure behavior is not reference-matched.
+These functions are still candidates, not linked into firmware; other exports
+from the original object must be supplied before removing it.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_wrapper.sh
+```
