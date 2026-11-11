@@ -430,3 +430,27 @@ the remaining shared-object interfaces.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_access.sh
 ```
+
+## Privacy-policy query candidates
+
+`policy.c` supplies `ASUS_PP_t` and the three `get_ASUS_privacy_policy*` queries.
+All eight names, required versions, IDs and force-sign flags match the reference.
+The state query retrieves the setting named by `webapi_get_b(3)`, copies at most
+31 characters, and compares its nonzero decimal value with the policy's required
+version. Unknown IDs return 0. The value query delegates to `nvram_get_int` after
+a successful setting-name lookup. These functions only read settings; they do
+not grant consent or change stored policy state.
+
+The suite matches native sanitizer, ARM and reference output for the table, 60
+value queries and 720 state/version combinations. Cases include missing/empty
+settings, threshold values, negative and malformed numbers, numeric suffixes,
+32-bit overflow and 31-character truncation. Settings-read counts are checked for
+successful and failed name lookup. The name lookup and settings backend are
+intercepted; their production integration is not established by these tests.
+The source explicitly terminates the lookup buffer and uses the ARM numeric
+range on native hosts. Policy initialization, timestamp updates and the underlying
+name-lookup helper still require replacement before this object can be removed.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_policy.sh
+```
