@@ -399,3 +399,24 @@ frames, transport errors and unchanged output on failure. Both exported runtime
 names are exercised. These tests use synthetic peer responses; actual kernel NLS
 conversion and hardware behavior have not been exercised. The source refuses
 NULL inputs and oversized replies rather than reproducing unbounded accesses.
+
+## Manager restart protocol work
+
+`manager.h` encodes the restart request as manager GET type 9 with the manager
+routing flag, a 20-byte variable header and the `restart` name/value pair. It
+preserves the reference's packed argument behavior while initializing reserved
+bytes. An ARM reference-library harness checked 392 argument/return cases against
+the source encoder. The kernel source routes this request through its registered
+wireless manager, which returns type-10 fragments and a type-11 final fragment.
+
+The source accumulator bounds responses to the reference restart buffer's 16-byte
+capacity, rejects empty or wrong-type fragments, and requires a consistent nonzero
+manager ID. It preserves state on error. Transport-origin validation is still
+required; the inner manager ID is not authentication by itself. Native sanitizer
+and ARM/QEMU tests cover framing, accumulation, ID changes and overflow.
+
+This codec is not yet an exported restart implementation. A single socket must
+remain open through the multipart exchange under a deadline; the current
+ordinary request transport closes after one reply. That transport integration
+and manager/hardware validation remain outstanding. No restart was sent to a
+router or running wireless manager during these tests.

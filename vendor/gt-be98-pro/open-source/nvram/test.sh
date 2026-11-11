@@ -16,7 +16,7 @@ cp /source/release/src/router/shared/source/nvpriv.c /tmp/source/storage.c
 cp /source/release/src/router/shared/source/storage_keys.h /tmp/source/storage_keys.h
 python3 /tmp/source/make-reference.py /source /tmp/source/reference.h
 cd /tmp/source
-for name in xfr pair frame getall settings persist client cache notification listener transport client_transport; do
+for name in manager xfr pair frame getall settings persist client cache notification listener transport client_transport; do
   gcc -std=c11 -Wall -Wextra -Werror -pthread -g \
     -fsanitize=address,undefined -fno-omit-frame-pointer \
     "test_$name.c" -o "/tmp/test_$name"
