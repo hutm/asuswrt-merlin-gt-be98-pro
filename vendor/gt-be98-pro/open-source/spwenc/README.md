@@ -530,3 +530,30 @@ and firmware integration before removal.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_policy_init.sh
 ```
+
+## Legacy MD5 context adapter
+
+`md5_abi.c` supplies `MD5Init`, `MD5Update` and `MD5Final` with the original
+88-byte layout: four state words, two bit-count words and a 64-byte buffer. The
+adapter uses OpenSSL's block transform and implements buffering/counting around
+it. It preserves the original untouched buffer bytes after initialization and
+partial updates, and clears the complete context on finalization. There are no
+heap allocations or hidden pointers in the caller's context.
+
+This adapter deliberately uses OpenSSL's deprecated low-level `MD5_Transform`
+API to preserve callers' inspectable/copyable context state. The pinned OpenSSL
+build supplies that symbol; an upgrade that removes deprecated APIs will require
+an alternative transform backend. The higher-level password candidate continues
+to use EVP. MD5 here preserves existing interfaces and formats, not a new security
+design. Context/input pointers must satisfy the existing ABI contract.
+
+The suite compares full context bytes and final digests for 4626 native/ARM/
+reference cases: lengths 0..513 and nine chunk sizes spanning padding/block
+boundaries. It additionally checks bit-counter rollover, zero-length updates and
+complete context clearing. Native address/undefined-behavior sanitizers pass.
+This adapter remains outside firmware pending the remaining object interfaces
+and integration checks.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_md5_abi.sh
+```
