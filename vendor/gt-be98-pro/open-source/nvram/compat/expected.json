@@ -1,0 +1,14 @@
+{
+  "bitflags": {
+    "sha256": "16def789866c2b2ff2827d6267406059c1b973ac60e7d66dfb0da82b96f34e1a",
+    "records": 1836
+  },
+  "strings": {
+    "sha256": "ef8bf4d8e16f70cc78409311c1207214e980617e3f872a5d6557d743296d9043",
+    "records": 18677
+  },
+  "numbers": {
+    "sha256": "261cc75b04b833af3baa97b7855c790fe05b28de73e7132e1e7aa676a05f3ee0",
+    "records": 140
+  }
+}

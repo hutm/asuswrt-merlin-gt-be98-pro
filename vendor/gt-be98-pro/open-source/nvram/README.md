@@ -31,6 +31,7 @@ support. No router or real storage device is accessed.
 | listener.h | Nonblocking subscription and checked receive/loss handling |
 | core.c / core.h | Serialized client core with owned-copy reads and updates |
 | shared/source/nvpriv.c | GT-BE98_PRO storage routing, migration and enumeration |
+| compat/ | Bit flags, trimming, wireless-name parsing and numeric conversion |
 | getall.h | Indexed page assembly, preserving caller output on failure |
 | settings.h | Existing newline settings format and ordered loading |
 | persist.h | File sync, backup/installation and recovery-file handling |
@@ -40,6 +41,13 @@ The pair test compares output with the actual helper extracted at test time from
 Generated test material stays in the disposable container. Other tests cover
 malformed messages, maximum sizes, transport deadlines and wrong senders,
 empty/missing values, file parsing, and injected persistence failures.
+
+The main runner also executes [compat/test.sh](compat/test.sh). Those eight
+compatibility entry points are not yet linked into firmware. Their native and
+ARM test transcripts match recorded reference results across 20,653 records;
+the bit-flag tests also check both public aliases. Optional comparison against
+a local reference library and behavior limits are described in
+[compat/README.md](compat/README.md).
 
 The combined client/transport test uses a synthetic Netlink peer with state.
 It exercises maximum-size SET/GET messages and an acknowledged but unapplied

@@ -49,3 +49,4 @@ for name in storage storage_bulk; do
   timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-storage-arm
 done
 '
+bash "$tests/compat/test.sh"
