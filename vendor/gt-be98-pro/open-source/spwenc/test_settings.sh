@@ -9,7 +9,7 @@ docker run --rm --network none --user "$(id -u):$(id -g)" \
   "${ASUS_COMPONENT_IMAGE:-amng-component-test}" bash -ec '
 cd /source/vendor/gt-be98-pro/open-source/spwenc
 compiler=/toolchain/bin/arm-buildroot-linux-gnueabi-gcc
-sources="settings.c wrapper.c inputs.c password.c lengths.c frame.c crypto.c key.c test_settings.c"
+sources="helpers.c settings.c wrapper.c inputs.c password.c lengths.c frame.c crypto.c key.c test_settings.c"
 gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -I/source/release/src/router/zlib \
  $sources -lcrypto -l:libz.so.1 -o /tmp/native
 /tmp/native >/tmp/native.txt
@@ -20,5 +20,5 @@ $compiler -std=c11 -Wall -Wextra -Werror -DREFERENCE -rdynamic test_settings.c -
 qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib /tmp/reference >/tmp/reference.txt
 cmp /tmp/native.txt /tmp/arm.txt
 cmp /tmp/arm.txt /tmp/reference.txt
-echo "Settings: 557 encryption and 604 decryption native/ARM/reference cases pass; capacity and denied-salt checks pass"
+echo "Settings: 557 encryption, 604 decryption and 300 conditional-update native/ARM/reference cases pass; capacity and denied-salt checks pass"
 '

@@ -2,6 +2,7 @@
 #define _DEFAULT_SOURCE
 #include "settings.h"
 #include "wrapper.h"
+#include "helpers.h"
 #include "lengths.h"
 #include <errno.h>
 #include <stdlib.h>
@@ -14,26 +15,33 @@ static int encrypt(const char *input,char output[4096])
  if(size>=4096){errno=ENOSPC;return -1;}
  return pw_enc(input,output,1);
 }
-static int transform(const char *name,const char *input,char *output,size_t capacity,int decrypt)
+static int transform(const char *name,const char *input,char *output,size_t capacity,int mode)
 {
  char result[4096]={0},encoded[4096]={0};char *copy=NULL;size_t copy_size=0,used=0;
- int status=-1,converted=decrypt?0:1;
+ int status=-1,converted=mode==1?0:1;
  if(!name||!input||!output){errno=EINVAL;return -1;}
  if(!capacity){errno=ENOSPC;return -1;}
  if(!*input){output[0]=0;return 0;}
  if(strcmp(name,"acc_list")&&strcmp(name,"pptpd_clientlist")&&strcmp(name,"vpn_serverx_clientlist")){
-  int ret=decrypt?pw_dec(input,result,sizeof result,1):encrypt(input,result);
+  int ret=mode==1?pw_dec(input,result,sizeof result,1):encrypt(input,result);
   if(ret<0)goto done;
-  if(decrypt)converted=ret;
+  if(mode==1)converted=ret;
  }else{
   copy=strdup(input);if(!copy)goto done;copy_size=strlen(copy)+1;
   char *cursor=copy,*record;
   while((record=strsep(&cursor,"<"))){
    char *user=strsep(&record,">"),*password=strsep(&record,">");
-   if(!password)continue;
-   int ret=decrypt?pw_dec(password,encoded,sizeof encoded,1):encrypt(password,encoded);
-   if(ret<0)goto done;
-   if(decrypt)converted=ret;
+   if(mode==2 && (!password || !*password)){
+    if(!*user)continue;
+    encoded[0]=0;
+    get_encrypt_list_value(name,user,encoded,sizeof encoded);
+    if(!*encoded)continue;
+   }else{
+    if(!password)continue;
+    int ret=mode==1?pw_dec(password,encoded,sizeof encoded,1):encrypt(password,encoded);
+    if(ret<0)goto done;
+    if(mode==1)converted=ret;
+   }
    size_t user_len=strlen(user),encoded_len=strlen(encoded);
    if(user_len>4093 || encoded_len>4093-user_len || used>4093-user_len-encoded_len){errno=ENOSPC;goto done;}
    size_t prefix=user_len+encoded_len+2;
@@ -64,4 +72,12 @@ int dec_nvram(char *name,char *input,char *output)
 int enc_nvram(char *name,char *input,char *output)
 {
  return nv_enc_setting(name,input,output,4096);
+}
+int nv_set_enc_setting(const char *name,const char *input,char *output,size_t capacity)
+{
+ return transform(name,input,output,capacity,2);
+}
+int set_enc_nvram(char *name,char *input,char *output)
+{
+ return nv_set_enc_setting(name,input,output,4096);
 }

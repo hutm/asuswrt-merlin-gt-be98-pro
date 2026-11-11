@@ -295,3 +295,22 @@ sanitizer checks also exercise denied salt and short destination errors. Existin
 strict frame-validation differences from the password wrapper still apply.
 Conditional setting updates and whole-settings migration remain incomplete; this
 candidate has not been selected in firmware.
+
+## Conditional settings update candidate
+
+`set_enc_nvram` and capacity-aware `nv_set_enc_setting` now share the settings
+transformer. For account lists, a missing or empty submitted password looks up
+the first stored record for that user. Its value is retained only when nonempty;
+no later duplicate is searched when the first value is empty. Missing users and
+empty stored values are omitted. A nonempty submitted password is encrypted.
+Ordinary settings behave like `enc_nvram`; no settings are written by this API.
+
+The settings suite adds 300 native/ARM/reference cases combining five setting
+names, six stored lists and ten submitted lists. These cover missing and empty
+settings, duplicates, omitted/empty/replaced passwords, extra fields and unknown
+users. Source tests show that retaining a stored value requires no salt read,
+while encrypting a replacement with denied salt fails without changing output.
+Short destinations also preserve output. The legacy void lookup helper cannot
+distinguish missing values from allocation failure; injected allocation failures
+and concurrent settings changes remain untested. All candidates are still outside
+the firmware build pending migration and the other remaining object interfaces.

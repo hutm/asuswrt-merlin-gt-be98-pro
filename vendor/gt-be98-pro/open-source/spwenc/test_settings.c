@@ -6,7 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 static int denied,wrong;
-char *nvram_get(const char *name){assert(!strcmp(name,"productid"));return "TEST-router";}
+static char *stored;
+char *nvram_get(const char *name){if(!strcmp(name,"productid"))return "TEST-router";return stored;}
 char *nvram_get_salt(void){return denied?(char *)(intptr_t)-1:wrong?"different":"synthetic-salt";}
 char *get_lan_hwaddr(void){return "02:11:22:33:44:55";}
 #ifdef REFERENCE
@@ -17,9 +18,11 @@ int main(void){
  assert(dlopen("libnvram.so",RTLD_LAZY|RTLD_GLOBAL));void *h=dlopen("libshared.so",RTLD_NOW);assert(h);
  int (*enc)(char *,char *,char *)=dlsym(h,"enc_nvram");assert(enc);
  int (*dec)(char *,char *,char *)=dlsym(h,"dec_nvram");assert(dec);
+ int (*update)(char *,char *,char *)=dlsym(h,"set_enc_nvram");assert(update);
 #else
  int (*enc)(char *,char *,char *)=enc_nvram;
  int (*dec)(char *,char *,char *)=dec_nvram;
+ int (*update)(char *,char *,char *)=set_enc_nvram;
 #endif
  char *names[]={"acc_list","pptpd_clientlist","vpn_serverx_clientlist","http_passwd","custom"};
  char *values[]={"","broken","<a>pass","<a>pass<b>next","a><>pass","a>pass>extra<b>next","<<a>pass<<b>next<",">","a>>pass"};
@@ -29,6 +32,13 @@ int main(void){
   for(wrong=0;wrong<2;++wrong){int r=dec(names[n],out,decoded);printf("D %u %u %d %d %s\n",n,v,wrong,r,decoded);}
   wrong=0;
  }
+ char *old[]={NULL,"","<a>old-a<b>old-b","<a><b>old-b","<a>first<a>second",">empty-user"};
+ char *updates[]={"","a","<a>","<b><a","<missing","<a>new<b>",">new","<a>>ignored","<a<b>next","<a><missing>"};
+ for(unsigned n=0;n<5;++n)for(unsigned o=0;o<6;++o)for(unsigned u=0;u<10;++u){
+  stored=old[o];strcpy(out,"unchanged");int r=update(names[n],updates[u],out);
+  assert(r==(u?1:0));printf("U %u %u %u %d %s\n",n,o,u,r,out);
+ }
+ stored=NULL;
  char input[513];
  for(unsigned len=1;len<=512;++len){memset(input,'a'+len%26,len);input[len]=0;assert(enc(names[3],input,out)==1);printf("L %u %s\n",len,out);assert(dec(names[3],out,decoded)==1&&!strcmp(input,decoded));}
 /* Last usable record determines the list return status. */
@@ -50,6 +60,12 @@ int main(void){
  assert(enc(names[0],oversized,out)==-1&&errno==ENOSPC);
  assert(nv_dec_setting(names[0],mixed,out,1)==-1&&errno==ENOSPC);
  assert(nv_dec_setting(NULL,"x",out,sizeof out)==-1&&errno==EINVAL);
+ stored="<a>old";denied=1;
+ assert(update(names[0],"a",out)==1&&!strcmp(out,"<a>old"));
+ strcpy(out,"unchanged");
+ assert(update(names[0],"<a>new",out)==-1&&errno==EACCES&&!strcmp(out,"unchanged"));
+ denied=0;
+ assert(nv_set_enc_setting(names[0],"a",out,2)==-1&&errno==ENOSPC&&!strcmp(out,"unchanged"));
  assert(nv_enc_setting(NULL,"x",out,sizeof out)==-1&&errno==EINVAL);
 #endif
  return 0;
