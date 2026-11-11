@@ -450,3 +450,24 @@ Full-image linking, final packaged-library identity, runtime boot settings loadi
 and hardware validation must still be checked before treating this selection as
 a working firmware replacement. No installable release is implied by this build
 selection.
+
+## First full-image source-library build
+
+Commit `ab5242cf43` completed the experimental GT-BE98 Pro firmware build on
+2026-11-11. The normal image is 76,715,748 bytes with SHA-256
+`52b263378ab56427cfdef5672ab82340fcf4f09cc988cce5507f43fc0ad23af0`.
+The extracted `/lib/libnvram.so` is byte-identical to the stripped source build;
+its SHA-256 is
+`6bf0184eb6db1b126e2190e0dba0a7c48484f7660e4d81e14a30d8a7111f1508`.
+The final-image userspace scan covered 647 ELF objects with no new or changed
+unresolved-dependency flags relative to the previous image. FIT payload hashes
+passed. A separate production-library load test against the preceding firmware
+libraries passed under ARM emulation with eager symbol resolution.
+
+This confirms packaging of the source library, not boot or hardware behavior.
+The CLI is still prebuilt. Its replacement must preserve `kernelset`, `kget`,
+`kset`, `kunset`, `kcommit` and manufacturing restore behavior used by packaged
+scripts. A reference test shows `restore_mfg` opens `/mnt/nvram/nvram.nvm`; it is
+not simply the newline settings loader. Other proprietary userspace, kernel,
+radio and boot components remain. This image is experimental and unvalidated on
+router hardware.
