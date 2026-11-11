@@ -114,3 +114,28 @@ against a temporary configuration. Its inputs must omit the CONFIG_ prefix,
 because the writer adds it. The test confirms real output entries and catches
 doubled prefixes, not just Make-variable values. A complete kernel build and
 final-image module inventory are still required.
+
+## Source GSO dispatch selection
+
+The experimental profile now keeps BCM_SW_GSO=y and sets BCM_SW_GSO_THREAD=n.
+The source at kernel/bcmkernel/net/core/bcm_sw_gso.c explicitly falls back to
+synchronous segmentation when no worker callback is registered. This replaces
+the proprietary scheduling layer with an existing source path; it does not remove
+segmentation. Performance and CPU distribution may differ. Underlying Broadcom
+buffer/accelerator dependencies remain; this is not fully independent networking.
+
+Kconfig.bcm defines THREAD as a separate tristate dependent on SW_GSO. The
+bcmdrivers Makefile selects sw_gso by that tristate, and
+`targets/fs.src/rom/etc/init.d/bcm-base-drivers.list` gates its load entry on the
+same symbol. Final-image absence and successful traffic still need verification.
+
+`python3 vendor/gt-be98-pro/open-source/test-gso-fallback.py` extracts the actual
+three dispatch functions from the current committed kernel source, compiles them
+in Docker with mocked callbacks, and checks absent/busy-worker fallback and
+packet ownership. AddressSanitizer/UBSan pass. This tests the real dispatch code,
+not the packet segmentation algorithm or concurrency. Source version is HEAD;
+uncommitted edits to those kernel functions are not part of this test.
+
+The ring core remains available for a future threaded source implementation if
+synchronous processing does not meet throughput requirements. No replacement
+is considered hardware validated until its behavior and performance are measured.

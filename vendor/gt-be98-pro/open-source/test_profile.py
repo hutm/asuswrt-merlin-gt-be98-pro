@@ -76,4 +76,7 @@ class KernelProfileTests(unittest.TestCase):
                 self.assertIn(f'CONFIG_{name}_FS=m', result)
             self.assertIn('CONFIG_FUSE_FS=y', result)
             self.assertFalse(any('CONFIG_CONFIG_' in line for line in result))
-            self.assertFalse(any('not set' in line for line in result))
+            self.assertIn('CONFIG_BCM_SW_GSO=y', result)
+            self.assertIn('# CONFIG_BCM_SW_GSO_THREAD is not set', result)
+            self.assertNotIn('# CONFIG_FAT_FS is not set', result)
+            self.assertNotIn('# CONFIG_HFSPLUS_FS is not set', result)
