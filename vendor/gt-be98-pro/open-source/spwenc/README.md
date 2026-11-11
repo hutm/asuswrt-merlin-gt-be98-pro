@@ -225,3 +225,27 @@ from the original object must be supplied before removing it.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_wrapper.sh
 ```
+
+## Digest and list helper candidates
+
+`helpers.c` supplies `str_to_md5` through OpenSSL EVP and implements
+`is_same_pass` / `get_encrypt_list_value` from copied NVRAM strings. Records are
+separated by `<`; the first two `>`-separated fields are used, including empty
+fields, and later fields are ignored. Lookup returns the first matching user and
+leaves the destination unchanged when absent. Comparison continues across
+records until both username and password match. For `pptpd_clientlist` and
+`vpn_serverx_clientlist`, comparison hashes the stored password first. This MD5
+usage preserves the existing format; it is not a new password-storage design.
+
+The helper suite matches native sanitizer, ARM and original-library results for
+513 binary-input digests (lengths 0..512), 1280 list lookups and 800 comparisons.
+Fixtures include NULL/empty settings, malformed records, empty fields, duplicates,
+extra fields, missing users and output capacities 0..7. Source-only checks reject
+invalid digest arguments and negative lengths without changing the output.
+Allocation/backend failures are not injected or reference-matched. Temporary
+list copies are cleared before release. These helpers remain outside firmware
+until the complete object replacement is ready.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_helpers.sh
+```
