@@ -344,3 +344,20 @@ An ARM reference-library test with synthetic values confirmed the key, policy
 gating, denied sentinel, and missing/empty/borrowed return behavior. Native
 sanitizer and ARM/QEMU runtime tests also cover transport failure. This adds
 another required API but does not enable the replacement library in firmware.
+
+## Direct kernel setter
+
+`nvram_kset` and `common_nvram_kernel_set` use the serialized core SET operation
+without ASUS JFFS routing or getter policy. NULL is a zero-length SET value,
+whereas the ordinary runtime setter maps NULL to UNSET. The ARM reference test
+confirmed the message type, payload for present/empty/NULL values, invalid-key
+return and send-error return. Source native sanitizer and ARM/QEMU tests cover
+these cases, direct-backend behavior and transport failure. The source checks
+the echoed payload as well as message type; acknowledgement still does not prove
+the kernel applied the change.
+
+The earlier firmware dynamic-symbol scan's remaining unimplemented consumer
+names are `nvram_kcommit`, `nvram_xfr` and `wlcsm_mngr_restart`. That scan does not
+cover dynamically constructed symbol lookups, static consumers or every export
+of the original library. Completing those three names alone is insufficient to
+claim full library compatibility or hardware readiness.

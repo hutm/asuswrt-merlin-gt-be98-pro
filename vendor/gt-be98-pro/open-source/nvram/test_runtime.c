@@ -15,7 +15,7 @@
 static char path[]="/tmp/nv-runtime-XXXXXX",small[64],large[64];
 static int present,deny,fail_init=1,requests,reenter,commits,commit_fail,data_fail,syncs,markers,stop_fail,marker_fail;
 static const char *stop_value,*salt_value;
-static int salt_fail,salt_gets;
+static int salt_fail,salt_gets,last_change,change_fail;
 int nv_runtime_test_directory(void){if(fail_init){fail_init=0;errno=ENOENT;return -1;}return open(path,O_RDONLY|O_DIRECTORY);}
 int nv_runtime_test_data_directory(void){if(data_fail){errno=ENOENT;return -1;}return open(path,O_RDONLY|O_DIRECTORY);}
 void nv_runtime_test_sync(void){++syncs;}
@@ -27,7 +27,7 @@ int nv_runtime_test_exchange(void *context,const void *request,size_t size,void 
  if(f.type==3&&!strcmp((const char *)f.payload,"asus_stop_commit")){if(stop_fail){errno=ETIMEDOUT;return -1;}if(stop_value)assert(!nv_pair_encode(payload,sizeof payload,"asus_stop_commit",stop_value,strlen(stop_value)+1,&n));}
  else if(f.type==3&&!strcmp((const char *)f.payload,"nvram_salt")){++salt_gets;if(salt_fail){errno=ETIMEDOUT;return -1;}if(salt_value)assert(!nv_pair_encode(payload,sizeof payload,"nvram_salt",salt_value,strlen(salt_value)+1,&n));}
  else if(f.type==3){assert(!strcmp((const char *)f.payload,"key"));if(present)assert(!nv_pair_encode(payload,sizeof payload,"key",small,strlen(small)+1,&n));}
- else if(f.type==2||f.type==4){assert(!nv_pair_decode(f.payload,f.length,&p)&&!strcmp(p.name,"key"));present=f.type==2;if(present){assert(p.value_len<=sizeof small);memcpy(small,p.value,p.value_len);}memcpy(payload,f.payload,f.length);n=f.length;}
+ else if(f.type==2||f.type==4){assert(!nv_pair_decode(f.payload,f.length,&p)&&!strcmp(p.name,"key"));last_change=f.type;if(change_fail){errno=ETIMEDOUT;return -1;}present=f.type==2&&p.value_len;if(present){assert(p.value_len<=sizeof small);memcpy(small,p.value,p.value_len);}memcpy(payload,f.payload,f.length);n=f.length;}
  else if(f.type==7){char lock[256];snprintf(lock,sizeof lock,"%s/nvram.lock",path);assert(!access(lock,F_OK));assert(!f.length);++commits;if(commit_fail){errno=ETIMEDOUT;return -1;}}
  else {assert(f.type==5);memcpy(payload,"key=one",8);n=8;}
  return nv_frame_encode(reply,capacity,f.type==5?6:f.type,0,0,payload,n,returned);
@@ -54,6 +54,13 @@ int main(void){
  char out[64];assert(nvram_getall(out,sizeof out)==18&&!memcmp(out,"key=one\0large=two\0",18));
  memset(out,0x55,sizeof out);assert(wlcsm_nvram_getall(out,sizeof out)==8&&!memcmp(out,"key=one\0",8));for(int i=8;i<64;++i)assert(!out[i]);
  assert(!nvram_set("key",NULL)&&!nvram_get("key"));assert(!wlcsm_nvram_unset("key"));
+ assert(nvram_kset(NULL,"bad")==-1&&errno==EINVAL);
+ deny=1;assert(!nvram_kset("key","kernel")&&last_change==2);deny=0;
+ assert(!strcmp(wlcsm_nvram_get("key"),"kernel"));
+ assert(!nvram_kset("key","")&&last_change==2&&!strcmp(wlcsm_nvram_get("key"),""));
+ assert(!nvram_kset("key",NULL)&&last_change==2&&!wlcsm_nvram_get("key"));
+ assert(!common_nvram_kernel_set("key","common")&&!strcmp(wlcsm_nvram_get("key"),"common"));
+ change_fail=1;assert(nvram_kset("key","failed")==-1&&errno==ETIMEDOUT);change_fail=0;
  reenter=1;assert(!nvram_set("key","guarded"));reenter=0;
  pthread_t threads[4];for(int i=0;i<4;++i)assert(!pthread_create(&threads[i],NULL,worker,NULL));for(int i=0;i<4;++i)assert(!pthread_join(threads[i],NULL));
  pid_t child=fork();assert(child>=0);if(!child){assert(!strcmp(nvram_get("key"),"parallel"));assert(nvram_set("large","child")==5);_exit(0);}

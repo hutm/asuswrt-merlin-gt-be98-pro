@@ -18,4 +18,7 @@ int wlcsm_nvram_commit(void);
 int nvram_commit(void);
 /* Returns borrowed kernel value, NULL when missing/error, (char *)-1 if denied. */
 char *nvram_get_salt(void);
+/* Direct kernel SET; NULL is encoded as a zero-length value, not UNSET. */
+int nvram_kset(const char *key,const char *value);
+int common_nvram_kernel_set(const char *key,const char *value);
 #endif

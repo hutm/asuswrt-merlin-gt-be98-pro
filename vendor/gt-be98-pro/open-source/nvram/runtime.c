@@ -160,3 +160,12 @@ char *nvram_get_salt(void) {
     } else if(nv_core_get_borrowed(core,"nvram_salt",&value)<0) value=NULL;
     leave();return value;
 }
+
+int common_nvram_kernel_set(const char *key,const char *value) {
+    int result;if(enter()) return -1;
+    /* This interface always sends SET, even for a NULL value. */
+    result=nv_core_change_ack(core,key,value,0);leave();return result;
+}
+int nvram_kset(const char *key,const char *value) {
+    return common_nvram_kernel_set(key,value);
+}
