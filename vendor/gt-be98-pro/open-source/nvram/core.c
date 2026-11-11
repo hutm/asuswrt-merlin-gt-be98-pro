@@ -1,9 +1,11 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
+#define _POSIX_C_SOURCE 200809L
 #include "core.h"
 #include "client.h"
 #include "cache.h"
 #include "getall.h"
 #include "notification.h"
+#include "persist.h"
 #include <pthread.h>
 struct nv_core {
     pthread_mutex_t mutex;
@@ -72,4 +74,39 @@ int nv_core_notification(struct nv_core *core,const void *data,size_t size) {
     if(data) result=nv_notification(data,size,invalidate,core);
     else nv_cache_invalidate(&core->cache,NULL);
     unlock(core);return result;
+}
+struct load_context {struct nv_core *core;size_t *confirmed;};
+static int apply_verified(void *opaque,const char *key,const char *value) {
+    struct load_context *load=opaque;struct nv_core *core=load->core;
+    char *observed=NULL;int result,saved;
+    nv_cache_invalidate(&core->cache,key);
+    if(nv_client_change_ack(core->exchange,core->context,0,key,value,0)) return -1;
+    result=nv_client_get(core->exchange,core->context,0,key,&observed);
+    if(result<0) return -1;
+    if(result!=1 || strcmp(observed,value)) {
+        free(observed);errno=EIO;return -1;
+    }
+    saved=errno;free(observed);errno=saved;
+    ++*load->confirmed;return 0;
+}
+int nv_core_load_verified(struct nv_core *core,FILE *input,size_t *confirmed) {
+    struct load_context load={core,confirmed};int result;
+    if(!input || !confirmed) {errno=EINVAL;return -1;}
+    if(lock(core)) return -1;
+    *confirmed=0;
+    result=nv_settings_load(input,apply_verified,&load);
+    unlock(core);return result;
+}
+int nv_core_save_at(struct nv_core *core,int directory,size_t capacity) {
+    unsigned char *data;size_t used=0;int result,saved;
+    if(directory<0 || !capacity || capacity>INT_MAX) {errno=EINVAL;return -1;}
+    if(lock(core)) return -1;
+    data=malloc(capacity);
+    if(!data) {unlock(core);return -1;}
+    result=nv_getall_pages(core->exchange,core->context,0,data,capacity,&used);
+    if(!result) {
+        if(!used || !data[0]) {errno=ENODATA;result=-1;}
+        else result=nv_persist_at(directory,data,used);
+    }
+    saved=errno;free(data);errno=saved;unlock(core);return result;
 }

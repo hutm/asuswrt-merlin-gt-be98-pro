@@ -67,7 +67,33 @@ handling are not supplied. Tests link to the actual native/ARM shared library
 and cover missing/empty values, unapplied acknowledgements, failed exchanges,
 notification invalidation, memory limits and concurrent calls against a
 synthetic peer. These tests do not establish vendor ABI compatibility or router
-behavior. Persistence and ASUS large-value/JFFS routing remain separate work.
+behavior. ASUS large-value/JFFS routing remains separate work.
+
+The core also connects the settings loader and persistence helper.
+`nv_core_load_verified` sends each parsed SET, checks the acknowledgement, then
+reads back and compares the value. It reports how many entries had matching
+readbacks. This is incremental: a later failure leaves earlier changes applied,
+and the failing entry may also have changed. Concurrent external writers can
+affect readback, and matching values do not prove durability or ownership of the
+update.
+
+`nv_core_save_at` collects GETALL and installs the existing main/_new/_old file
+layout in a caller-provided trusted directory. It refuses empty replies because
+the kernel cannot distinguish an empty database from an allocation failure in
+that response. This prevents an ambiguous reply from replacing a nonempty saved
+configuration; saving an intentionally empty database is currently unsupported.
+The helper returns the persistence result, including a distinct uncertain-sync
+status after installation. It still requires external cross-process writer
+serialization, and collection across pages is not atomic. ASUS commit controls,
+post-save notification, startup recovery selection and flash validation remain
+required before exposing this as nvram_commit.
+
+Shared-library tests on native and ARM builds now cover ordered loads, empty
+values, acknowledged-but-unapplied SET rejection, partial load failures, save
+backup contents, and preservation of the existing file on transport failure or
+ambiguous empty collection. Persistence failure-injection tests continue to cover
+write, rename, rollback and sync failures separately. All files are disposable;
+these are not router power-loss or flash-storage tests.
 
 The cache reserves a 1024-byte value buffer for each stored key so growth does
 not relocate an exposed pointer. It never evicts entries, applies a caller-set

@@ -1,4 +1,5 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
+#define _POSIX_C_SOURCE 200809L
 #include "core.h"
 #include "frame.h"
 #include "pair.h"
@@ -7,7 +8,9 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
-struct peer {char value[1024];int present,fail,ignore,gets;};
+#include <fcntl.h>
+#include <unistd.h>
+struct peer {char value[1024];int present,fail,ignore,gets,empty;};
 static int exchange(void *context,const void *request,size_t size,void *reply,size_t capacity,size_t *returned) {
     struct peer *peer=context;struct nv_frame_view frame;struct nv_pair_view pair;
     unsigned char payload[1024];size_t length=0;unsigned type;
@@ -26,7 +29,7 @@ static int exchange(void *context,const void *request,size_t size,void *reply,si
         memcpy(payload,frame.payload,frame.length);length=frame.length;
     } else {
         assert(type==5);type=6;
-        memcpy(payload,"key=value",10);length=10;
+        if(!peer->empty) {memcpy(payload,"key=value",10);length=10;}
     }
     return nv_frame_encode(reply,capacity,type,0,0,payload,length,returned);
 }
@@ -63,12 +66,46 @@ int main(void) {
     assert(!nv_core_change_ack(core,"key",NULL,1));
     assert(nv_core_get_copy(core,"key",&value)==0 && !value);
     assert(!strcmp(retained,"value"));free(retained);
+    {
+        FILE *input=tmpfile();size_t confirmed=999;assert(input);
+        fputs("key=first\nkey=\nkey=last\n",input);rewind(input);
+        assert(!nv_core_load_verified(core,input,&confirmed) && confirmed==3);
+        assert(!strcmp(peer.value,"last"));fclose(input);
+        peer.ignore=1;input=tmpfile();assert(input);
+        fputs("key=unapplied\n",input);rewind(input);
+        assert(nv_core_load_verified(core,input,&confirmed)==-1 && errno==EIO && confirmed==0);
+        assert(!strcmp(peer.value,"last"));fclose(input);peer.ignore=0;
+        input=tmpfile();assert(input);
+        fputs("key=partial\n",input);
+        for(int i=0;i<1030;++i) fputc(120,input);
+        fputc(10,input);rewind(input);
+        assert(nv_core_load_verified(core,input,&confirmed)==-1 && errno==EOVERFLOW && confirmed==1);
+        assert(!strcmp(peer.value,"partial"));fclose(input);
+    }
+    {
+        char path[]="/tmp/core-save-XXXXXX",contents[64]={0};int directory,fd;
+        assert(mkdtemp(path));directory=open(path,O_RDONLY|O_DIRECTORY);assert(directory>=0);
+        fd=openat(directory,".kernel_nvram.setting",O_CREAT|O_WRONLY,0600);assert(fd>=0);
+        assert(write(fd,"previous\n",9)==9);close(fd);
+        peer.fail=1;assert(nv_core_save_at(core,directory,4096)==-1 && errno==ETIMEDOUT);peer.fail=0;
+        peer.empty=1;assert(nv_core_save_at(core,directory,4096)==-1 && errno==ENODATA);peer.empty=0;
+        assert(faccessat(directory,".kernel_nvram.setting_new",F_OK,0)==-1 && errno==ENOENT);
+        fd=openat(directory,".kernel_nvram.setting",O_RDONLY);assert(fd>=0);
+        assert(read(fd,contents,sizeof contents)==9 && !strcmp(contents,"previous\n"));close(fd);
+        assert(!nv_core_save_at(core,directory,4096));memset(contents,0,sizeof contents);
+        fd=openat(directory,".kernel_nvram.setting",O_RDONLY);assert(fd>=0);
+        assert(read(fd,contents,sizeof contents)==10 && !strcmp(contents,"key=value\n"));close(fd);
+        memset(contents,0,sizeof contents);fd=openat(directory,".kernel_nvram.setting_old",O_RDONLY);assert(fd>=0);
+        assert(read(fd,contents,sizeof contents)==9 && !strcmp(contents,"previous\n"));close(fd);
+        unlinkat(directory,".kernel_nvram.setting",0);unlinkat(directory,".kernel_nvram.setting_old",0);
+        close(directory);assert(!rmdir(path));
+    }
     for(int i=0;i<4;++i) assert(!pthread_create(&threads[i],NULL,stress,core));
     for(int i=0;i<4;++i) assert(!pthread_join(threads[i],NULL));
     assert(peer.gets>=400);nv_core_destroy(core);
     core=nv_core_create(exchange,&peer,1);assert(core);value=(char *)"unchanged";
     assert(nv_core_get_copy(core,"key",&value)==-1 && errno==ENOSPC && !strcmp(value,"unchanged"));
     nv_core_destroy(core);
-    puts("NVRAM core: shared-library GET/SET/UNSET/GETALL, copy ownership, notifications, failures and concurrent calls passed");
+    puts("NVRAM core: shared-library operations, verified load, durable save, failure preservation and concurrent calls passed");
     return 0;
 }

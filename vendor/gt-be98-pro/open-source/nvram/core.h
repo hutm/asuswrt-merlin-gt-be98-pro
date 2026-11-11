@@ -2,6 +2,7 @@
 #ifndef OPEN_NVRAM_CORE_H
 #define OPEN_NVRAM_CORE_H
 #include <stddef.h>
+#include <stdio.h>
 struct nv_core;
 typedef int (*nv_core_exchange)(void *,const void *,size_t,void *,size_t,size_t *);
 /* Exchange/context must remain valid until destroy, and must not reenter this
@@ -18,4 +19,14 @@ int nv_core_getall(struct nv_core *core,void *output,size_t capacity,size_t *use
 /* Only call for trusted kernel notifications. data==NULL invalidates all after
  * loss/reopen. Otherwise returns notification decoder status. */
 int nv_core_notification(struct nv_core *core,const void *data,size_t size);
+/* Incremental load: each SET acknowledgement is followed by GET comparison.
+ * confirmed counts matching readbacks, not a transaction or durable commits.
+ * On failure, earlier entries and possibly the failing entry may have changed. */
+int nv_core_load_verified(struct nv_core *core,FILE *input,size_t *confirmed);
+/* Save current GETALL to the existing settings filenames in a trusted directory.
+ * External cross-process writer serialization is required. Return 0 installed
+ * and synced, -1 before installation failure, -2 installed but durability
+ * uncertain. Empty replies are refused: kernel allocation failure looks empty.
+ * This is not nvram_commit: ASUS controls and commit notification are separate. */
+int nv_core_save_at(struct nv_core *core,int directory,size_t capacity);
 #endif
