@@ -35,7 +35,7 @@ for format in HDR1 HDR2; do
   cmp /tmp/source.log /tmp/expected
   echo "$format: source/reference setters and filtering match"
 done
-for args in "getflag flags 3" "setflag flags 3=1"; do
+for args in "getflag flags 3" "setflag flags 3=1" "restart" "commit" "commit restart"; do
   qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
     -E LD_PRELOAD=/tmp/stubs.so /tmp/source-cli $args >/tmp/source.log
   qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \

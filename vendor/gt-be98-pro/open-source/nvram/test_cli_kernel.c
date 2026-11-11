@@ -13,7 +13,13 @@ int nvram_set(const char *key,const char *value){event("A",key,value);if(fail){e
 int nvram_unset(const char *key){event("U",key,NULL);return 0;}
 int nvram_kset(const char *key,const char *value){event("K",key,value);return 0;}
 int wlcsm_nvram_set(const char *key,const char *value){event("W",key,value);return 0;}
-int nvram_kcommit(void){event("C","",NULL);return 0;}
+static int commit_fail,restart_fail,kcommit_fail;
+int nvram_kcommit(void){event("C","",NULL);if(kcommit_fail){errno=EIO;return -1;}return 0;}
+int wlcsm_nvram_commit(void){event("WCOMMIT","",NULL);if(commit_fail){errno=EIO;return 1;}return 0;}
+int wlcsm_mngr_restart(unsigned radio,unsigned source,int persist,int wait){
+ assert(radio==0 && source==1 && wait==0);event("RESTART",persist?"save":"",NULL);
+ if(restart_fail){errno=ETIMEDOUT;return 1;}return 0;
+}
 char *wlcsm_nvram_get(const char *key){(void)key;return NULL;}
 char *wlcsm_nvram_get_bitflag(const char *key,unsigned bit){(void)key;(void)bit;return NULL;}
 int wlcsm_nvram_set_bitflag(const char *key,unsigned bit,int enabled){(void)key;(void)bit;(void)enabled;return 0;}
@@ -46,6 +52,14 @@ int main(void){
   export=fopen(path,"r");assert(export);char unchanged[64]={0};fread(unchanged,1,sizeof unchanged,export);fclose(export);assert(!strcmp(unchanged,exported));
  }
  snapshot_mode=0;unlink(path);set[1]="/nonexistent/parent/export";assert(nv_cli_kernel(2,set,out)==-1);
+ reset();set[0]="restart";assert(nv_cli_kernel(1,set,out)==1&&!strcmp(events,"RESTART::<NULL>;"));
+ reset();set[0]="commit";assert(nv_cli_kernel(1,set,out)==1&&!strcmp(events,"WCOMMIT::<NULL>;C::<NULL>;"));
+ reset();set[1]="restart";assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"RESTART:save:<NULL>;C::<NULL>;"));
+ reset();stop="0";assert(nv_cli_kernel(2,set,out)==2&&!used);stop="";assert(nv_cli_kernel(1,set,out)==1&&!used);stop=NULL;
+ restart_fail=1;assert(nv_cli_kernel(2,set,out)==-1&&errno==ETIMEDOUT&&!strcmp(events,"RESTART:save:<NULL>;"));restart_fail=0;
+ reset();commit_fail=1;assert(nv_cli_kernel(1,set,out)==-1&&errno==EIO&&!strcmp(events,"WCOMMIT::<NULL>;"));commit_fail=0;
+ reset();kcommit_fail=1;assert(nv_cli_kernel(1,set,out)==-1&&errno==EIO&&!strcmp(events,"WCOMMIT::<NULL>;C::<NULL>;"));kcommit_fail=0;
+ reset();set[1]="get";assert(nv_cli_kernel(2,set,out)==1); /* Preserve following commands. */
  set[0]="unknown";assert(!nv_cli_kernel(1,set,out));fclose(out);
  puts("Kernel CLI: routing order, NULL values, stop control, file loading and failures passed");return 0;
 }

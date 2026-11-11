@@ -53,3 +53,8 @@ int nvram_kcommit(void) {puts("KCOMMIT");return 0;}
 
 int nvram_unset(const char *name){printf("AUNSET[%s]\n",name);return 0;}
 int wlcsm_nvram_unset(const char *name){printf("WUNSET[%s]\n",name);return 0;}
+
+int wlcsm_nvram_commit(void) {puts("WCOMMIT");return 0;}
+int wlcsm_mngr_restart(unsigned radio,unsigned source,int persist,int wait) {
+ printf("RESTART[%u,%u,%d,%d]\n",radio,source,persist,wait);return 0;
+}

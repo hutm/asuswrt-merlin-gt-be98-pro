@@ -576,7 +576,7 @@ flag commands with synthetic backends and matches their transcripts.
 kernel setter. Omitted loadfile paths select `/data/nvramdefault.txt`, matching
 the reference. The source opens files read-only and reports parse/setter errors.
 Tests distinguish the two setter routes and preserve duplicate/empty values.
-Dump/restart variants and remaining ordinary-command error handling
+Dump variants and remaining ordinary-command error handling
 still need work before selecting the source CLI in firmware.
 
 ## Text export candidate
@@ -594,3 +594,24 @@ cases and invalid destination paths; the full component suite passes. Output
 and close failures are reported, but errors after opening may leave a partial
 file. This change does not select the CLI in the firmware or establish hardware
 compatibility.
+
+## Commit and wireless restart commands
+
+The opt-in CLI implements `restart`, `commit` and `commit restart`. The standalone
+restart requests manager arguments `(0, 1, 0, 0)`. Commit checks the presence of
+`asus_stop_commit`, calls the WLCSM commit, then saves kernel settings. Commit
+with restart instead requests `(0, 1, 1, 0)` before saving kernel settings. ARM
+comparisons of the complete source and reference CLIs with synthetic backends
+confirm these call sequences. A manager acknowledgement is not evidence that
+wireless hardware restarted successfully.
+
+The source stops and reports a failure if either step fails; it cannot roll back
+an earlier completed step. Native sanitizer and ARM tests cover both sequences,
+manager failure, commit failure, kernel-save failure, and stop values including
+empty and `0`. As with the existing kcommit adapter, the pointer-only stop getter
+cannot distinguish a missing value from a read failure. This remains a limitation.
+The source accepts only the exact optional `restart` argument and preserves any
+other following command, unlike the reference's prefix match and consumption of
+an unrelated argument. All component tests and the CLI reference comparison pass.
+The source CLI is still not selected in firmware; dump filtering, backup writing,
+erase and remaining ordinary-command behavior need review.

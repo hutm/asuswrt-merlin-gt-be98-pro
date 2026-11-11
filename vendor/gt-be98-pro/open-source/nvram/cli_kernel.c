@@ -53,6 +53,16 @@ int nv_cli_kernel(int argc,char *const argv[],FILE *output) {
         if(argc<2 || !argv[1]) {errno=EINVAL;return -1;}
         return nv_mfg_restore("/mnt/nvram/nvram.nvm",argv[1],"/proc/nvram/BaseMacAddr")?-1:2;
     }
+    if(!strcmp(command,"restart"))
+        return wlcsm_mngr_restart(0,1,0,0)?-1:1;
+    if(!strcmp(command,"commit")) {
+        int restart=argc>1 && argv[1] && !strcmp(argv[1],"restart");
+        int consumed=restart?2:1;
+        if(nvram_get("asus_stop_commit")) return consumed;
+        result=restart?wlcsm_mngr_restart(0,1,1,0):wlcsm_nvram_commit();
+        if(result) return -1;
+        return nvram_kcommit()?-1:consumed;
+    }
     if(!strcmp(command,"kcommit")) {
         if(nvram_get("asus_stop_commit")) return 1;
         return nvram_kcommit()?-1:1;
