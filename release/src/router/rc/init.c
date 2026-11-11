@@ -23512,6 +23512,10 @@ int init_nvram(void)
 #endif
 #endif // RTCONFIG_HFS
 
+#ifdef ASUS_OPEN_COMPONENTS
+	add_rc_support("open_fs_format");
+#endif
+
 #ifdef RTCONFIG_APFS
 	nvram_set("usb_apfs_mod", "");
 #if defined(RTCONFIG_TUXERA_APFS)

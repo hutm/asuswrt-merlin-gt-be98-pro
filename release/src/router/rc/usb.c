@@ -5310,6 +5310,9 @@ static int __inc_mount_counter(struct mntent *mnt, uint flags)
 static void start_diskformat(char *port_path)
 {
 	int fd, len, nr_format = 0;
+#ifdef ASUS_OPEN_COMPONENTS
+	int format_failed = 1;
+#endif
 	char **cmd = NULL;
 	char write_file_name[32], line[128], usbport[16];
 	char disk_system[32], disk_label[32], devpath[16], ofdev[16 + 3], *ptr_path;
@@ -5336,6 +5339,9 @@ static void start_diskformat(char *port_path)
 	disk_list = read_disk_data();
 	if(disk_list == NULL){
 		dbg("Can't get any disk's information.\n");
+#ifdef ASUS_OPEN_COMPONENTS
+		nvram_set("disk_format_flag", "-1");
+#endif
 		return;
 	}
 
@@ -5360,6 +5366,9 @@ static void start_diskformat(char *port_path)
 	if (!di) {
 		dbg("disk_format: Can't find device via ptr_path [%s]\n", ptr_path);
 		logmessage("disk_format", "Can't find device via ptr_path [%s]", ptr_path);
+#ifdef ASUS_OPEN_COMPONENTS
+		goto format_done;
+#endif
 	} else if (mount_counter) {
 		dbg("disk_format: Can't unmount %d partition(s) of device %s\n", di->device, mount_counter);
 		logmessage("disk_format", "Can't unmount %d partition(s) of device %s", di->device, mount_counter);
@@ -5368,6 +5377,11 @@ static void start_diskformat(char *port_path)
 		char *tfat_cmd[] = { "mkfatfs", "-l", disk_label, "-v", devpath, NULL };
 		char *tntfs_cmd[] = {"mkntfs", "-F", "-L", disk_label, "-v", devpath, NULL };
 		char *thfsplus_cmd[] = { "newfs_hfs", "-v", disk_label, devpath, NULL };
+#endif
+#ifdef ASUS_OPEN_COMPONENTS
+		char *open_fat_cmd[] = { "mkfs.vfat", "-I", "-n", disk_label, devpath, NULL };
+		char *open_ntfs_cmd[] = { "mkntfs", "-F", "-Q", "-L", disk_label, devpath, NULL };
+		char *open_hfs_cmd[] = { "mkfs.hfsplus", "-v", disk_label, devpath, NULL };
 #endif
 		// format partition.
 		snprintf(devpath, sizeof(devpath), "/dev/%s", di->device);
@@ -5383,6 +5397,15 @@ static void start_diskformat(char *port_path)
 			unlink(write_file_name);
 
 		cmd = NULL;
+#ifdef ASUS_OPEN_COMPONENTS
+		if (!strcmp(disk_system, "tfat") && nvram_match("usb_fatfs_mod", "open"))
+			cmd = open_fat_cmd;
+		else if (!strcmp(disk_system, "tntfs") && nvram_match("usb_ntfs_mod", "open"))
+			cmd = open_ntfs_cmd;
+		else if (!strcmp(disk_system, "thfsplus") && nvram_match("usb_hfs_mod", "open"))
+			cmd = open_hfs_cmd;
+		else
+#endif
 #if defined(RTCONFIG_TFAT) || defined(RTCONFIG_TUXERA_NTFS) || defined(RTCONFIG_TUXERA_HFS)
 		if (!strcmp(disk_system, "tfat") && nvram_match("usb_fatfs_mod", "tuxera")) {
 			cmd = tfat_cmd;
@@ -5457,7 +5480,11 @@ static void start_diskformat(char *port_path)
 
 			dbg("disk_format: Format %s ...\n", devpath);
 			logmessage("disk_format", "Format %s ...", devpath);
+#ifdef ASUS_OPEN_COMPONENTS
+			format_failed = (_eval(cmd, write_file_name, 0, NULL) != 0);
+#else
 			_eval(cmd, write_file_name, 0, NULL);
+#endif
 		}
 	}
 
@@ -5477,6 +5504,9 @@ static void start_diskformat(char *port_path)
 		}
 	}
 
+#ifdef ASUS_OPEN_COMPONENTS
+format_done:
+#endif
 	start_nas_services(1);
 
 	free_disk_data(&disk_list);
@@ -5484,7 +5514,11 @@ static void start_diskformat(char *port_path)
 	// finish & restart USB apps.
 	dbg("disk_format: done.\n");
 	diskmon_status(DISKMON_FINISH);
+#ifdef ASUS_OPEN_COMPONENTS
+	nvram_set("disk_format_flag", format_failed ? "-1" : "4");
+#else
 	nvram_set("disk_format_flag", "4");
+#endif
 	return;
 }
 

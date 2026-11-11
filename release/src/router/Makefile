@@ -1451,7 +1451,9 @@ obj-$(RTCONFIG_EXT4FS) += e2fsprogs
 
 obj-y += libdisk
 
-#obj-y += dosfstools
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+obj-y += dosfstools
+endif
 #obj-$(RTCONFIG_FTP) += $(if $(RTCONFIG_QCA),vsftpd-3.x,vsftpd)
 ifeq ($(RTCONFIG_FTP),y)
 ifeq ($(or $(RTCONFIG_FTP_SSL),$(RTCONFIG_QCA)),y)
@@ -4766,6 +4768,17 @@ ntfs-3g-2016.2.22-install: ntfs-3g-2016.2.22
 		ln -sf ../bin/ntfs-3g mount.ntfs-3g && \
 		ln -sf ../bin/ntfs-3g mount.ntfs
 
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+dosfstools:
+	$(MAKE) -C dosfstools CC="$(CC)" CFLAGS="-Os -D_FILE_OFFSET_BITS=64" dosfsck
+
+dosfstools-install: dosfstools
+	$(MAKE) -C dosfstools INSTALLDIR="$(INSTALLDIR)/dosfstools" STRIP="$(STRIP)" install
+
+dosfstools-clean:
+	$(MAKE) -C dosfstools clean
+endif
+
 ntfs-3g/stamp-h1:
 	cd ntfs-3g && \
 	CC=$(CC) CFLAGS="-Os -Wall $(EXTRACFLAGS) -ffunction-sections -fdata-sections" \
@@ -4783,6 +4796,10 @@ ntfs-3g-clean:
 	@rm -f ntfs-3g/stamp-h1
 
 ntfs-3g-install: ntfs-3g
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+	install -D ntfs-3g/ntfsprogs/mkntfs $(INSTALLDIR)/ntfs-3g/usr/sbin/mkntfs
+	$(STRIP) -s $(INSTALLDIR)/ntfs-3g/usr/sbin/mkntfs
+endif
 	install -D ntfs-3g/src/ntfs-3g $(INSTALLDIR)/ntfs-3g/bin/ntfs-3g
 	$(STRIP) -s $(INSTALLDIR)/ntfs-3g/bin/ntfs-3g
 	install -d $(INSTALLDIR)/ntfs-3g/sbin && cd $(INSTALLDIR)/ntfs-3g/sbin && \

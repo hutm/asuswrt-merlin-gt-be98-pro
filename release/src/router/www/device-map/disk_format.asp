@@ -74,14 +74,17 @@ function set_disk_info(device) {
 	}
 	
 	switch(disk_system) {
+		case "vfat" :
 		case "tfat" :
 			document.form.disk_name.maxLength = 11;
 			disk_system = "tfat";
 			break;
+		case "ntfs" :
 		case "tntfs" :
 			document.form.disk_name.maxLength = 32;
 			disk_system = "tntfs";
 			break;
+		case "hfsplus" :
 		case "thfsplus" :
 			document.form.disk_name.maxLength = 30;
 			disk_system = "thfsplus";
@@ -94,11 +97,12 @@ function set_disk_info(device) {
 	var usb_fatfs_mod = '<% nvram_get("usb_fatfs_mod"); %>';
 	var usb_ntfs_mod = '<% nvram_get("usb_ntfs_mod"); %>';
 	var usb_hfs_mod = '<% nvram_get("usb_hfs_mod"); %>';
-	if(usb_fatfs_mod != "tuxera")
+	var open_fs_format = (' <% nvram_get("rc_support"); %> ').indexOf(' open_fs_format ') !== -1;
+	if(usb_fatfs_mod != "tuxera" && !(open_fs_format && usb_fatfs_mod == "open"))
 		$("#disk_system option[value='tfat']").remove();
-	if(usb_ntfs_mod != "tuxera")
+	if(usb_ntfs_mod != "tuxera" && !(open_fs_format && usb_ntfs_mod == "open"))
 		$("#disk_system option[value='tntfs']").remove();
-	if(usb_hfs_mod != "tuxera")
+	if(usb_hfs_mod != "tuxera" && !(open_fs_format && usb_hfs_mod == "open"))
 		$("#disk_system option[value='thfsplus']").remove();
 
 	var selected_disk_system = document.form.disk_system;
