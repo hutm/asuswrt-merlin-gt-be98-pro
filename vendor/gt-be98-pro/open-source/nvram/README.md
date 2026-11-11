@@ -28,6 +28,7 @@ support. No router or real storage device is accessed.
 | notification.h | Validated notification dispatch to cache invalidation |
 | listener.h | Nonblocking subscription and checked receive/loss handling |
 | core.c / core.h | Serialized client core with owned-copy reads and updates |
+| storage.c / storage_keys.h | GT-BE98_PRO large-value routing and JFFS get/set/unset hooks |
 | getall.h | Indexed page assembly, preserving caller output on failure |
 | settings.h | Existing newline settings format and ordered loading |
 | persist.h | File sync, backup/installation and recovery-file handling |
@@ -148,3 +149,26 @@ behavior and firmware reader permissions need validation. New settings files use
 mode 0600. The existing newline format cannot faithfully round-trip embedded LF
 values; oversized physical input lines are rejected rather than split into
 multiple entries. There is no transaction across incremental loaded updates.
+
+## Large-value storage hooks
+
+The source storage candidate implements five hooks: large_nvram, large_nvram_t,
+jffs_nvram_get, jffs_nvram_set and jffs_nvram_unset. Its GT-BE98_PRO table has
+304 exact-match identifiers and two migration exceptions. Routing requires the
+/jffs directory and /jffs/nvram_war marker. The reference object and candidate
+passed matching ARM tests for every identifier and both marker gates, unknown
+keys and suffixes, missing versus empty files, helper errors and return values.
+The candidate also passes native sanitizer tests. All filesystem helpers are
+mocked in these tests; no JFFS device is accessed.
+
+Reads preserve the existing shared 16 KiB buffer behavior, including returning
+an empty string on a nonpositive file-read result. Writes return the underlying
+f_write_string result, which can be a positive byte count; NULL means unset.
+These semantics must be accounted for when connecting them to the core. Calls
+require external serialization. Invalid names, path separators and oversized
+paths are rejected instead of traversing directories or silently truncating.
+
+This is not yet a complete replacement for nvpriv.o: internal integer lookup,
+startup migration, combined enumeration and caller integration remain pending.
+The build still uses the original object. The table is specific to this model
+and input version; it must be checked again when changing the ASUS baseline.

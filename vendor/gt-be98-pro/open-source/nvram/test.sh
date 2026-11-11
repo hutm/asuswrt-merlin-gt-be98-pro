@@ -38,4 +38,10 @@ timeout 30 /tmp/test-core
 /toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
   -pthread test_core.c -L/tmp/core-arm -Wl,-rpath,/tmp/core-arm -lnvcore -o /tmp/test-core-arm
 timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-core-arm
+gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined \
+  storage.c test_storage.c -o /tmp/test-storage
+timeout 30 /tmp/test-storage
+/toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
+  storage.c test_storage.c -o /tmp/test-storage-arm
+timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-storage-arm
 '
