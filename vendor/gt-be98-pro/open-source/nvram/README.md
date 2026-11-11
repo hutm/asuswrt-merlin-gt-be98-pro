@@ -780,3 +780,20 @@ passes these rejection checks and all earlier valid-command comparisons. The
 reference sometimes exits zero for rejected commands; the source intentionally
 uses a nonzero exit so scripts can detect errors. Raw-backup options and broader
 feedback-pattern coverage still need review before firmware integration.
+
+## Raw backup option
+
+The source CLI now supports `save FILE 1` for a raw settings snapshot and
+`save FILE 0` for the ordinary decrypted snapshot. Both use the bounded HDR2
+writer. Raw export bypasses settings decryption; it preserves the existing
+stored representation rather than applying new encryption. Exact optional `0`
+and `1` arguments are consumed, and following commands remain available to the
+parser. Other tokens remain commands instead of being silently consumed as an
+unrecognized export option.
+
+ARM comparisons independently decode reference and source files for both modes
+and match explicit ordinary, encrypted/decrypted, empty and embedded-equals
+records. A synthetic failing decrypt backend confirms raw mode does not invoke
+it, while a chained getter confirms argument consumption. The full CLI comparison
+suite passes. Broader feedback-pattern coverage and final firmware integration
+remain pending.

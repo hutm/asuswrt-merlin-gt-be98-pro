@@ -188,4 +188,29 @@ for command in get set unset save restore fb_save; do
 done
 echo "dispatch: unsupported modes, command prefixes and missing arguments rejected without backend calls"
 
+for option in 0 1; do
+  for pair in "source /tmp/source-cli" "reference /firmware/bin/nvram"; do
+    set -- $pair
+    qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+      -E LD_PRELOAD=/tmp/stubs.so -E SAVE_FIXTURE=1 $2 save /tmp/$1-option-$option $option
+  done
+done
+python3 - <<"PYTHON"
+from pathlib import Path
+def records(path):
+    data=Path(path).read_bytes()
+    assert data[:4]==b"HDR2" and len(data)==8+int.from_bytes(data[4:7],"little")
+    return bytes(0 if c>=253 else (255+data[7]-c)&255 for c in data[8:]).rstrip(b"\0").split(b"\0")
+for option in (0,1):
+    expected=[b"lan_ipaddr=192.0.2.1",b"test_exact="+(b"ciphertext" if option else b"decrypted"),b"empty=",b"equals=a=b"]
+    assert records(f"/tmp/source-option-{option}")==records(f"/tmp/reference-option-{option}")==expected
+print("save options: raw and decrypted profiles match the reference records")
+PYTHON
+qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+  -E LD_PRELOAD=/tmp/stubs.so -E SAVE_FIXTURE=1 -E SAVE_FAULT=decryptfail \
+  /tmp/source-cli save /tmp/raw-bypass 1 get key >/tmp/raw-chain.log
+printf "GET[key]\n" >/tmp/expected-chain
+cmp /tmp/raw-chain.log /tmp/expected-chain
+echo "raw save: bypasses decryption and preserves following commands"
+
 '

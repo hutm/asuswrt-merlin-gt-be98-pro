@@ -1058,6 +1058,14 @@ main(int argc, char **argv)
 		{
 			if (*++argv)
 			{
+#ifdef ASUS_OPEN_NVRAM_CLI
+                int save_option = argv[1] && (!strcmp(argv[1], "0") || !strcmp(argv[1], "1"));
+                if (save_option && !strcmp(argv[1], "1")) {
+                    if (nvram_save_new(*argv, buf)) { perror(*argv); free(buf); return 1; }
+                    ++argv;
+                    continue;
+                }
+#endif
 				#ifndef ASUS_OPEN_NVRAM_CLI
                 nvram_getall(buf, nvram_space);
 #endif
@@ -1086,6 +1094,10 @@ main(int argc, char **argv)
                 nvram_save_new(*argv, buf);
 #endif
 #endif
+#ifdef ASUS_OPEN_NVRAM_CLI
+                if (save_option) ++argv;
+#endif
+
 			}
 		}
 		else if (!strncmp(*argv, "save_ap", 7) ||
