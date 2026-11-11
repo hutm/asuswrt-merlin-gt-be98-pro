@@ -19,7 +19,7 @@ main() {
 
 
   docker build -t amng-build --build-arg "BUILD_UID=$(id -u)" \
-    --build-arg "BUILD_GID=$(id -g)" "$kit"
+    --build-arg "BUILD_GID=$(id -g)" - < "$kit/Dockerfile"
 
   # The absolute workspace mount lets Git resolve this linked worktree's metadata.
   docker run --rm --init --name "$container" \
