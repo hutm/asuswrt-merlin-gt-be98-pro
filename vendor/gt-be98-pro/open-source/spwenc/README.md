@@ -557,3 +557,32 @@ and integration checks.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_md5_abi.sh
 ```
+
+## Legacy AES context adapter
+
+`aes_abi.c` supplies the five `AES_*` exports. Initialization generates the
+240-byte AES-256 expanded schedule with an algebraic substitution function.
+Encryption/decryption uses the existing OpenSSL EVP adapter with the original
+32 key bytes at the start of that context. Valid initialized contexts may be
+copied and reused. Arbitrarily modified expanded schedules are not supported:
+the EVP backend derives its own schedule from the original key. This limitation
+must be considered when auditing callers before integration.
+
+The legacy buffer interfaces require storage rounded up to a 16-byte boundary.
+They zero-fill a final short block before processing, for both encryption and
+decryption. Nonpositive lengths do nothing. Single-block interfaces process 16
+bytes in place. The void ABI cannot report backend failure directly; errno is
+available from the checked backend, which also rejects lengths beyond INT_MAX.
+These interfaces preserve a legacy contract; new source callers should prefer
+the checked API. No constant-time claim is made for the compatibility adapter.
+
+The suite compares 64 complete key schedules and 4288 buffer-length cases on
+native sanitizer, ARM and original-library runs. It covers lengths -1..65,
+independent encryption/decryption results, partial-block padding, copied contexts,
+single-block operations, round trips and unchanged context bytes. All pass.
+These candidates remain outside firmware pending command-execution helpers,
+caller review and full integration.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_aes_abi.sh
+```
