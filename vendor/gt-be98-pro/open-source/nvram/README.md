@@ -357,7 +357,28 @@ the echoed payload as well as message type; acknowledgement still does not prove
 the kernel applied the change.
 
 The earlier firmware dynamic-symbol scan's remaining unimplemented consumer
-names are `nvram_kcommit`, `nvram_xfr` and `wlcsm_mngr_restart`. That scan does not
+names are `nvram_xfr` and `wlcsm_mngr_restart`. That scan does not
 cover dynamically constructed symbol lookups, static consumers or every export
-of the original library. Completing those three names alone is insufficient to
+of the original library. Completing those names alone is insufficient to
 claim full library compatibility or hardware readiness.
+
+## Kernel-only commit
+
+The runtime exports `nvram_kcommit`, saving the kernel snapshot to
+`/data/.kernel_nvram.setting` without ASUS suppression, a status marker, global
+`sync()` or a type-7 notification. Its ABI returns zero on success and -1 on
+failure. An ARM reference test confirmed the path, kernel enumeration callback,
+newline serialization and init/save failure returns.
+
+The source deliberately uses the existing recovery-file transaction and exclusive
+storage lock instead of the reference's in-place truncate and file-record lock.
+It preserves live settings on enumeration failure, refuses an occupied staging
+file and can create a missing live file when the data directory exists. It does
+not interoperate as a writer lock with original in-place committers: mixed-library
+concurrent writes remain unsupported. Error returns can follow file installation.
+
+Native sanitizer and ARM/QEMU runtime tests cover successful save, bypass of ASUS
+stop/policy controls, absence of notification/sync/marker calls, failed enumeration
+with preserved settings, unavailable data directory, occupied staging, lock cleanup
+and retry. Hardware persistence testing and replacement-library integration remain
+pending.

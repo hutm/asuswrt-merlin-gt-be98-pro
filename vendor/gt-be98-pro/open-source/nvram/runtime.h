@@ -21,4 +21,7 @@ char *nvram_get_salt(void);
 /* Direct kernel SET; NULL is encoded as a zero-length value, not UNSET. */
 int nvram_kset(const char *key,const char *value);
 int common_nvram_kernel_set(const char *key,const char *value);
+/* Save kernel settings without a notification. Zero success, -1 failure;
+ * errors can follow installation. Uses the source recovery-file transaction. */
+int nvram_kcommit(void);
 #endif

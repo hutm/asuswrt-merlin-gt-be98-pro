@@ -95,7 +95,7 @@ int wlcsm_nvram_getall(char *output,int capacity) {
 /* Serialize source writers with the same exclusive lock used for JFFS storage.
  * Original binaries do not necessarily take this lock when committing; mixing
  * implementations cannot provide cross-process commit serialization. */
-static int commit_locked(void) {
+static int commit_locked(int notify) {
     int directory,result,saved,released;
     struct nv_storage_hooks *storage=&adapter.storage;
     if(storage->lock(storage->context)) return 1;
@@ -106,7 +106,8 @@ static int commit_locked(void) {
 #endif
     if(directory<0) result=-1;
     else {
-        result=nv_core_commit_at(core,directory,262144);
+        result=notify?nv_core_commit_at(core,directory,262144):
+                      nv_core_save_at(core,directory,262144);
         saved=errno;
         if(close(directory) && !result) result=-1;
         else errno=saved;
@@ -120,7 +121,7 @@ static int commit_locked(void) {
 
 int wlcsm_nvram_commit(void) {
     int result;if(enter()) return 1;
-    result=commit_locked();leave();return result;
+    result=commit_locked(1);leave();return result;
 }
 int nvram_commit(void) {
     char *stop=NULL;FILE *marker;int result,saved;
@@ -133,7 +134,7 @@ int nvram_commit(void) {
     result=nv_core_get_copy(core,"asus_stop_commit",&stop);
     if(result<0) {leave();return 1;}
     if(stop) {free(stop);leave();return 0;}
-    result=commit_locked();saved=errno;
+    result=commit_locked(1);saved=errno;
 #ifdef NV_RUNTIME_TEST
     nv_runtime_test_sync();
 #else
@@ -168,4 +169,11 @@ int common_nvram_kernel_set(const char *key,const char *value) {
 }
 int nvram_kset(const char *key,const char *value) {
     return common_nvram_kernel_set(key,value);
+}
+
+int nvram_kcommit(void) {
+    int result;if(enter()) return -1;
+    /* Kernel snapshot only: no ASUS stop flag, global sync or notification.
+     * Use the recovery-file transaction rather than truncating the live file. */
+    result=commit_locked(0);leave();return result?-1:0;
 }
