@@ -375,3 +375,30 @@ migration entry points, but other object exports and firmware integration remain
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_init.sh
 ```
+
+## Combined credential lifecycle validation
+
+`test_lifecycle.sh` links all source password, settings, migration and startup
+components together. Only the settings backend, device identity and entropy are
+substituted with synthetic fixtures. The reference run uses the original
+library's complete credential path against the same in-memory backend. Native
+runs include address/undefined-behavior sanitizers; ARM runs use the extracted
+firmware libraries under QEMU.
+
+Eight scenarios cover default versions 2/3, missing/existing salt, and empty/
+nonempty password and account-list credentials. Each initializes twice, for 16
+compared final states. Every stored value and presence flag matches the reference.
+The tests also assert decoded credentials, account-list ordering, recovery of a
+formerly encrypted setting, preservation of an ordinary setting, final mode and
+version, and one commit per initialization. The second initialization leaves all
+stored values unchanged. Version 3 with initially missing salt preserves the
+credentials while creating the deterministic test salt.
+
+This closes the earlier successful-path integration gap between the credential
+candidates. It does not validate the production NVRAM backend, concurrent writes,
+crash recovery, real entropy, other default versions or the full firmware build.
+Other exports from `spwenc.o` still prevent selecting its complete replacement.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_lifecycle.sh
+```
