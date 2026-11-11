@@ -55,4 +55,16 @@ printf "key=one\nempty=\nequals=a=b\n" >/tmp/expected-export
 cmp /tmp/export /tmp/expected-export
 echo "savefile: source/reference exports and status match"
 
+for command in show dump getall; do
+  qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+    -E LD_PRELOAD=/tmp/stubs.so -E DUMP_FIXTURE=1 /tmp/source-cli $command >/tmp/source.log 2>/tmp/source.err
+  qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+    -E LD_PRELOAD=/tmp/stubs.so -E DUMP_FIXTURE=1 /firmware/bin/nvram $command >/tmp/reference.log 2>/tmp/reference.err
+  cmp /tmp/source.log /tmp/reference.log
+  cmp /tmp/source.err /tmp/reference.err
+  printf "key=one\nXX ILLEGAL nvram\nempty=\nequals=a=b\n" >/tmp/expected-dump
+  cmp /tmp/source.log /tmp/expected-dump
+  echo "$command: filtering, empty slots and size report match"
+done
+
 '

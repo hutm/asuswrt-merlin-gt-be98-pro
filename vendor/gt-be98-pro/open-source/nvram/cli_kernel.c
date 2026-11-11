@@ -33,11 +33,41 @@ static int savefile(const char *path,FILE *output) {
     if(!result && fprintf(output,"save nvram to %s done!\n",path)<0) return -1;
     return result;
 }
+/* The shared policy receives the complete key, including names over 127 bytes. */
+extern int invalid_nvram_get_name(char *name);
+static int dump(FILE *output) {
+    const size_t capacity=262144;size_t pos=0,end;int count,result=0,saved;
+    char *data=malloc(capacity);
+    if(!data) return -1;
+    memset(data,0xff,capacity);
+    count=nvram_getall(data,(int)capacity);
+    if(count<0) {saved=errno;free(data);errno=saved;return -1;}
+    if((size_t)count>=capacity) {free(data);errno=EPROTO;return -1;}
+    /* A positive byte count can include empty slots before later records. */
+    while(pos<capacity && (data[pos] || pos<(size_t)count)) {
+        char *nul=memchr(data+pos,0,capacity-pos);
+        if(!nul) break;
+        pos=(size_t)(nul-data)+1;
+    }
+    if(pos>=capacity || data[pos]) {free(data);errno=EPROTO;return -1;}
+    end=pos;
+    for(pos=0;pos<end;pos+=strlen(data+pos)+1) {
+        char *record=data+pos,*equals=strchr(record,'=');int denied;
+        if(equals) *equals=0;
+        denied=invalid_nvram_get_name(record);
+        if(equals) *equals='=';
+        if(!denied && (fputs(*record?record:"XX ILLEGAL nvram",output)==EOF || fputc('\n',output)==EOF)) {result=-1;break;}
+    }
+    if(!result && fprintf(stderr,"size: %d bytes (%d left)\n",(int)end+20,(int)capacity-(int)end-20)<0) result=-1;
+    saved=errno;free(data);errno=saved;return result;
+}
 int nv_cli_kernel(int argc,char *const argv[],FILE *output) {
     const char *command;char *copy,*value;int result,saved;FILE *input;
     if(argc<=0 || !argv || !argv[0] || !output) {errno=EINVAL;return -1;}
     result=nv_cli_flags(argc,argv,output);if(result) return result;
     command=argv[0];
+    if(!strcmp(command,"show") || !strcmp(command,"dump") || !strcmp(command,"getall"))
+        return dump(output)?-1:1;
     if(!strcmp(command,"savefile")) {
         const char *path=argc>1 && argv[1]?argv[1]:"/data/nvramdefault.txt";
         return savefile(path,output)?-1:(argc>1?2:1);

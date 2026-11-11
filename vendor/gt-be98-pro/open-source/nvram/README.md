@@ -615,3 +615,23 @@ other following command, unlike the reference's prefix match and consumption of
 an unrelated argument. All component tests and the CLI reference comparison pass.
 The source CLI is still not selected in firmware; dump filtering, backup writing,
 erase and remaining ordinary-command behavior need review.
+
+## Filtered settings display
+
+The source CLI handles exact `show`, `dump` and `getall` commands. All three
+retrieve the ASUS settings view, apply `invalid_nvram_get_name` to each key,
+preserve record order, and report used/remaining bytes including the 20-byte
+header allowance. Positive getter lengths can span empty slots: those slots
+produce the reference's `XX ILLEGAL nvram` marker if the policy permits them.
+The complete source and reference CLIs match stdout and stderr under ARM/QEMU
+for a fixture containing restricted settings, empty slots and ordinary values.
+
+The source validates all record boundaries and the reported length before any
+output; getter errors and malformed or unterminated snapshots fail without
+printing partial settings. Native sanitizer and ARM tests also cover a full
+buffer, an out-of-range reported length, and output failure. The policy receives
+the complete key; unlike the reference, the source does not truncate names to
+127 bytes before checking them. A long restricted-key test confirms that its
+value is withheld. This delegates policy to the existing shared library, whose
+remaining proprietary components still require replacement. Firmware selection
+of the source CLI awaits backup/erase and ordinary-command review.

@@ -29,8 +29,12 @@ int nvram_getall(char *out,int capacity){
  if(snapshot_mode==1){errno=EIO;return -1;}
  if(snapshot_mode==2){memset(out,'x',(size_t)capacity);return 0;}
  if(snapshot_mode==3){memset(out,'x',(size_t)capacity);out[capacity-1]=0;return 0;}
+ if(snapshot_mode==4){const char dump[]="key=one\0restricted=hidden\0\0empty=\0\0";memcpy(out,dump,sizeof dump);return sizeof dump-2;}
+ if(snapshot_mode==5)return capacity;
+ if(snapshot_mode==6){memset(out,'q',160);memcpy(out+160,"=hidden\0\0",9);return 0;}
  memcpy(out,data,sizeof data);return 0;
 }
+int invalid_nvram_get_name(char *name){return !strcmp(name,"restricted") || (strlen(name)==160 && strspn(name,"q")==160);}
 static void reset(void){used=0;events[0]=0;}
 int main(void){
  FILE *out=tmpfile();assert(out);char *set[]={"kset","key=a=b"};assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"A:key:a=b;K:key:a=b;"));
@@ -60,6 +64,20 @@ int main(void){
  reset();commit_fail=1;assert(nv_cli_kernel(1,set,out)==-1&&errno==EIO&&!strcmp(events,"WCOMMIT::<NULL>;"));commit_fail=0;
  reset();kcommit_fail=1;assert(nv_cli_kernel(1,set,out)==-1&&errno==EIO&&!strcmp(events,"WCOMMIT::<NULL>;C::<NULL>;"));kcommit_fail=0;
  reset();set[1]="get";assert(nv_cli_kernel(2,set,out)==1); /* Preserve following commands. */
+ const char *commands[]={"show","dump","getall"};
+ for(unsigned i=0;i<3;++i){
+  FILE *view=tmpfile();assert(view);set[0]=(char *)commands[i];snapshot_mode=4;
+  assert(nv_cli_kernel(1,set,view)==1);rewind(view);char shown[128]={0};fread(shown,1,sizeof shown,view);fclose(view);
+  assert(!strcmp(shown,"key=one\nXX ILLEGAL nvram\nempty=\n"));
+  for(snapshot_mode=1;snapshot_mode<=5;++snapshot_mode){
+   if(snapshot_mode==4)continue;
+   view=tmpfile();assert(view);assert(nv_cli_kernel(1,set,view)==-1);assert(ftell(view)==0);fclose(view);
+  }
+ }
+ snapshot_mode=6;set[0]="dump";FILE *view=tmpfile();assert(view);
+ assert(nv_cli_kernel(1,set,view)==1 && ftell(view)==0);fclose(view);
+ snapshot_mode=0;view=fopen("/dev/full","w");assert(view);assert(!setvbuf(view,NULL,_IONBF,0));
+ assert(nv_cli_kernel(1,set,view)==-1 && errno==ENOSPC);fclose(view);
  set[0]="unknown";assert(!nv_cli_kernel(1,set,out));fclose(out);
  puts("Kernel CLI: routing order, NULL values, stop control, file loading and failures passed");return 0;
 }
