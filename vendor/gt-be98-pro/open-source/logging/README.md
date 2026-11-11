@@ -3,7 +3,10 @@
 The experimental GT-BE98_PRO profile builds
 `release/src/router/libasuslog/source/libasuslog.c`. Other profiles retain their
 existing selection. The source exports the eight baseline symbol names and uses
-libc, pthreads and the existing NVRAM library. NVRAM replacement remains separate.
+libc, pthreads and the existing NVRAM/shared libraries. The current NVRAM library
+imports ASUS helpers from libshared without declaring that dependency itself;
+retaining it avoids new unresolved symbols when loading the logging library.
+NVRAM/shared replacement remains separate.
 
 Run from the repository root:
 
@@ -39,3 +42,11 @@ A successful component test does not establish complete compatibility. The next
 firmware build must verify the installed library's dependencies, consumer symbol
 resolution and runtime behavior. This is one replacement within the larger goal;
 wireless, acceleration, firmware and other userspace dependencies remain.
+
+The full build at `de3442012034` completed. Its image SHA-256 is
+`0d6d0abda2ec14d3db881ec8819e3779f7eac8e08168198172b38c03d8c2aaf7`.
+The packaged source library matched the build output and passed the ARM reference
+matrix. Static inspection then found that dropping libshared introduced unresolved
+symbols through libnvram when checking the library's standalone dependency scope.
+The subsequent dependency correction restores libshared; it needs a new full build.
+This image is experimental and not an installable release.

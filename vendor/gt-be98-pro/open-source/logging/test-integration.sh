@@ -3,7 +3,7 @@ set -euo pipefail
 ulimit -c 0
 fixture=${LOGGING_FIXTURE:-/source}
 output=${LOGGING_OUTPUT:-/output}
-mkdir -p /tmp/router/libasuslog/source /tmp/router/nvram /tmp/router/libasuslog/prebuild/{GT-BE98_PRO,OTHER}
+mkdir -p /tmp/router/shared /tmp/router/libasuslog/source /tmp/router/nvram /tmp/router/libasuslog/prebuild/{GT-BE98_PRO,OTHER}
 cp "$fixture"/integration-Makefile /tmp/router/libasuslog/Makefile
 cp "$fixture"/libasuslog.c /tmp/router/libasuslog/source/
 cat > /tmp/router/common.mak <<'MAKE'
@@ -16,6 +16,7 @@ CC := /toolchain/bin/arm-buildroot-linux-gnueabi-gcc
 MAKE
 CC=/toolchain/bin/arm-buildroot-linux-gnueabi-gcc
 $CC -shared -fPIC "$fixture"/reference_stubs.c -o /tmp/router/nvram/libnvram.so
+$CC -shared -fPIC "$fixture"/reference_stubs.c -o /tmp/router/shared/libshared.so
 printf 'baseline GT\n' > /tmp/router/libasuslog/prebuild/GT-BE98_PRO/libasuslog.so
 printf 'baseline OTHER\n' > /tmp/router/libasuslog/prebuild/OTHER/libasuslog.so
 cd /tmp/router/libasuslog

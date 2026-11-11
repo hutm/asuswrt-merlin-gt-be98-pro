@@ -33,7 +33,8 @@ endif
 
 
 ifeq ($(OPEN_ASUSLOG),y)
-LDFLAGS_SO = -L$(TOP_PLATFORM)/nvram${BCMEX}${EX7} -lnvram -lpthread
+# libnvram imports ASUS helpers from libshared without declaring DT_NEEDED.
+LDFLAGS_SO = -L$(TOP_PLATFORM)/nvram${BCMEX}${EX7} -lnvram -L$(TOP)/shared -lshared -lpthread
 all: $(PROGS)
 
 # Rebuild when returning from a profile that copied a prebuilt .so over ours.
