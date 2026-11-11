@@ -4699,6 +4699,10 @@ aupnpc-clean:
 	$(MAKE) -C aupnpc clean
 
 
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+shared: openssl-3.5 zlib
+endif
+
 # !!TB
 #shared:
 shared: $(if $(RTCONFIG_QTN),libqcsapi_client) $(if $(RTCONFIG_HTTPS),openssl) $(if $(RTCONFIG_SW_HW_AUTH),sw-hw-auth) $(if $(BCM_502L07P2),ethctl_lib)

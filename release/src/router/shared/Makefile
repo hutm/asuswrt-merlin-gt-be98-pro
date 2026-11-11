@@ -435,7 +435,13 @@ ifeq ($(RTCONFIG_ISP_CUSTOMIZE),y)
 OBJS	+= $(if $(wildcard customize_shared.c),customize_shared.o,prebuild/customize_shared.o)
 endif
 
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_SPWENC_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/spwenc)
+OBJS += open-spwenc.o
+OPEN_SPWENC_LIBS := -L$(TOP)/openssl-3.5 -lcrypto -L$(TOP)/zlib -lz
+else
 OBJS += $(if $(wildcard spwenc.c), spwenc.o, prebuild/spwenc.o)
+endif
 
 ifeq ($(CONFIG_BCMWL5),y)
 ifneq ($(RTCONFIG_DSL_REMOTE)$(HND_ROUTER),y)
@@ -613,9 +619,9 @@ all: libshared.so libshared.a
 libshared.so: $(OBJS)
 	@echo " [shared] LD $@"
 ifeq ($(HND_ROUTER),y)
-	@$(CC) $(LDFLAGS) $(EXTRA_LD_FLAGS) -shared -o $@ $^
+	@$(CC) $(LDFLAGS) $(EXTRA_LD_FLAGS) -shared -o $@ $^ $(OPEN_SPWENC_LIBS)
 else
-	@$(LD) $(LDFLAGS) -shared -o $@ $^
+	@$(LD) $(LDFLAGS) -shared -o $@ $^ $(OPEN_SPWENC_LIBS)
 endif
 
 	$(SIZECHECK)
@@ -633,6 +639,7 @@ install: all
 	$(if $(RTCONFIG_DEBUG),,@$(STRIP) $(INSTALLDIR)/usr/lib/libshared.so)
 
 clean:
+	rm -rf .open-spwenc
 	rm -f *.o *.so *.a .*.depend *.prep sysdeps/*.o sysdeps/broadcom/*.o sysdeps/ralink/*.o sysdeps/qtn/*.o
 
 private.o:
@@ -648,6 +655,15 @@ endif
 hw_auth.o:
 ifeq ($(wildcard $(SRCBASE)/router/sw-hw-auth/*.c),)
 	cp -f $(TOP)/sw-hw-auth/prebuild/$(BUILD_NAME)/hw_auth.o ./
+endif
+
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+.PHONY: open-spwenc-force
+open-spwenc-force:
+open-spwenc.o: open-spwenc-force
+	$(MAKE) -f $(OPEN_SPWENC_DIR)/Makefile CC="$(CC)" \
+	  BUILD_DIR="$(CURDIR)/.open-spwenc" OUTPUT="$(CURDIR)/$@" \
+	  CFLAGS="$(CFLAGS)" CPPFLAGS="-I$(TOP)/openssl-3.5/include -I$(TOP)/zlib"
 endif
 
 .PHONY: open-nvpriv-force

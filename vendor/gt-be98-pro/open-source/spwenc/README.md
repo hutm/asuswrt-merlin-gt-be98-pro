@@ -616,3 +616,27 @@ object now needs an export/caller audit and integration into the full build.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_commands.sh
 ```
+
+## Experimental build selection
+
+The component Makefile now builds one ARM relocatable object from all source
+candidates. `test_exports.sh` confirms that it supplies all 37 exports from the
+original object; the two exported tables have matching ARM sizes and symbol
+types. The existing reference-image symbol inventory found MD5-name imports in
+`rc` and no AES-name imports in that image. This is symbol-name evidence only;
+it does not cover runtime lookup, static callers, binding order or arbitrary
+context mutation. The AES valid-context limitation remains applicable.
+
+For `ASUS_OPEN_COMPONENTS=y` and `BUILD_NAME=GT-BE98_PRO`, the shared-library
+Makefile now selects `open-spwenc.o` instead of `prebuild/spwenc.o`. Source OpenSSL
+3.5 and zlib are explicit build prerequisites and link dependencies. Other model/
+option combinations retain their existing selection. The source object is
+revisited on each shared-library build, with per-source dependency tracking.
+The complete 21-script component suite passes before starting this integration
+attempt, including native sanitizer and ARM/reference checks. A successful full
+firmware build, packaged-object verification and image ABI audit remain pending.
+No hardware compatibility or flash-readiness claim follows from these tests.
+
+```
+bash vendor/gt-be98-pro/open-source/spwenc/test_exports.sh
+```
