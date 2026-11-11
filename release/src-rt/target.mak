@@ -444,3 +444,8 @@ export RT-BE58_GO += BUILD_NAME="RT-BE58_GO" EXT_PHY="BCM84880" NVSIZE="128" DHD
 ifeq ($(ASUS_PUBLIC_GPL_38984),y)
 export GT-BE98_PRO := $(filter-out MULTISERVICE_WAN=y,$(GT-BE98_PRO)) MULTISERVICE_WAN=n
 endif
+
+# Experimental replacement profile; this does not yet remove all binary inputs.
+ifeq ($(ASUS_OPEN_COMPONENTS),y)
+export GT-BE98_PRO := $(filter-out TFAT=% NTFS=% HFS=%,$(GT-BE98_PRO)) TFAT=n NTFS="open" HFS="open"
+endif
