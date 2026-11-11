@@ -38,3 +38,27 @@ standard primitives where their interfaces can preserve the existing format.
 The complete object and its data exports must be accounted for before removing
 it from libshared; these three helpers do not constitute that replacement.
 Reference binaries and implementation inspection artifacts stay outside Git.
+
+## AES primitive candidate
+
+`crypto.c` reuses OpenSSL EVP for AES-256 ECB without padding, with checked block
+lengths and separate or exactly overlapping input/output buffers. It is not the
+vendor context ABI and is not selected in firmware. OpenSSL source already exists
+in this repository; the candidate avoids adding another handwritten AES core.
+Zero-length operations succeed without touching buffers; invalid arguments and
+int-size overflow return errors. A backend failure may leave partial output.
+
+Tests compare native sanitizer/OpenSSL, ARM/OpenSSL and the original library:
+the AES-256 key `000102...1f` and plaintext `001122...ff` yield
+`8ea2b7ca516745bfeafc49904b496089`. Another 256 deterministic keys/messages each
+cover four blocks, exact ciphertext comparisons, decrypt round trips and in-place
+encryption. All pass. This establishes the tested primitive behavior only: it
+does not validate password framing, key/salt derivation, vendor context layout,
+partial-block zero padding, authentication or settings-policy behavior. ECB is
+used here to preserve the existing format, not as a new encryption design.
+
+Run with the same extracted reference root:
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_crypto.sh
+```
