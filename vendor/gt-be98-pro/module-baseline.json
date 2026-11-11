@@ -1,0 +1,2996 @@
+{
+  "scope": "Baseline standard Merlin 3006.102.9 rootfs, not the experimental vendor-input image",
+  "baseline_image_sha256": "8aba99c00aa20fca485f61a768dec988ba4369d94e426274a25902c85cda2481",
+  "module_count": 153,
+  "explicit_nonfree_count": 17,
+  "additional_prebuilt_attributed_count": 17,
+  "modules": [
+    {
+      "path": "lib/modules/4.19.294/bcmkernel/net/netfilter/nf_conntrack_rtsp.ko",
+      "sha256": "b2e5c25b54b2d8aece8b368d574eda146c44f4e8d597f67124e89bde15ce5604",
+      "architecture": "EM_AARCH64",
+      "bytes": 19064,
+      "executable_section_bytes": 5386,
+      "named_function_symbols": 8,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/bcmkernel/net/netfilter/nf_conntrack_rtsp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/bcmkernel/net/netfilter/nf_dyndscp.ko",
+      "sha256": "1d9b6018af6cada9371a4901d744f6a557ab4f9e7547cbe79ba10a3cef4fe9e9",
+      "architecture": "EM_AARCH64",
+      "bytes": 19128,
+      "executable_section_bytes": 4094,
+      "named_function_symbols": 21,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/bcmkernel/net/netfilter/nf_dyndscp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/bcmkernel/net/netfilter/nf_nat_pt.ko",
+      "sha256": "5a8b88575f1095b44cacd2f57529ffd4661e0f67a6bdb7415650af67a7018211",
+      "architecture": "EM_AARCH64",
+      "bytes": 17176,
+      "executable_section_bytes": 4074,
+      "named_function_symbols": 9,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/bcmkernel/net/netfilter/nf_nat_pt.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/bcmkernel/net/netfilter/nf_nat_rtsp.ko",
+      "sha256": "760550d10c2c0f13418707bbb3c171abd19b3b77ed7905471b96f87df641c05e",
+      "architecture": "EM_AARCH64",
+      "bytes": 13424,
+      "executable_section_bytes": 2922,
+      "named_function_symbols": 12,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/bcmkernel/net/netfilter/nf_nat_rtsp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "nf_conntrack_rtsp"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/bcmkernel/net/netfilter/xt_SKIPLOG.ko",
+      "sha256": "7cd290cf47b4c98d2677a8a21d53d1c561e2007a31aa016d0ee71a80470ef45d",
+      "architecture": "EM_AARCH64",
+      "bytes": 4720,
+      "executable_section_bytes": 86,
+      "named_function_symbols": 5,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/bcmkernel/net/netfilter/xt_SKIPLOG.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/bcmkernel/net/netfilter/xt_blog.ko",
+      "sha256": "b23fc182500c4919cab899a566a77f76ed7807f7391356e27d2de3507677182a",
+      "architecture": "EM_AARCH64",
+      "bytes": 4672,
+      "executable_section_bytes": 142,
+      "named_function_symbols": 5,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/bcmkernel/net/netfilter/xt_blog.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/bcmkernel/net/netfilter/xt_flowlabel.ko",
+      "sha256": "4117ae58240361fdbb23eef5259c96ca3c9b2c99f7d0f3d55ee97b5172dfd274",
+      "architecture": "EM_AARCH64",
+      "bytes": 5176,
+      "executable_section_bytes": 182,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/bcmkernel/net/netfilter/xt_flowlabel.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/bcmkernel/net/netfilter/xt_mscs.ko",
+      "sha256": "17300f4f18e72f733842582c84bd4412deb9faa547f3d1382f3227d6a01bc36f",
+      "architecture": "EM_AARCH64",
+      "bytes": 6824,
+      "executable_section_bytes": 946,
+      "named_function_symbols": 7,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/bcmkernel/net/netfilter/xt_mscs.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/bcmkernel/net/netfilter/xt_scs.ko",
+      "sha256": "88f8ff4cd2dc862f5b6e13d260c8386763cd27d4e527eb8dfda59e7cd791b903",
+      "architecture": "EM_AARCH64",
+      "bytes": 7496,
+      "executable_section_bytes": 1294,
+      "named_function_symbols": 7,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/bcmkernel/net/netfilter/xt_scs.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcm_bca_usb.ko",
+      "sha256": "45251a122169c61ef850084ea8ab8d0f58fbb7c0722cfb273411b609b060f617",
+      "architecture": "EM_AARCH64",
+      "bytes": 18560,
+      "executable_section_bytes": 3442,
+      "named_function_symbols": 21,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL v2",
+        "GPL v2"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcm_bp3drv.ko",
+      "sha256": "1b0358022a743009ca09a7613e898de31c1f57440c85ae5babb6e0c95e0c1d18",
+      "architecture": "EM_AARCH64",
+      "bytes": 212176,
+      "executable_section_bytes": 73082,
+      "named_function_symbols": 248,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcm_bpm.ko",
+      "sha256": "4210544576e5a9b262de67f6678d0dc7086493e5bd33f0fed8ba86311f20fd2f",
+      "architecture": "EM_AARCH64",
+      "bytes": 93848,
+      "executable_section_bytes": 25586,
+      "named_function_symbols": 64,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        "bcm_mpm"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcm_enet.ko",
+      "sha256": "34f1e4659faa7b4f003688fda855ec50238daa0811c6bbfb16f20b97b0d0103c",
+      "architecture": "EM_AARCH64",
+      "bytes": 269248,
+      "executable_section_bytes": 92550,
+      "named_function_symbols": 243,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "bdmf,rdpa_gpl,bcmlibs"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcm_ingqos.ko",
+      "sha256": "385b075ed20a7c6c8da71cc62215a85567f9097fa8bc32fae7bbaa71924a7cd2",
+      "architecture": "EM_AARCH64",
+      "bytes": 57920,
+      "executable_section_bytes": 18682,
+      "named_function_symbols": 45,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcm_knvram.ko",
+      "sha256": "302cda26fa6be36b5052b21e0a95c34db299300bdb74299eb8234f10763a28ea",
+      "architecture": "EM_AARCH64",
+      "bytes": 23704,
+      "executable_section_bytes": 6030,
+      "named_function_symbols": 26,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcm_mpm.ko",
+      "sha256": "9c880242ebc3c7275f326f45a9fe1d08d43f71f357cd8412b9c69ec516d780b2",
+      "architecture": "EM_AARCH64",
+      "bytes": 126864,
+      "executable_section_bytes": 37382,
+      "named_function_symbols": 75,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcm_pcie_hcd.ko",
+      "sha256": "3386e76e99751433c04eab60f3182ede1178916db727889f92851cc8ddacb6ad",
+      "architecture": "EM_AARCH64",
+      "bytes": 206456,
+      "executable_section_bytes": 53130,
+      "named_function_symbols": 67,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "bcm_enet,bcm_knvram"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcm_pondrv.ko",
+      "sha256": "ed02ba9131da9dfbfa84ffc7e366601e38dbcbbd47e948727d7ff7f68a58264f",
+      "architecture": "EM_AARCH64",
+      "bytes": 99752,
+      "executable_section_bytes": 21918,
+      "named_function_symbols": 83,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        "bdmf,bcmlibs"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcm_thermal.ko",
+      "sha256": "6d1f8782f53c6b118c3e0acec048c4ec4764192ffae3d9900ddd2120a79f93f1",
+      "architecture": "EM_AARCH64",
+      "bytes": 20344,
+      "executable_section_bytes": 3514,
+      "named_function_symbols": 23,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcmflex.ko",
+      "sha256": "a46c58a7b7d1ef8906fa036481ef641315d896b5186d67f797f2979fd0c319e5",
+      "architecture": "EM_AARCH64",
+      "bytes": 35744,
+      "executable_section_bytes": 8638,
+      "named_function_symbols": 20,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL v2"
+      ],
+      "depends": [
+        "rdpa_gpl"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcmlibs.ko",
+      "sha256": "b63afa61242e9c29938c05591ae50de9a9049e45fa7ac4ae2d739d985a6fbfa1",
+      "architecture": "EM_AARCH64",
+      "bytes": 64808,
+      "executable_section_bytes": 15066,
+      "named_function_symbols": 83,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcmmcast.ko",
+      "sha256": "c5519dc861305ef715d4b46199a07c912c56a5b5c7a692d6a9ec08dc2dc92a7e",
+      "architecture": "EM_AARCH64",
+      "bytes": 212640,
+      "executable_section_bytes": 67506,
+      "named_function_symbols": 195,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcmspu.ko",
+      "sha256": "f55183d2e713a34f8225a84353d0d884ae7cb40148ecc039f07eec5729962ff8",
+      "architecture": "EM_AARCH64",
+      "bytes": 244736,
+      "executable_section_bytes": 57054,
+      "named_function_symbols": 164,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL v2"
+      ],
+      "depends": [
+        "bdmf,bcmflex,rdpa_gpl"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bcmvlan.ko",
+      "sha256": "0ec61ee7fea01c42cbb549bcbfcc88cde807f696e2fa08d18e763e96c8c76a87",
+      "architecture": "EM_AARCH64",
+      "bytes": 206744,
+      "executable_section_bytes": 62134,
+      "named_function_symbols": 123,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/bdmf.ko",
+      "sha256": "d38cb6cf32140837d7f431d276f982373271c4e212405cc0694b6b90e620615f",
+      "architecture": "EM_AARCH64",
+      "bytes": 410616,
+      "executable_section_bytes": 126062,
+      "named_function_symbols": 435,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL",
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/cmdlist.ko",
+      "sha256": "fc413b1428b0f475b6ff685f1f639fcfdc9256008f4f501db26a24412f3e3aff",
+      "architecture": "EM_AARCH64",
+      "bytes": 222160,
+      "executable_section_bytes": 68734,
+      "named_function_symbols": 87,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/dhd.ko",
+      "sha256": "af77543e47c80c0aa6b400c8267e50f77126493a9d9ef01aa4ffe4e095cab2e6",
+      "architecture": "EM_AARCH64",
+      "bytes": 2507200,
+      "executable_section_bytes": 707590,
+      "named_function_symbols": 1799,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL and additional rights"
+      ],
+      "depends": [
+        "bdmf,hnd,cfg80211,wlshared,rdpa_gpl,bcm_knvram,bcmlibs,bcmmcast,wfd,emf,igs,bcm_pcie_hcd"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/emf.ko",
+      "sha256": "d8c20737d825cc3a2d05a6ea38e3d2920fc323070215663dca75fcb6d05f1850",
+      "architecture": "EM_AARCH64",
+      "bytes": 34336,
+      "executable_section_bytes": 10986,
+      "named_function_symbols": 44,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual MIT/GPL"
+      ],
+      "depends": [
+        "hnd,bcmmcast"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/gdx.ko",
+      "sha256": "4e67aa7158b0ccdb8ddd269198bc012f8a50628774a3b97ca22301e84aa10946",
+      "architecture": "EM_AARCH64",
+      "bytes": 99768,
+      "executable_section_bytes": 28534,
+      "named_function_symbols": 46,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        "bdmf,rdpa_gpl"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/hnd.ko",
+      "sha256": "9f79110d7f6f8a3eef08623261b2de4233dd8165702ad54f3c9780285f9669e6",
+      "architecture": "EM_AARCH64",
+      "bytes": 701384,
+      "executable_section_bytes": 179870,
+      "named_function_symbols": 880,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL and additional rights"
+      ],
+      "depends": [
+        "bcm_knvram"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/hs_uart_drv.ko",
+      "sha256": "6c50bb826b9472eafec9b581ce8d5844d7672fa18db38a809fa8f8010dfaf1a0",
+      "architecture": "EM_AARCH64",
+      "bytes": 24000,
+      "executable_section_bytes": 5782,
+      "named_function_symbols": 35,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/igs.ko",
+      "sha256": "7b7aae57d7017c35b59e6cfa09bd1ffaa477334b35c1113975109284c097b24f",
+      "architecture": "EM_AARCH64",
+      "bytes": 40912,
+      "executable_section_bytes": 12266,
+      "named_function_symbols": 54,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual MIT/GPL"
+      ],
+      "depends": [
+        "emf,hnd,bcmmcast"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/nat46.ko",
+      "sha256": "bcb2fd61edeb4efe4d429de59ede891e88ee0f3cd99b46095e18f4f8f38572ed",
+      "architecture": "EM_AARCH64",
+      "bytes": 62832,
+      "executable_section_bytes": 21094,
+      "named_function_symbols": 76,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/pcap.ko",
+      "sha256": "e4f62696dd874221b7914395eb141874bc3059575a0efcd66922d8b24bb0d85c",
+      "architecture": "EM_AARCH64",
+      "bytes": 20408,
+      "executable_section_bytes": 6090,
+      "named_function_symbols": 18,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/bcmdrivers/opensource/char/pcap/impl1/pcap.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/pktflow.ko",
+      "sha256": "4a1aef36117adea3c202427fce9470e97d6f349e7ef334c4c00d702b17f74ad1",
+      "architecture": "EM_AARCH64",
+      "bytes": 525208,
+      "executable_section_bytes": 223554,
+      "named_function_symbols": 429,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        "bcmlibs"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/pktrunner.ko",
+      "sha256": "a8426e214ecadd1aa0be99eedf637585429fef915ad113561b28574baecb60be",
+      "architecture": "EM_AARCH64",
+      "bytes": 135992,
+      "executable_section_bytes": 37434,
+      "named_function_symbols": 96,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        "cmdlist,bdmf,rdpa_gpl,bcmlibs,pktflow,rdpa_mw"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/rdpa.ko",
+      "sha256": "316a8452ca9dfb8d2bd90e8cee72387bc5b4ed547c851a1af7bf2d7688535112",
+      "architecture": "EM_AARCH64",
+      "bytes": 7171096,
+      "executable_section_bytes": 1523246,
+      "named_function_symbols": 4895,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        "bdmf,rdpa_gpl,bcm_mpm,bcmlibs"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/rdpa_cmd.ko",
+      "sha256": "5f4105716a1ec62835c6195d2edd27ce6da779d79052dfe63a31664d37b22fc7",
+      "architecture": "EM_AARCH64",
+      "bytes": 68744,
+      "executable_section_bytes": 19094,
+      "named_function_symbols": 40,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "bdmf,rdpa_mw,rdpa_gpl,bcm_ingqos,rdpa_gpl_ext"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/rdpa_gpl.ko",
+      "sha256": "abe079963b5dfc7609633c05460903c09deec2e8b571c8e90df000cd55b43f1e",
+      "architecture": "EM_AARCH64",
+      "bytes": 77344,
+      "executable_section_bytes": 6462,
+      "named_function_symbols": 93,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL",
+        "GPL"
+      ],
+      "depends": [
+        "bdmf"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/rdpa_gpl_ext.ko",
+      "sha256": "9cf20e2f817e449a19ebf1be95b59121ac7927c74a30725283d3b34aeba67c6d",
+      "architecture": "EM_AARCH64",
+      "bytes": 5696,
+      "executable_section_bytes": 186,
+      "named_function_symbols": 4,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL",
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/rdpa_mw.ko",
+      "sha256": "39d2f67ab25f9237397ddb6025d996d2f809d35e0131d7fd405f3ac704667c15",
+      "architecture": "EM_AARCH64",
+      "bytes": 67608,
+      "executable_section_bytes": 20030,
+      "named_function_symbols": 36,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "bdmf,rdpa_gpl,bcm_knvram"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/rdpa_usr.ko",
+      "sha256": "566019abf80f44922160297e463e2d1d8e749ccb56fc7a6d1697057734f46ce7",
+      "architecture": "EM_AARCH64",
+      "bytes": 149376,
+      "executable_section_bytes": 50742,
+      "named_function_symbols": 47,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "bdmf,rdpa_gpl"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/sw_gso.ko",
+      "sha256": "7fba345b7959ab34f7a0d39cafb572d1b8ecd58dc2f1cf8d2ee040e2ac8aeb52",
+      "architecture": "EM_AARCH64",
+      "bytes": 23664,
+      "executable_section_bytes": 6518,
+      "named_function_symbols": 18,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/wfd.ko",
+      "sha256": "e89453eb193488ba637737c4a499fe96d5db9f0c926c5784cf2ce995c36fb44a",
+      "architecture": "EM_AARCH64",
+      "bytes": 65208,
+      "executable_section_bytes": 20002,
+      "named_function_symbols": 35,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "bdmf,rdpa_gpl,bcmlibs,bcmmcast"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/wl.ko",
+      "sha256": "bcc79a964b84bd671a194e6cadc5a2467adf30de704d053724b6fa985cc6348a",
+      "architecture": "EM_AARCH64",
+      "bytes": 21161320,
+      "executable_section_bytes": 6688310,
+      "named_function_symbols": 10470,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/bootloaders/u-boot-2019.07/drivers/mtd/ubi/wl.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/mtd/ubi/wl.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        "hnd,wlshared,wfd,cfg80211,bcmlibs,emf,igs,bcm_pcie_hcd"
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/extra/wlshared.ko",
+      "sha256": "e6f519d9bd248dbaba9a3ae2db348fbbf8cd62df4b0bf599c714fb6b28499b76",
+      "architecture": "EM_AARCH64",
+      "bytes": 11448,
+      "executable_section_bytes": 1650,
+      "named_function_symbols": 13,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL and additional rights"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/base/firmware_loader/firmware_class.ko",
+      "sha256": "a4364176b4d2f7ee6aebd555f18d671ae3477ce4f56fb2ee78fbad0dc8d129a4",
+      "architecture": "EM_AARCH64",
+      "bytes": 16856,
+      "executable_section_bytes": 2954,
+      "named_function_symbols": 16,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/cdrom/cdrom.ko",
+      "sha256": "786af523d4e3b503e1bb1f2dfbd0dfb2fe19cd4f3d305d127ef0335da1f24acd",
+      "architecture": "EM_AARCH64",
+      "bytes": 53504,
+      "executable_section_bytes": 21066,
+      "named_function_symbols": 53,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/cdrom/cdrom.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/char/rtl8372/rtl8372.ko",
+      "sha256": "90bf31e07c76aba5b5d7565918ed6da4775218548428ab080016669b8f5de79d",
+      "architecture": "EM_AARCH64",
+      "bytes": 945288,
+      "executable_section_bytes": 250930,
+      "named_function_symbols": 1424,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL",
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "text_sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/hid/usbhid/usbhid.ko",
+      "sha256": "512a8494c5ec2db35ecffc4bd574c7735bcf4caa629e1f5c134e8306949c3cbc",
+      "architecture": "EM_AARCH64",
+      "bytes": 60128,
+      "executable_section_bytes": 19682,
+      "named_function_symbols": 52,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/mtd/mtdoops.ko",
+      "sha256": "3757a7f74ec4e8470cdf29d946d5fac003f7ec630c39ee5283b9786fd873324c",
+      "architecture": "EM_AARCH64",
+      "bytes": 16104,
+      "executable_section_bytes": 2758,
+      "named_function_symbols": 13,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/mtd/mtdoops.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/net/bonding/bonding.ko",
+      "sha256": "6c4f7f821c6dd01129035c7a01a60c5d28b644358e32e3e3094b5070f0027121",
+      "architecture": "EM_AARCH64",
+      "bytes": 235848,
+      "executable_section_bytes": 74934,
+      "named_function_symbols": 235,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/bcmdrivers/broadcom/net/wl/impl103/main/components/opensource/router_tools/libnl/lib/route/link/bonding.c",
+        "release/src-rt-5.04behnd.4916/bcmdrivers/broadcom/net/wl/impl105/main/components/opensource/router_tools/libnl/lib/route/link/bonding.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/net/mii.ko",
+      "sha256": "a5a8d11dff58fa891c52855b259212f7b41ea5d663722a464117f2a24dc8dee0",
+      "architecture": "EM_AARCH64",
+      "bytes": 11824,
+      "executable_section_bytes": 4054,
+      "named_function_symbols": 11,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/bootloaders/u-boot-2019.07/cmd/mii.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/mii.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/net/tun.ko",
+      "sha256": "d97111776e58e2afd54a45c75be36d5868a2c57699f8878a8ac32b97043c1612",
+      "architecture": "EM_AARCH64",
+      "bytes": 72792,
+      "executable_section_bytes": 25950,
+      "named_function_symbols": 68,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/tun.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/qrtr/tun.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/net/usb/asix.ko",
+      "sha256": "6d87a072cc4b2c2e1f23d7a22942216c941e91b1d216dacf2f48065ec0a538aa",
+      "architecture": "EM_AARCH64",
+      "bytes": 63832,
+      "executable_section_bytes": 14934,
+      "named_function_symbols": 69,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/bootloaders/u-boot-2019.07/drivers/usb/eth/asix.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "mii,usbnet,usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/net/usb/ax88179_178a.ko",
+      "sha256": "04b7d32d86a97edf40c166b689287d335407dee5bef056d7ecbf6a4062109ed3",
+      "architecture": "EM_AARCH64",
+      "bytes": 37552,
+      "executable_section_bytes": 11738,
+      "named_function_symbols": 43,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/usb/ax88179_178a.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbnet,usbcore,mii"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/net/usb/cdc_ether.ko",
+      "sha256": "6df2de47cc2ea9ae447d83ada9f6fbf32069052e4810c5fe147f0566e7db5c73",
+      "architecture": "EM_AARCH64",
+      "bytes": 20440,
+      "executable_section_bytes": 2274,
+      "named_function_symbols": 14,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/usb/cdc_ether.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbnet,usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/net/usb/cdc_ncm.ko",
+      "sha256": "8903101de9737561f8f9fe4365b10de224e35a610f7367fc35da7f409e0ab0a1",
+      "architecture": "EM_AARCH64",
+      "bytes": 43472,
+      "executable_section_bytes": 11058,
+      "named_function_symbols": 49,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/usb/cdc_ncm.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual BSD/GPL"
+      ],
+      "depends": [
+        "usbnet,usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/net/usb/ipheth.ko",
+      "sha256": "a7d382c0b11bacda2a1aff69e2ca0a1029c7b0bcfb9789543d398a960df1290a",
+      "architecture": "EM_AARCH64",
+      "bytes": 18792,
+      "executable_section_bytes": 3162,
+      "named_function_symbols": 17,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/usb/ipheth.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual BSD/GPL"
+      ],
+      "depends": [
+        "usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/net/usb/qmi_wwan.ko",
+      "sha256": "d44c744a98126fd512ef508231111ad6565b8c0ad1fe7fe76f20ba12fd6be07e",
+      "architecture": "EM_AARCH64",
+      "bytes": 83432,
+      "executable_section_bytes": 5494,
+      "named_function_symbols": 26,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/usb/qmi_wwan.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbnet,usbcore,cdc-wdm"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/net/usb/rndis_host.ko",
+      "sha256": "8794319685930b14abe42827af78720f8e9592675c3b7efc8c01ee624fdbb976",
+      "architecture": "EM_AARCH64",
+      "bytes": 16992,
+      "executable_section_bytes": 3038,
+      "named_function_symbols": 12,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/usb/rndis_host.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbnet,usbcore,cdc_ether"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/net/usb/usbnet.ko",
+      "sha256": "0ebbd17b9ada90a5c0cc09ff3359036804beb270b3d27e77e1e0739d64242537",
+      "architecture": "EM_AARCH64",
+      "bytes": 52400,
+      "executable_section_bytes": 13794,
+      "named_function_symbols": 59,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/usb/usbnet.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore,mii"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/scsi/scsi_mod.ko",
+      "sha256": "1e0cacf6a0d29ff5779cec70bd818678c1ca51e78f7b5392b17b73dc78bd54b7",
+      "architecture": "EM_AARCH64",
+      "bytes": 312648,
+      "executable_section_bytes": 73258,
+      "named_function_symbols": 325,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/scsi/sd_mod.ko",
+      "sha256": "28edb28d0c6907c1e9b8ed5de59ffa0250945917a4419d4df3316ac10c0bdb78",
+      "architecture": "EM_AARCH64",
+      "bytes": 73648,
+      "executable_section_bytes": 23766,
+      "named_function_symbols": 67,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "scsi_mod"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/scsi/sg.ko",
+      "sha256": "44ac401675ec858b8b7fd83e70f8ded7c7875ce843d1908b544ebfc6d2b127d9",
+      "architecture": "EM_AARCH64",
+      "bytes": 74640,
+      "executable_section_bytes": 24174,
+      "named_function_symbols": 45,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/scsi/sg.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "scsi_mod"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/scsi/sr_mod.ko",
+      "sha256": "a93ec32779d371622bbdaeb22649a081ad226fec08d27a343fcb73379750776a",
+      "architecture": "EM_AARCH64",
+      "bytes": 35528,
+      "executable_section_bytes": 10902,
+      "named_function_symbols": 37,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL",
+        "GPL"
+      ],
+      "depends": [
+        "scsi_mod,cdrom"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/class/cdc-acm.ko",
+      "sha256": "84e5e922b0676ca0368b42b90dbeefd03878909b361c58c9812328b614da7f0d",
+      "architecture": "EM_AARCH64",
+      "bytes": 49776,
+      "executable_section_bytes": 10962,
+      "named_function_symbols": 35,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/class/cdc-acm.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/class/cdc-wdm.ko",
+      "sha256": "755ed399e12c76bed7a003e6c8da6791f665b8de802310d9c59f4c29a2f531bb",
+      "architecture": "EM_AARCH64",
+      "bytes": 28000,
+      "executable_section_bytes": 7262,
+      "named_function_symbols": 27,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/class/cdc-wdm.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/class/usblp.ko",
+      "sha256": "f99906d53f4742bc869af824269e341276e29d05e4b3f2a714c4d116301e739a",
+      "architecture": "EM_AARCH64",
+      "bytes": 31192,
+      "executable_section_bytes": 8378,
+      "named_function_symbols": 25,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/class/usblp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/common/usb-common.ko",
+      "sha256": "8ef76ee77e4bc076874ad7bce877fe9ae55ece4d3012c624e0cc8b64ee8ca71e",
+      "architecture": "EM_AARCH64",
+      "bytes": 11680,
+      "executable_section_bytes": 1234,
+      "named_function_symbols": 9,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/core/ledtrig-usbport.ko",
+      "sha256": "e07963c2249e38d59735ff3a5b224cc02e421d16f264492ebdbc48731229e185",
+      "architecture": "EM_AARCH64",
+      "bytes": 11208,
+      "executable_section_bytes": 2246,
+      "named_function_symbols": 13,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/core/ledtrig-usbport.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL v2"
+      ],
+      "depends": [
+        "usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/core/usbcore.ko",
+      "sha256": "622f3d0f129043315fca6419ce74592203eaf69cb7d9bfad72abb8b9329ad46d",
+      "architecture": "EM_AARCH64",
+      "bytes": 369712,
+      "executable_section_bytes": 120630,
+      "named_function_symbols": 404,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usb-common"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/host/ehci-hcd.ko",
+      "sha256": "78fd28b9a655fcfc700eea951e464d8852027995cbf280d700cde72dfb799df1",
+      "architecture": "EM_AARCH64",
+      "bytes": 74608,
+      "executable_section_bytes": 34878,
+      "named_function_symbols": 77,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/bootloaders/u-boot-2019.07/drivers/usb/host/ehci-hcd.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/host/ehci-hcd.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/host/ehci-pci.ko",
+      "sha256": "f3e145adf3987625c723243d14bcca90f48e10e13c810e14bb90c108f9dd5232",
+      "architecture": "EM_AARCH64",
+      "bytes": 12240,
+      "executable_section_bytes": 1902,
+      "named_function_symbols": 7,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/bootloaders/u-boot-2019.07/drivers/usb/host/ehci-pci.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/host/ehci-pci.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore,ehci-hcd"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/host/ehci-platform.ko",
+      "sha256": "ac4cb461e0a0d347165612cbfa1121096b0078588d70942cb106cab0ad17390d",
+      "architecture": "EM_AARCH64",
+      "bytes": 16616,
+      "executable_section_bytes": 2422,
+      "named_function_symbols": 12,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/host/ehci-platform.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore,ehci-hcd,usb-common"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/host/ohci-hcd.ko",
+      "sha256": "f64d2b024b81d1e532719719b7b5360f57c761d997801992dbc840963d2bb4a1",
+      "architecture": "EM_AARCH64",
+      "bytes": 58512,
+      "executable_section_bytes": 21310,
+      "named_function_symbols": 43,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/bootloaders/u-boot-2019.07/drivers/usb/host/ohci-hcd.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/host/ohci-hcd.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/host/ohci-pci.ko",
+      "sha256": "d268494341e6a633b676b1777249581c18a0817ecdd23a1a7127118b3fd2b8e0",
+      "architecture": "EM_AARCH64",
+      "bytes": 10376,
+      "executable_section_bytes": 850,
+      "named_function_symbols": 15,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/host/ohci-pci.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore,ohci-hcd"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/host/ohci-platform.ko",
+      "sha256": "4821f5cf71cf8110f07ffd63b08a645ef543d9ac584082632d4ad2acbe54293c",
+      "architecture": "EM_AARCH64",
+      "bytes": 13024,
+      "executable_section_bytes": 1702,
+      "named_function_symbols": 8,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/host/ohci-platform.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore,ohci-hcd"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/host/xhci-hcd.ko",
+      "sha256": "54cd554df66554c13d2df6f993bf733e0be7cd62dee94826067921969decb74a",
+      "architecture": "EM_AARCH64",
+      "bytes": 218008,
+      "executable_section_bytes": 82210,
+      "named_function_symbols": 195,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/host/xhci-pci.ko",
+      "sha256": "d28a34e72e271c4d18d715234752f9d1b1eac661119ce8428bfbe8aa112402ed",
+      "architecture": "EM_AARCH64",
+      "bytes": 11208,
+      "executable_section_bytes": 2518,
+      "named_function_symbols": 9,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/bootloaders/u-boot-2019.07/drivers/usb/host/xhci-pci.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/host/xhci-pci.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore,xhci-hcd"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/host/xhci-plat-hcd.ko",
+      "sha256": "485eb94e84dc3b6066d0a3698b8abdd1e93806718ad281e7190e10b045bf2256",
+      "architecture": "EM_AARCH64",
+      "bytes": 18032,
+      "executable_section_bytes": 2222,
+      "named_function_symbols": 13,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore,xhci-hcd"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/mon/usbmon.ko",
+      "sha256": "bd5d332516d65f998d3bebdfa824169af2a92128ea80199242e081ed023e3364",
+      "architecture": "EM_AARCH64",
+      "bytes": 51312,
+      "executable_section_bytes": 17530,
+      "named_function_symbols": 60,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/serial/option.ko",
+      "sha256": "638037016e027d5922512295cdfb9a52daa07bebe37dba73fd25da1e1dd22122",
+      "architecture": "EM_AARCH64",
+      "bytes": 180472,
+      "executable_section_bytes": 542,
+      "named_function_symbols": 8,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/bcmdrivers/broadcom/net/wl/impl103/main/components/opensource/dnsmasq/src/option.c",
+        "release/src-rt-5.04behnd.4916/bcmdrivers/broadcom/net/wl/impl105/main/components/opensource/dnsmasq/src/option.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/gpu/drm/nouveau/nvkm/core/option.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/serial/option.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL v2"
+      ],
+      "depends": [
+        "usb_wwan,usbserial,usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/serial/usb_wwan.ko",
+      "sha256": "0fa00d9086788d5979a0c8093ad3abdc3249100d5925720686517068ece597dd",
+      "architecture": "EM_AARCH64",
+      "bytes": 15240,
+      "executable_section_bytes": 3334,
+      "named_function_symbols": 15,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/serial/usb_wwan.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL v2"
+      ],
+      "depends": [
+        "usbcore,usbserial"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/serial/usbserial.ko",
+      "sha256": "9164824d174a6d60d01b89e224336ce50668e26be94880cdee974dd9092f03be",
+      "architecture": "EM_AARCH64",
+      "bytes": 56160,
+      "executable_section_bytes": 13802,
+      "named_function_symbols": 76,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL v2"
+      ],
+      "depends": [
+        "usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/storage/uas.ko",
+      "sha256": "99ee45f8bdb6ab258777b87223f0610e2f37281856fa5a1e84229d426f5de1f4",
+      "architecture": "EM_AARCH64",
+      "bytes": 33504,
+      "executable_section_bytes": 8834,
+      "named_function_symbols": 33,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/usb/storage/uas.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "usbcore,scsi_mod,usb-storage"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/drivers/usb/storage/usb-storage.ko",
+      "sha256": "9903dca7e87c43ce1aa037d7cdbae19b4e7850bfe1a9107fb648914b1ad8a701",
+      "architecture": "EM_AARCH64",
+      "bytes": 146616,
+      "executable_section_bytes": 17478,
+      "named_function_symbols": 64,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "scsi_mod,usbcore"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/cifs/cifs.ko",
+      "sha256": "73458b79d993a9aee6157df9822549eb8172309c38b45f05a2c2d34a5228fee6",
+      "architecture": "EM_AARCH64",
+      "bytes": 720824,
+      "executable_section_bytes": 216710,
+      "named_function_symbols": 648,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/nls/nls_cp437.ko",
+      "sha256": "d1a2fc8a5bc4c7b54fff9dc06715415040e4c433227298bb88e09e6695a3a060",
+      "architecture": "EM_AARCH64",
+      "bytes": 10400,
+      "executable_section_bytes": 186,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/fs/nls/nls_cp437.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual BSD/GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/nls/nls_cp850.ko",
+      "sha256": "c1d0db19df5f9bf61cc6016003653f4779ab452eff892c4d3651896789404d2b",
+      "architecture": "EM_AARCH64",
+      "bytes": 9464,
+      "executable_section_bytes": 186,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/fs/nls/nls_cp850.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual BSD/GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/nls/nls_cp852.ko",
+      "sha256": "f6b02cc637ea13f5d04cab98112ba4c4969c60213f0bfc414ef3624dc0d9f8d6",
+      "architecture": "EM_AARCH64",
+      "bytes": 9464,
+      "executable_section_bytes": 186,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/fs/nls/nls_cp852.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual BSD/GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/nls/nls_cp866.ko",
+      "sha256": "2da8e667143877a41d9c4997e075ed0cfd069741841bf827b6c1899b9f987171",
+      "architecture": "EM_AARCH64",
+      "bytes": 9776,
+      "executable_section_bytes": 186,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/fs/nls/nls_cp866.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual BSD/GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/nls/nls_cp932.ko",
+      "sha256": "d3385d68ab30c11bbb13f407bdc7340ddd820a94bfc58cacc9e55f5a0dcc9e95",
+      "architecture": "EM_AARCH64",
+      "bytes": 91456,
+      "executable_section_bytes": 438,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/fs/nls/nls_cp932.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual BSD/GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/nls/nls_cp936.ko",
+      "sha256": "5e10a26f163304e29bfd52a937b5240ebf8c2706195b19d2cc8908c9bfa0da3a",
+      "architecture": "EM_AARCH64",
+      "bytes": 139976,
+      "executable_section_bytes": 422,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/fs/nls/nls_cp936.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual BSD/GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/nls/nls_cp949.ko",
+      "sha256": "333f6ecd35b14943d6ce7496909c07162d989338b5299df965eaecc824e06f4e",
+      "architecture": "EM_AARCH64",
+      "bytes": 163048,
+      "executable_section_bytes": 302,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/fs/nls/nls_cp949.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual BSD/GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/nls/nls_cp950.ko",
+      "sha256": "6bb9f3ca7de757d1cd871cc2c0aa2dbd8d235457440c30c9c1b1a85c3aece246",
+      "architecture": "EM_AARCH64",
+      "bytes": 115424,
+      "executable_section_bytes": 302,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/fs/nls/nls_cp950.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual BSD/GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/nls/nls_euc-jp.ko",
+      "sha256": "b7b59c1507b0ab0a394e65410b26a4a41227c238385bfb46a8052b05838aaa65",
+      "architecture": "EM_AARCH64",
+      "bytes": 9896,
+      "executable_section_bytes": 1962,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/fs/nls/nls_euc-jp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Dual BSD/GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/tfat.ko",
+      "sha256": "22ceae7596398efbdde7119c667fce3c18f94ac3fd6ae1159a5bad6b3f121ce6",
+      "architecture": "EM_AARCH64",
+      "bytes": 597152,
+      "executable_section_bytes": 238534,
+      "named_function_symbols": 223,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Commercial. For support email support@tuxera.com"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/thfsplus.ko",
+      "sha256": "1b08b2dbd6f02bafefd485d16fb0ef96690f6e6488c1262b598e110b853c111b",
+      "architecture": "EM_AARCH64",
+      "bytes": 178168,
+      "executable_section_bytes": 56658,
+      "named_function_symbols": 167,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/fs/tntfs.ko",
+      "sha256": "3e07d980687533ad0986daeb59e40300dd6e767f6b99c7d6497cbf255c7985eb",
+      "architecture": "EM_AARCH64",
+      "bytes": 949744,
+      "executable_section_bytes": 332314,
+      "named_function_symbols": 268,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Commercial. For support email support@tuxera.com."
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "sha256"
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/bridge/br_netfilter.ko",
+      "sha256": "5d48fe0c0939ab29e02628d031e42ffb015ac1fca3a8a082e3142a31680a5cca",
+      "architecture": "EM_AARCH64",
+      "bytes": 32112,
+      "executable_section_bytes": 10858,
+      "named_function_symbols": 27,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/dns_resolver/dns_resolver.ko",
+      "sha256": "613357ab48e0e12e7420448730bfb4faaa5037364d17a525b5f58bd253f3a0e1",
+      "architecture": "EM_AARCH64",
+      "bytes": 16584,
+      "executable_section_bytes": 2878,
+      "named_function_symbols": 11,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL",
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/ah4.ko",
+      "sha256": "bad1467b7482960ebee1ffd38733813320c97968f96d7590a7e5de3f1dee6264",
+      "architecture": "EM_AARCH64",
+      "bytes": 14848,
+      "executable_section_bytes": 4150,
+      "named_function_symbols": 14,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/ah4.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/esp4.ko",
+      "sha256": "b545fb37dc094d1bd50507b8c1acba8b69857ecc7769050dad02be61b63799bd",
+      "architecture": "EM_AARCH64",
+      "bytes": 22552,
+      "executable_section_bytes": 7194,
+      "named_function_symbols": 24,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/esp4.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/ipcomp.ko",
+      "sha256": "c36d85f4051d97519143e02526b96d56a0629b144a79e31d09dfd26f2a2e8ef8",
+      "architecture": "EM_AARCH64",
+      "bytes": 8504,
+      "executable_section_bytes": 978,
+      "named_function_symbols": 7,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/ipcomp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/netfilter/ipt_TOS.ko",
+      "sha256": "f34bdbef854d9381e574c0b5a2b01524fa5b8d96065dbdfc10926029f6ed38ed",
+      "architecture": "EM_AARCH64",
+      "bytes": 5296,
+      "executable_section_bytes": 330,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/netfilter/ipt_TOS.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/netfilter/ipt_ipp2p.ko",
+      "sha256": "ef0018b05ee181bbda1d5bd63cb36b1e77363dd8a4154c0bfb9ffa549a2f43df",
+      "architecture": "EM_AARCH64",
+      "bytes": 14328,
+      "executable_section_bytes": 5378,
+      "named_function_symbols": 27,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/netfilter/ipt_ipp2p.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/netfilter/ipt_tos.ko",
+      "sha256": "a2d92f338b58dfee3194c837f10b7243755e74a3f0384d708ec03a459c42467e",
+      "architecture": "EM_AARCH64",
+      "bytes": 4392,
+      "executable_section_bytes": 106,
+      "named_function_symbols": 5,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/netfilter/ipt_tos.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/netfilter/ipt_web.ko",
+      "sha256": "410b7f9f9c58748c0e3ae41ea42b327ed428683396328ff42bb110121630aabb",
+      "architecture": "EM_AARCH64",
+      "bytes": 6184,
+      "executable_section_bytes": 1142,
+      "named_function_symbols": 7,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/netfilter/ipt_web.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/netfilter/ipt_webmon.ko",
+      "sha256": "94e1069114f4d3d444d80bd0008476854ee651dee95adbd955f0a43864662d48",
+      "architecture": "EM_AARCH64",
+      "bytes": 44656,
+      "executable_section_bytes": 19630,
+      "named_function_symbols": 48,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/netfilter/ipt_webmon.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/netfilter/nf_dup_ipv4.ko",
+      "sha256": "edd918a2007d56e1317102582e90d15cc714a6b0bc5455123f36a83f3874f4af",
+      "architecture": "EM_AARCH64",
+      "bytes": 5648,
+      "executable_section_bytes": 594,
+      "named_function_symbols": 1,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/netfilter/nf_dup_ipv4.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/netfilter/nf_nat_h323.ko",
+      "sha256": "31c9430d0646d124fcba707a15c5f48b922dc964fb68877bf180d134dd1b53e1",
+      "architecture": "EM_AARCH64",
+      "bytes": 17568,
+      "executable_section_bytes": 4402,
+      "named_function_symbols": 16,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/netfilter/nf_nat_h323.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "nf_conntrack_h323"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/netfilter/nf_socket_ipv4.ko",
+      "sha256": "0da57a4aaf50ae7ef17614caa6ef0a56164a9f41bae31e248074d139a7a2258b",
+      "architecture": "EM_AARCH64",
+      "bytes": 5288,
+      "executable_section_bytes": 938,
+      "named_function_symbols": 1,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/netfilter/nf_socket_ipv4.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/netfilter/nf_tproxy_ipv4.ko",
+      "sha256": "8f4fe025a7227cb112dbf59fba317f16904f69b0e7336f3e01bf4a09d23efff7",
+      "architecture": "EM_AARCH64",
+      "bytes": 7128,
+      "executable_section_bytes": 942,
+      "named_function_symbols": 3,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/netfilter/nf_tproxy_ipv4.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv4/xfrm4_tunnel.ko",
+      "sha256": "111faa046a3763cdb166c3bf75898c072cc9865e53e15e2939aaf072a83aef49",
+      "architecture": "EM_AARCH64",
+      "bytes": 7360,
+      "executable_section_bytes": 554,
+      "named_function_symbols": 10,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv4/xfrm4_tunnel.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv6/netfilter/nf_dup_ipv6.ko",
+      "sha256": "99bb7ef9b1408004dced9588d03475dc42837422e5131c2c9ff5880c2a602c65",
+      "architecture": "EM_AARCH64",
+      "bytes": 5672,
+      "executable_section_bytes": 614,
+      "named_function_symbols": 1,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv6/netfilter/nf_dup_ipv6.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv6/netfilter/nf_socket_ipv6.ko",
+      "sha256": "5fba6fbcb61bd90cd80b41da082e5e97782b3021e318a2592e6e4f9d975d020f",
+      "architecture": "EM_AARCH64",
+      "bytes": 5000,
+      "executable_section_bytes": 710,
+      "named_function_symbols": 1,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv6/netfilter/nf_socket_ipv6.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/ipv6/netfilter/nf_tproxy_ipv6.ko",
+      "sha256": "8720b2bdfd30c7357a70dafff0f3430dac0cb83eb996553b2180907d140ecc95",
+      "architecture": "EM_AARCH64",
+      "bytes": 7680,
+      "executable_section_bytes": 1222,
+      "named_function_symbols": 3,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/ipv6/netfilter/nf_tproxy_ipv6.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/nf_conntrack_ftp.ko",
+      "sha256": "b1f8bf7f20209f31e7299727f65803242ec4fe0d5c2d6eb25555f154c8b0f609",
+      "architecture": "EM_AARCH64",
+      "bytes": 15792,
+      "executable_section_bytes": 3046,
+      "named_function_symbols": 12,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/nf_conntrack_ftp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/nf_conntrack_h323.ko",
+      "sha256": "1c4645de27c042861207c7744108959df69e7f550fb1562859590dc3f4df0211",
+      "architecture": "EM_AARCH64",
+      "bytes": 71088,
+      "executable_section_bytes": 15658,
+      "named_function_symbols": 34,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/nf_conntrack_sip.ko",
+      "sha256": "838c17832455a6e542a887a82d4dbf98fe07e848dccad5f47de6f21205bf2fc5",
+      "architecture": "EM_AARCH64",
+      "bytes": 45064,
+      "executable_section_bytes": 13078,
+      "named_function_symbols": 36,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/nf_conntrack_sip.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/nf_conntrack_tftp.ko",
+      "sha256": "f766846e95ff8dca63e3cddf5009151d4da8cc9c741f23874ba8221869f50d2e",
+      "architecture": "EM_AARCH64",
+      "bytes": 10784,
+      "executable_section_bytes": 786,
+      "named_function_symbols": 5,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/nf_conntrack_tftp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/nf_nat_ftp.ko",
+      "sha256": "c908b2b63e1d6bdb6a03ca0d135734aef55dfe824afbea2dd53c413e8fb5ca5a",
+      "architecture": "EM_AARCH64",
+      "bytes": 7776,
+      "executable_section_bytes": 690,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/nf_nat_ftp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "nf_conntrack_ftp"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/nf_nat_sip.ko",
+      "sha256": "c8d47ce774fac4dffac836e35f7d0fe04218ed1cb923d2cce8e9a694bd2d73de",
+      "architecture": "EM_AARCH64",
+      "bytes": 20424,
+      "executable_section_bytes": 7018,
+      "named_function_symbols": 17,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/nf_nat_sip.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "nf_conntrack_sip"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/nf_nat_tftp.ko",
+      "sha256": "22c96433d0738d2208d7ef51531da8df005d51bbebeef5c839a99eb4b5fec1fb",
+      "architecture": "EM_AARCH64",
+      "bytes": 5272,
+      "executable_section_bytes": 202,
+      "named_function_symbols": 5,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/nf_nat_tftp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "nf_conntrack_tftp"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/nf_tables.ko",
+      "sha256": "459bb01f215ef801a4d16eb8ba6443c87633a7c34858612de79061266a5d203f",
+      "architecture": "EM_AARCH64",
+      "bytes": 202128,
+      "executable_section_bytes": 80754,
+      "named_function_symbols": 228,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_HL.ko",
+      "sha256": "5b5739fa4c0c799e60dbb99928bb40e72ca7e444b6111ecd266f5e34fee15df1",
+      "architecture": "EM_AARCH64",
+      "bytes": 6232,
+      "executable_section_bytes": 626,
+      "named_function_symbols": 8,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_HL.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_TEE.ko",
+      "sha256": "5a992205e52896be99c72fc2c728ada1a4c3d15acccf1433c645740c3bb96c40",
+      "architecture": "EM_AARCH64",
+      "bytes": 11504,
+      "executable_section_bytes": 1398,
+      "named_function_symbols": 10,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_TEE.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "nf_dup_ipv4,nf_dup_ipv6"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_TPROXY.ko",
+      "sha256": "2c002e76c8e415e45df16b77a3480d8d19ff8bb89dce7f28b9e97e42ab07ef29",
+      "architecture": "EM_AARCH64",
+      "bytes": 10208,
+      "executable_section_bytes": 1570,
+      "named_function_symbols": 10,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_TPROXY.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "nf_tproxy_ipv4,nf_tproxy_ipv6"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_comment.ko",
+      "sha256": "2bcc542e259ae6dfca5b2e48abbd0ce2b80a19d891de8a697b6e294b2f442999",
+      "architecture": "EM_AARCH64",
+      "bytes": 4688,
+      "executable_section_bytes": 66,
+      "named_function_symbols": 5,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_comment.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_condition.ko",
+      "sha256": "822d963f08093340229f5c81c4eb59794942947009a5850ef1afc29f4a56fc65",
+      "architecture": "EM_AARCH64",
+      "bytes": 13664,
+      "executable_section_bytes": 1390,
+      "named_function_symbols": 10,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_condition.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_geoip.ko",
+      "sha256": "2fed845fea89572ade5f3b57bf392067cdbe9e60c5df3069941446c423610cd1",
+      "architecture": "EM_AARCH64",
+      "bytes": 9048,
+      "executable_section_bytes": 1394,
+      "named_function_symbols": 7,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_geoip.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_hashlimit.ko",
+      "sha256": "0bc93568ac88aabae5086783381c167e1bb1b13b2bd2c5a33256a8dd53b640a9",
+      "architecture": "EM_AARCH64",
+      "bytes": 28728,
+      "executable_section_bytes": 7526,
+      "named_function_symbols": 36,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_hashlimit.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_hl.ko",
+      "sha256": "b7bafb23250814643397c5992f686438f4106f20210b0745b8dd9db613431f5e",
+      "architecture": "EM_AARCH64",
+      "bytes": 5160,
+      "executable_section_bytes": 326,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_hl.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_length.ko",
+      "sha256": "e5139e5cee4befa105389032aced3dd6f612c6537c4dee7682e761e0d85f609a",
+      "architecture": "EM_AARCH64",
+      "bytes": 5112,
+      "executable_section_bytes": 254,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_length.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_pkttype.ko",
+      "sha256": "750f5faf7fa381dd5b156ceb591f519f1434e6712208051d8765c5800f68e5b6",
+      "architecture": "EM_AARCH64",
+      "bytes": 4816,
+      "executable_section_bytes": 218,
+      "named_function_symbols": 5,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_pkttype.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_quota.ko",
+      "sha256": "49c386ff3f0485a07d001fdbb5841d2e19992ef8f51a10673b46a8e3afb166fc",
+      "architecture": "EM_AARCH64",
+      "bytes": 5616,
+      "executable_section_bytes": 334,
+      "named_function_symbols": 7,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_quota.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_sctp.ko",
+      "sha256": "9062e0847ae9572eef295b9ca6f0ee44037b470b210e4472f171fa6d0cc842c8",
+      "architecture": "EM_AARCH64",
+      "bytes": 6536,
+      "executable_section_bytes": 1090,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_sctp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/netfilter/xt_socket.ko",
+      "sha256": "d2baabdeb9bcac6cc774d6bde3418f45f05601846a38541829bafe2836286960",
+      "architecture": "EM_AARCH64",
+      "bytes": 11328,
+      "executable_section_bytes": 1450,
+      "named_function_symbols": 11,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/netfilter/xt_socket.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "nf_socket_ipv4,nf_socket_ipv6"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/sched/em_cmp.ko",
+      "sha256": "2dd71be0d31020318ffb84c72843684375eb8912a4b0576b0e64b30907f1ca87",
+      "architecture": "EM_AARCH64",
+      "bytes": 4624,
+      "executable_section_bytes": 390,
+      "named_function_symbols": 5,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/sched/em_cmp.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/sched/em_ipset.ko",
+      "sha256": "35b490f0cb89b87df385c7b6d1976551bde967176f422c700c666f4e1c9fe53b",
+      "architecture": "EM_AARCH64",
+      "bytes": 7496,
+      "executable_section_bytes": 1038,
+      "named_function_symbols": 7,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/sched/em_ipset.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/sched/em_ipt.ko",
+      "sha256": "e24f940ed6e6486d8cdbade03fcb337a46ed78941bb5ef99648c920cd5c6036f",
+      "architecture": "EM_AARCH64",
+      "bytes": 9272,
+      "executable_section_bytes": 1522,
+      "named_function_symbols": 10,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/sched/em_ipt.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/sched/em_meta.ko",
+      "sha256": "df67844083094278bdf38f36f4400b997c41e12bdd152c3d5bee86e2eb8f6474",
+      "architecture": "EM_AARCH64",
+      "bytes": 19632,
+      "executable_section_bytes": 4706,
+      "named_function_symbols": 67,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/sched/em_meta.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/sched/em_nbyte.ko",
+      "sha256": "7c2b5da414c3c1e5516aec2071e7fc6f727fa0bad8372e03909f4e0d3a01fba4",
+      "architecture": "EM_AARCH64",
+      "bytes": 4904,
+      "executable_section_bytes": 334,
+      "named_function_symbols": 6,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/sched/em_nbyte.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/sched/em_text.ko",
+      "sha256": "70b1f199cea3ea4b544f516f5b6b9ae19d55d7a5109dbb606b2eacbd53b6f13d",
+      "architecture": "EM_AARCH64",
+      "bytes": 6648,
+      "executable_section_bytes": 994,
+      "named_function_symbols": 8,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/sched/em_text.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/sched/em_u32.ko",
+      "sha256": "1b028014f2f2739fe9f2274134e66959cd5b008856a27d7f899b4a04875450c3",
+      "architecture": "EM_AARCH64",
+      "bytes": 4432,
+      "executable_section_bytes": 174,
+      "named_function_symbols": 5,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/sched/em_u32.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/sched/sch_hfsc.ko",
+      "sha256": "c7d5ae65027ce55493cb5755dff5e833765c39e701bf2d66cf7687c9753f18f7",
+      "architecture": "EM_AARCH64",
+      "bytes": 29624,
+      "executable_section_bytes": 10410,
+      "named_function_symbols": 32,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/sched/sch_hfsc.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/wireguard/wireguard.ko",
+      "sha256": "dc4c8aa58227b6932e5923839feeb3d19489a578d80016c814b2def36581bb16",
+      "architecture": "EM_AARCH64",
+      "bytes": 185968,
+      "executable_section_bytes": 97494,
+      "named_function_symbols": 183,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL v2"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/wireless/cfg80211.ko",
+      "sha256": "4a0403c1f3280195b8db3e848efcd339b232e66bee6fbd3187e7156652024eb3",
+      "architecture": "EM_AARCH64",
+      "bytes": 476384,
+      "executable_section_bytes": 182350,
+      "named_function_symbols": 489,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/wireless/ath/ath6kl/cfg80211.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/wireless/ath/wil6210/cfg80211.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/wireless/marvell/mwifiex/cfg80211.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/net/wireless/quantenna/qtnfmac/cfg80211.c",
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/drivers/staging/wlan-ng/cfg80211.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        "firmware_class"
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "lib/modules/4.19.294/kernel/net/xfrm/xfrm_user.ko",
+      "sha256": "c3236dd8d9714a9662f7afe4e3550a5e3ef8997a3429686351ca92aeb3d68093",
+      "architecture": "EM_AARCH64",
+      "bytes": 50400,
+      "executable_section_bytes": 19002,
+      "named_function_symbols": 54,
+      "explicit_nonfree_license": false,
+      "same_named_source_candidates": [
+        "release/src-rt-5.04behnd.4916/kernel/linux-4.19/net/xfrm/xfrm_user.c"
+      ],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "GPL"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": null
+    },
+    {
+      "path": "usr/bwdpi/tdts.ko",
+      "sha256": "63fd2c1038854dc4fce59bbcf4023dcb47b6ebbfc1cdb1abb3c16a20990c4d52",
+      "architecture": "EM_AARCH64",
+      "bytes": 592872,
+      "executable_section_bytes": 322170,
+      "named_function_symbols": 621,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        ""
+      ],
+      "prebuilt_attribution": "sha256"
+    },
+    {
+      "path": "usr/bwdpi/tdts_udb.ko",
+      "sha256": "9db2c41e76d7afad4afb86d356fc122a99e6c5014deb4142924661414cd8d314",
+      "architecture": "EM_AARCH64",
+      "bytes": 335544,
+      "executable_section_bytes": 126934,
+      "named_function_symbols": 548,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        "tdts"
+      ],
+      "prebuilt_attribution": "sha256"
+    },
+    {
+      "path": "usr/bwdpi/tdts_udbfw.ko",
+      "sha256": "7b890a0aed2f69a960b15b357c356ba767e5eafd9937daa8a9a3eb2430c7ad83",
+      "architecture": "EM_AARCH64",
+      "bytes": 60896,
+      "executable_section_bytes": 19254,
+      "named_function_symbols": 58,
+      "explicit_nonfree_license": true,
+      "same_named_source_candidates": [],
+      "source_completeness": "not-established-by-this-scan",
+      "license": [
+        "Proprietary"
+      ],
+      "depends": [
+        "tdts_udb,tdts,pktflow"
+      ],
+      "prebuilt_attribution": "sha256"
+    }
+  ]
+}
