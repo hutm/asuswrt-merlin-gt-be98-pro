@@ -52,7 +52,7 @@ loss, never as completed equivalents. Hardware tests require recovery readiness.
 
 Evidence is the standard baseline module (not a claim of equivalence to every ASUS
 release), SHA256 7fba345b7959ab34f7a0d39cafb572d1b8ecd58dc2f1cf8d2ee040e2ac8aeb52.
-Local disassembly is outside Git under vendor-rebuild-39442/recon.
+Local reference evidence is kept outside Git.
 
 New observations from sw_gso_enqueue:
 - 0x2dc returns **positive 16**, leaving the packet to the caller when unavailable.
@@ -173,4 +173,30 @@ release. The logging source added afterward was not part of this image.
 
 The experimental profile now selects a source logging library. See
 [logging/README.md](logging/README.md) for the test runner, scope and known
-behavior differences. Full-image validation of this addition is pending.
+behavior differences.
+
+## Current image validation
+
+The profile built successfully at commit `99690c9fa5c6` on 2026-11-11. Its normal
+image is 76,719,844 bytes with SHA-256
+`87ad77477251560e18431533a8a77b6d4a0c8cd6f6a3d6113c9327c92e1b5d8a`.
+FIT integrity checks passed. Extracted-image inspection confirms the source
+logging library retains its required libshared dependency, the source FAT checker
+and NTFS formatter are packaged, and the four replaced modules remain absent.
+
+The packaged tools formatted disposable FAT and NTFS files under ARM emulation;
+the FAT checker reported the new volume healthy. All 151 modules passed static
+export/dependency/architecture checks against the matching packaged kernel.
+The userspace scan covered 647 ELF objects and retained the same 81 standalone
+or plugin-scope flags as the baseline, with no new or changed flags. Those flags
+are not a claim that every standalone library can run independently. Static
+checks do not validate private ABI layouts, dynamic loading, traffic or hardware.
+Full NTFS consistency checking is unavailable. The image remains experimental,
+with partial provenance and other proprietary components still present.
+
+## NVRAM source components
+
+[nvram/README.md](nvram/README.md) describes the protocol, transport, settings and
+persistence implementation and its Docker test runner. These components are not
+yet integrated as a replacement for the installed NVRAM libraries. Notification,
+cache lifetime, ASUS storage hooks and full public API coverage remain required.
