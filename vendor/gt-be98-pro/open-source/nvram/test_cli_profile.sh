@@ -121,4 +121,24 @@ if qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
 fi
 echo "erase: reference helper route matches and source reports helper failure (all operations intercepted)"
 
+for executable in /tmp/source-cli /firmware/bin/nvram; do
+  qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+    -E LD_PRELOAD=/tmp/stubs.so -E ERASE_FIXTURE=1 $executable godefault >/tmp/default.log
+  printf "UNLINK[/data/.kernel_nvram.setting]\nSYNC\n" >/tmp/expected-default
+  cmp /tmp/default.log /tmp/expected-default
+done
+qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+  -E LD_PRELOAD=/tmp/stubs.so -E ERASE_FIXTURE=1 -E UNLINK_FAULT=missing \
+  /tmp/source-cli godefault >/tmp/default.log
+cmp /tmp/default.log /tmp/expected-default
+if qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+  -E LD_PRELOAD=/tmp/stubs.so -E ERASE_FIXTURE=1 -E UNLINK_FAULT=denied \
+  /tmp/source-cli godefault >/tmp/default.log; then
+  echo "godefault ignored deletion failure" >&2
+  exit 1
+fi
+printf "UNLINK[/data/.kernel_nvram.setting]\n" >/tmp/expected-default
+cmp /tmp/default.log /tmp/expected-default
+echo "godefault: reference sequence matches; absent file and deletion failures handled (intercepted)"
+
 '

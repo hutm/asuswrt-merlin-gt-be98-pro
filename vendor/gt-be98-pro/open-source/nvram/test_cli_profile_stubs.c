@@ -29,7 +29,9 @@ int dec_nvram(char *name,char *input,char *output) {
 }
 void sync(void) {if(getenv("ERASE_FIXTURE")) puts("SYNC");}
 int system(const char *command) {if(!getenv("ERASE_FIXTURE")) abort();printf("SYSTEM[%s]\n",command);return getenv("ERASE_FAILURE")?256:0;}
-int unlink(const char *path) {if(!getenv("ERASE_FIXTURE")) abort();printf("UNLINK[%s]\n",path);return 0;}
+int unlink(const char *path) {if(!getenv("ERASE_FIXTURE")) abort();printf("UNLINK[%s]\n",path);
+ const char *fault=getenv("UNLINK_FAULT");
+ if(fault){errno=!strcmp(fault,"missing")?ENOENT:EACCES;return -1;}return 0;}
 static void print_escaped(const char *s) {
     if(!s) { printf("NULL");return; }
     for(;*s;++s) {

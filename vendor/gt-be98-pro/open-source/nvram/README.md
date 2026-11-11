@@ -709,3 +709,18 @@ exit, signal status and launch failure. Complete CLI comparisons intercept
 without executing an erase helper or touching router settings. This establishes
 command routing, not successful hardware reset or complete helper provenance.
 The reference also exposes `godefault`, which still requires separate validation.
+
+## Kernel defaults command
+
+`godefault` now removes `/data/.kernel_nvram.setting` and calls `sync`, matching
+the observed reference CLI sequence. Despite the reference usage text describing
+a wireless restart, this command itself does not call the restart manager.
+An already-absent settings file is successful; other unlink errors are reported
+and stop the operation. The `sync` API provides no error result, so successful
+CLI completion does not establish durable deletion or subsequent default loading.
+
+Native sanitizer and ARM tests cover successful deletion, missing file and access
+failure. Complete source/reference CLI comparisons intercept file deletion and
+sync and match the exact path and sequence. No settings files are deleted by
+these tests. Feedback redaction, mode exports and remaining ordinary command
+behavior still need review before selecting the source CLI in firmware.

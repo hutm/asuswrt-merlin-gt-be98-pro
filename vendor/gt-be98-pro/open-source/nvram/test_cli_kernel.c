@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 static char events[512];static int used,fail;static const char *stop;
 static void event(const char *op,const char *key,const char *value){used+=snprintf(events+used,sizeof events-used,"%s:%s:%s;",op,key,value?value:"<NULL>");assert(used<(int)sizeof events);}
 char *nvram_get(const char *key){if(!strcmp(key,"asus_stop_commit"))return (char *)stop;assert(!strcmp(key,"key"));return "value";}
@@ -35,6 +36,12 @@ int nvram_getall(char *out,int capacity){
  memcpy(out,data,sizeof data);return 0;
 }
 int invalid_nvram_get_name(char *name){return !strcmp(name,"restricted") || (strlen(name)==160 && strspn(name,"q")==160);}
+static int unlink_error;
+int unlink(const char *path){
+ if(strcmp(path,"/data/.kernel_nvram.setting"))return unlinkat(AT_FDCWD,path,0);
+ event("UNLINK",path,NULL);if(unlink_error){errno=unlink_error;return -1;}return 0;
+}
+void sync(void){event("SYNC","",NULL);}
 static int erase_result;
 int system(const char *command){assert(!strcmp(command,"hnd-erase nvram"));event("ERASE","",NULL);if(erase_result==-1)errno=EAGAIN;return erase_result;}
 static void reset(void){used=0;events[0]=0;}
@@ -84,6 +91,9 @@ int main(void){
  erase_result=256;assert(nv_cli_kernel(1,set,out)==-1&&errno==EIO);
  erase_result=9;assert(nv_cli_kernel(1,set,out)==-1&&errno==EIO);
  erase_result=-1;assert(nv_cli_kernel(1,set,out)==-1&&errno==EAGAIN);erase_result=0;
+ reset();set[0]="godefault";assert(nv_cli_kernel(1,set,out)==1&&!strcmp(events,"UNLINK:/data/.kernel_nvram.setting:<NULL>;SYNC::<NULL>;"));
+ reset();unlink_error=ENOENT;assert(nv_cli_kernel(1,set,out)==1&&!strcmp(events,"UNLINK:/data/.kernel_nvram.setting:<NULL>;SYNC::<NULL>;"));
+ reset();unlink_error=EACCES;assert(nv_cli_kernel(1,set,out)==-1&&errno==EACCES&&!strcmp(events,"UNLINK:/data/.kernel_nvram.setting:<NULL>;"));unlink_error=0;
  set[0]="unknown";assert(!nv_cli_kernel(1,set,out));fclose(out);
  puts("Kernel CLI: routing order, NULL values, stop control, file loading and failures passed");return 0;
 }

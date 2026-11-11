@@ -1,10 +1,12 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
+#define _DEFAULT_SOURCE
 #define _POSIX_C_SOURCE 200809L
 #include "cli_kernel.h"
 #include "runtime.h"
 #include "settings.h"
 #include "manufacturing.h"
 #include <stdlib.h>
+#include <unistd.h>
 static int apply(void *unused,const char *key,const char *value) {
     return unused?wlcsm_nvram_set(key,value):nvram_kset(key,value);
 }
@@ -82,6 +84,11 @@ int nv_cli_kernel(int argc,char *const argv[],FILE *output) {
     if(!strcmp(command,"restore_mfg")) {
         if(argc<2 || !argv[1]) {errno=EINVAL;return -1;}
         return nv_mfg_restore("/mnt/nvram/nvram.nvm",argv[1],"/proc/nvram/BaseMacAddr")?-1:2;
+    }
+    if(!strcmp(command,"godefault")) {
+        if(unlink("/data/.kernel_nvram.setting") && errno!=ENOENT) return -1;
+        sync();
+        return 1;
     }
     if(!strcmp(command,"erase")) {
         result=system("hnd-erase nvram");
