@@ -9,7 +9,7 @@ struct nv_storage_hooks {
     void *context;
     int (*is_large)(void *,const char *);
     int (*lock)(void *); /* zero success, nonzero failure */
-    void (*unlock)(void *);
+    int (*unlock)(void *); /* zero success; release failure is reported */
     char *(*get)(void *,const char *);
     int (*set)(void *,const char *,const char *);
     int (*unset)(void *,const char *);

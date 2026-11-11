@@ -13,8 +13,10 @@ int nv_adapter_init(struct nv_adapter *a,struct nv_core *core,const struct nv_st
 static int valid(struct nv_adapter *a,const char *key) {
     if(!a || !a->core || !key) {errno=EINVAL;return 0;}return 1;
 }
-static void unlock(struct nv_adapter *a) {
-    int saved=errno;a->storage.unlock(a->storage.context);errno=saved;
+static int unlock(struct nv_adapter *a) {
+    int saved=errno;
+    if(a->storage.unlock(a->storage.context)) return -1;
+    errno=saved;return 0;
 }
 char *nv_adapter_get(struct nv_adapter *a,const char *key) {
     char *value=NULL;
@@ -25,7 +27,7 @@ char *nv_adapter_get(struct nv_adapter *a,const char *key) {
         return value;
     }
     if(a->storage.lock(a->storage.context)) return NULL;
-    value=a->storage.get(a->storage.context,key);unlock(a);return value;
+    value=a->storage.get(a->storage.context,key);if(unlock(a)) return NULL;return value;
 }
 int nv_adapter_set(struct nv_adapter *a,const char *key,const char *value) {
     int result;
@@ -33,7 +35,7 @@ int nv_adapter_set(struct nv_adapter *a,const char *key,const char *value) {
     if(!a->storage.is_large(a->storage.context,key))
         return nv_core_change_ack(a->core,key,value,value==NULL);
     if(a->storage.lock(a->storage.context)) return -1;
-    result=a->storage.set(a->storage.context,key,value);unlock(a);return result;
+    result=a->storage.set(a->storage.context,key,value);if(unlock(a)) return -1;return result;
 }
 int nv_adapter_unset(struct nv_adapter *a,const char *key) {
     int result;
@@ -41,7 +43,7 @@ int nv_adapter_unset(struct nv_adapter *a,const char *key) {
     if(!a->storage.is_large(a->storage.context,key))
         return nv_core_change_ack(a->core,key,NULL,1);
     if(a->storage.lock(a->storage.context)) return -1;
-    result=a->storage.unset(a->storage.context,key);unlock(a);return result;
+    result=a->storage.unset(a->storage.context,key);if(unlock(a)) return -1;return result;
 }
 int nv_adapter_getall(struct nv_adapter *a,char *output,int capacity) {
     char *scratch;size_t used=0;int result,saved;
@@ -54,7 +56,7 @@ int nv_adapter_getall(struct nv_adapter *a,char *output,int capacity) {
         if(a->storage.lock(a->storage.context)) result=-1;
         else {
             result=a->storage.getall(a->storage.context,(int)used,scratch,capacity);
-            unlock(a);
+            if(unlock(a)) result=-1;
             if(result>=0 && (result<(int)used || result>=capacity)) {errno=EPROTO;result=-1;}
         }
     }

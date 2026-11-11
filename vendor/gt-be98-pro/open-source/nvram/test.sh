@@ -29,6 +29,18 @@ for name in pair frame getall settings persist client cache notification listene
     *) timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot "/tmp/test_$name-arm" ;;
   esac
 done
+gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined \
+  storage_lock.c test_storage_lock.c -o /tmp/test-storage-lock
+timeout 30 /tmp/test-storage-lock
+/toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
+  storage_lock.c test_storage_lock.c -o /tmp/test-storage-lock-arm
+timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-storage-lock-arm
+gcc -std=c11 -Wall -Wextra -Werror -pthread -fsanitize=address,undefined \
+  storage_binding.c storage_lock.c test_storage_binding.c -o /tmp/test-storage-binding
+timeout 30 /tmp/test-storage-binding
+/toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror -pthread \
+  storage_binding.c storage_lock.c test_storage_binding.c -o /tmp/test-storage-binding-arm
+timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-storage-binding-arm
 mkdir /tmp/core-native /tmp/core-arm
 gcc -std=c11 -Wall -Wextra -Werror -g -fsanitize=address,undefined \
   -pthread -fPIC -shared core.c adapter.c -o /tmp/core-native/libnvcore.so

@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-struct state {char small[64],large[64];int present,denied,lock_failed,locked,unlocks,exchanges,last_type,bad_all;};
+struct state {char small[64],large[64];int present,denied,lock_failed,locked,unlocks,exchanges,last_type,bad_all,release_failed;};
 static int exchange(void *opaque,const void *request,size_t size,void *reply,size_t capacity,size_t *returned) {
  struct state *s=opaque;struct nv_frame_view f;struct nv_pair_view p;unsigned char payload[1024];size_t n=0;
  assert(!nv_frame_decode(request,size,&f));++s->exchanges;s->last_type=f.type;
@@ -18,7 +18,7 @@ static int exchange(void *opaque,const void *request,size_t size,void *reply,siz
 }
 static int is_large(void *opaque,const char *key){(void)opaque;return !strcmp(key,"large");}
 static int lock_storage(void *opaque){struct state *s=opaque;if(s->lock_failed){errno=EBUSY;return -1;}assert(!s->locked);s->locked=1;return 0;}
-static void unlock_storage(void *opaque){struct state *s=opaque;assert(s->locked);s->locked=0;++s->unlocks;errno=0;}
+static int unlock_storage(void *opaque){struct state *s=opaque;assert(s->locked);s->locked=0;++s->unlocks;if(s->release_failed){errno=ESTALE;return -1;}errno=0;return 0;}
 static char *get(void *opaque,const char *key){struct state *s=opaque;assert(s->locked&&!strcmp(key,"large"));return s->large;}
 static int set(void *opaque,const char *key,const char *value){struct state *s=opaque;assert(s->locked&&!strcmp(key,"large"));if(value){assert(strlen(value)<sizeof s->large);strcpy(s->large,value);return (int)strlen(value);}s->large[0]=0;return 0;}
 static int unset(void *opaque,const char *key){return set(opaque,key,NULL);}
@@ -39,6 +39,9 @@ int main(void){
  assert(nv_adapter_getall(&a,out,sizeof out)==20&&!memcmp(out,"small=one\0large=two\0",20));for(int i=20;i<64;++i)assert(!out[i]);
  for(int error=1;error<=2;++error){state.bad_all=error;memset(out,0x55,sizeof out);assert(nv_adapter_getall(&a,out,sizeof out)==-1&&errno==(error==1?EIO:EPROTO));for(int i=0;i<64;++i)assert(out[i]==0x55);}state.bad_all=0;
  assert(nv_adapter_getall(&a,out,10)==-1&&errno==ENOSPC);
+ state.release_failed=1;assert(nv_adapter_set(&a,"large","applied")==-1&&errno==ESTALE&&!strcmp(state.large,"applied"));
+ assert(!nv_adapter_get(&a,"large")&&errno==ESTALE);memset(out,0x55,sizeof out);
+ assert(nv_adapter_getall(&a,out,sizeof out)==-1&&errno==ESTALE);for(int i=0;i<64;++i)assert(out[i]==0x55);state.release_failed=0;
  hooks.lock=NULL;assert(nv_adapter_init(&a,core,&hooks)==-1&&errno==EINVAL);
  nv_core_destroy(core);puts("NVRAM adapter: backend routing, borrowed pointers, permissions, locks, byte-count enumeration and failure preservation passed");return 0;
 }

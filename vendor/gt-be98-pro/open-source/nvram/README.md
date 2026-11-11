@@ -31,6 +31,7 @@ support. No router or real storage device is accessed.
 | listener.h | Nonblocking subscription and checked receive/loss handling |
 | core.c / core.h | Serialized client core with owned-copy reads and updates |
 | adapter.c / adapter.h | Backend routing and borrowed-value compatibility interface |
+| storage_binding.c / storage_lock.c | Shared-library hooks and compatible storage locking |
 | shared/source/nvpriv.c | GT-BE98_PRO storage routing, migration and enumeration |
 | compat/ | Bit flags, trimming, wireless-name parsing and numeric conversion |
 | getall.h | Indexed page assembly, preserving caller output on failure |
@@ -82,9 +83,32 @@ Adapter tests link to the actual core/adapter shared library on native sanitizer
 and ARM builds. They use a synthetic kernel peer and mock storage/policy/lock
 callbacks to cover routing, missing versus empty values, retained pointers,
 SET(NULL) as UNSET, positive storage-write results, denied calls, failed locks,
-byte-count enumeration and output preservation. Binding the real shared-library
-hooks, global process lifecycle and exported nvram/wlcsm wrappers is still pending;
-the adapter is not yet a replacement for libnvram.so.
+byte-count enumeration and output preservation. Global process lifecycle and
+exported nvram/wlcsm wrappers remain pending; the adapter is not yet a replacement
+for libnvram.so.
+
+The storage binding calls the existing shared-library JFFS and access-policy
+exports and supplies process/thread serialization. A local mutex serializes
+threads; exclusive creation of `nvram.lock` in a caller-provided trusted `/var`
+directory coordinates with the existing firmware protocol. The binding uses ten
+attempts separated by 500 ms on contention. It does not replace this protocol
+with flock, which would not coordinate with existing callers. The binding keeps
+its own directory descriptor and requires quiescent destruction.
+
+Lock release checks that the pathname still identifies the acquired file before
+removing it. A replaced pathname is left intact and reported as ESTALE. This is
+an ownership check under the trusted-directory assumption, not an atomic defense
+against arbitrary concurrent pathname replacement. Stale lock files after a
+process crash are not automatically removed, and fork-safe lifecycle integration
+remains pending. The adapter propagates release failures: a failed SET result can
+therefore follow an applied update. Callers must not infer rollback from failure.
+
+Native sanitizer and ARM tests exercise actual temporary-file creation, forked
+process exclusion, release/reacquisition, symlink refusal and replaced-path
+handling. Binding tests use the real lock helper with mocked shared-library
+exports to check argument/result forwarding and lifecycle. Adapter tests check
+that release failures are reported and do not expose partial enumeration output.
+No router filesystem or live firmware services are used by these tests.
 
 The combined core is built as a shared library during tests. It serializes
 GET/SET/UNSET/GETALL and notification handling with a mutex, refreshes every GET,
