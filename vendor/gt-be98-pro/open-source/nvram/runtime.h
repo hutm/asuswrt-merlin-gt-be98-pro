@@ -24,4 +24,7 @@ int common_nvram_kernel_set(const char *key,const char *value);
 /* Save kernel settings without a notification. Zero success, -1 failure;
  * errors can follow installation. Uses the source recovery-file transaction. */
 int nvram_kcommit(void);
+/* Shared borrowed conversion buffer; NULL on empty reply or error. */
+char *wlcsm_nvram_xfr(const char *input);
+char *nvram_xfr(const char *input);
 #endif

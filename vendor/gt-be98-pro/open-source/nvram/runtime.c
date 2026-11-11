@@ -177,3 +177,10 @@ int nvram_kcommit(void) {
      * Use the recovery-file transaction rather than truncating the live file. */
     result=commit_locked(0);leave();return result?-1:0;
 }
+
+char *wlcsm_nvram_xfr(const char *input) {
+    char *value=NULL;if(enter()) return NULL;
+    if(nv_core_xfr(core,input,&value)<0) value=NULL;
+    leave();return value;
+}
+char *nvram_xfr(const char *input) {return wlcsm_nvram_xfr(input);}

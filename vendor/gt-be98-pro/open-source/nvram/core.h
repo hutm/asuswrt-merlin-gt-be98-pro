@@ -38,4 +38,6 @@ int nv_core_save_at(struct nv_core *core,int directory,size_t capacity);
  * Notification may have arrived on failure; no rollback. Zero confirms only an
  * echo, not subscriber receipt. ASUS suppression/markers belong in the wrapper. */
 int nv_core_commit_at(struct nv_core *core,int directory,size_t capacity);
+/* Borrowed conversion buffer, overwritten by the next successful conversion. */
+int nv_core_xfr(struct nv_core *core,const char *input,char **value);
 #endif

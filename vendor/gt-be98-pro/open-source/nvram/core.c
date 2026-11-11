@@ -6,10 +6,12 @@
 #include "getall.h"
 #include "notification.h"
 #include "persist.h"
+#include "xfr.h"
 #include <pthread.h>
 struct nv_core {
     pthread_mutex_t mutex;
     struct nv_cache cache;
+    char xfr_value[1025];
     nv_core_exchange exchange;
     void *context;
 };
@@ -138,5 +140,13 @@ int nv_core_commit_at(struct nv_core *core,int directory,size_t capacity) {
             errno=EPROTO;result=-3;
         }
     }
+    unlock(core);return result;
+}
+
+int nv_core_xfr(struct nv_core *core,const char *input,char **value) {
+    int result;if(!value) {errno=EINVAL;return -1;}
+    if(lock(core)) return -1;
+    result=nv_xfr(core->exchange,core->context,input,core->xfr_value);
+    if(result>=0) *value=result?core->xfr_value:NULL;
     unlock(core);return result;
 }

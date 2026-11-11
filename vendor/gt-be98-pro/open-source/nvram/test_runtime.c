@@ -28,6 +28,7 @@ int nv_runtime_test_exchange(void *context,const void *request,size_t size,void 
  else if(f.type==3&&!strcmp((const char *)f.payload,"nvram_salt")){++salt_gets;if(salt_fail){errno=ETIMEDOUT;return -1;}if(salt_value)assert(!nv_pair_encode(payload,sizeof payload,"nvram_salt",salt_value,strlen(salt_value)+1,&n));}
  else if(f.type==3){assert(!strcmp((const char *)f.payload,"key"));if(present)assert(!nv_pair_encode(payload,sizeof payload,"key",small,strlen(small)+1,&n));}
  else if(f.type==2||f.type==4){assert(!nv_pair_decode(f.payload,f.length,&p)&&!strcmp(p.name,"key"));last_change=f.type;if(change_fail){errno=ETIMEDOUT;return -1;}present=f.type==2&&p.value_len;if(present){assert(p.value_len<=sizeof small);memcpy(small,p.value,p.value_len);}memcpy(payload,f.payload,f.length);n=f.length;}
+ else if(f.type==14){assert(!strcmp((const char *)f.payload,"convert"));memcpy(payload,"converted",9);n=9;}
  else if(f.type==7){char lock[256];snprintf(lock,sizeof lock,"%s/nvram.lock",path);assert(!access(lock,F_OK));assert(!f.length);++commits;if(commit_fail){errno=ETIMEDOUT;return -1;}}
  else {assert(f.type==5);if(getall_fail){errno=ETIMEDOUT;return -1;}memcpy(payload,"key=one",8);n=8;}
  return nv_frame_encode(reply,capacity,f.type==5?6:f.type,0,0,payload,n,returned);
@@ -42,6 +43,7 @@ int invalid_program_check(void){return deny;}
 static void *worker(void *unused){(void)unused;for(int i=0;i<100;++i){char out[64];assert(!nvram_set("key","parallel"));assert(nvram_getall(out,sizeof out)==18);}return NULL;}
 int main(void){
  assert(mkdtemp(path));assert(!nvram_get("key")&&errno==ENOENT);assert(!nvram_get("key"));
+ assert(!strcmp(nvram_xfr("convert"),"converted"));assert(!strcmp(wlcsm_nvram_xfr("convert"),"converted"));
  assert(!nvram_get_salt()&&salt_gets==1);
  salt_value="example";char *salt=nvram_get_salt();assert(salt&&!strcmp(salt,"example")&&salt_gets==2);
  salt_value="";assert(nvram_get_salt()==salt&&!*salt&&salt_gets==3);

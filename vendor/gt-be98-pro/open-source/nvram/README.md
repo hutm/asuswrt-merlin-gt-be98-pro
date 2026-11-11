@@ -357,7 +357,7 @@ the echoed payload as well as message type; acknowledgement still does not prove
 the kernel applied the change.
 
 The earlier firmware dynamic-symbol scan's remaining unimplemented consumer
-names are `nvram_xfr` and `wlcsm_mngr_restart`. That scan does not
+name is `wlcsm_mngr_restart`. That scan does not
 cover dynamically constructed symbol lookups, static consumers or every export
 of the original library. Completing those names alone is insufficient to
 claim full library compatibility or hardware readiness.
@@ -382,3 +382,20 @@ stop/policy controls, absence of notification/sync/marker calls, failed enumerat
 with preserved settings, unavailable data directory, occupied staging, lock cleanup
 and retry. Hardware persistence testing and replacement-library integration remain
 pending.
+
+## Character-set conversion transport
+
+`nvram_xfr` and `wlcsm_nvram_xfr` send a type-14 request to the kernel NLS handler,
+whose source is in bcm_knvram's wlcsm_netlink.c. The FTP filename conversion
+consumer uses this interface. Inputs are limited to 511 bytes plus the terminator.
+The result is a shared borrowed buffer overwritten by a later successful call;
+empty replies and errors return NULL. Embedded NUL terminates the result, and a
+non-NUL-terminated kernel payload receives a bounded terminator in userspace.
+
+ARM reference tests confirm request framing, input boundaries, shared-pointer
+behavior, embedded-NUL handling and missing/error replies. Native sanitizer and
+ARM/QEMU tests additionally cover maximum replies, oversized or wrong-type
+frames, transport errors and unchanged output on failure. Both exported runtime
+names are exercised. These tests use synthetic peer responses; actual kernel NLS
+conversion and hardware behavior have not been exercised. The source refuses
+NULL inputs and oversized replies rather than reproducing unbounded accesses.
