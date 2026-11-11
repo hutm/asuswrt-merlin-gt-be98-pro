@@ -4,7 +4,7 @@ Branch: gt-be98-pro/open-source. Baseline: 9a1d8889be. Separate sparse worktree
 keeps the successful ASUS-input build untouched. This is not a blob-free image.
 The objective covers **all** final-image proprietary components: userspace,
 kernel modules, embedded radio/accelerator firmware, and boot-stage components.
-Decompilation alone does not establish source completeness, licensing rights,
+Interface analysis alone does not establish source completeness, licensing rights,
 or equivalent behavior. Do not relabel proprietary disassembly as open source.
 
 ## First implemented change
@@ -15,8 +15,9 @@ model profiles unchanged. Traced through src-rt/Makefile, router/Makefile and
 rc/usb.c: these select FAT/VFAT, NTFS-3G and kernel HFS/HFS+ instead of the Tuxera
 modules. This is a configuration change, not yet a validated removal from an image.
 Use a fresh configuration/build: old RTCONFIG_* values and staged modules could
-survive incremental rebuilds. The current iteration launcher does not yet forward
-this flag. Do not describe a default launcher build as testing this profile.
+survive incremental rebuilds. The iteration launcher forwards this flag when explicitly set in its environment.
+Default builds do not enable it. Kernel configuration now explicitly requests
+FAT/VFAT and HFS/HFS+ modules plus built-in FUSE for this profile.
 
 Outstanding: actual kernel FUSE/FAT/HFS configuration; compile NTFS-3G and filesystem
 tools; final rootfs absence of Tuxera modules/tools; FAT/NTFS/HFS read/write tests;
@@ -69,3 +70,17 @@ correctness or binary equivalence. Next reconstruct worker batching, callback
 contracts, requeue handling, initialization/failure paths, shutdown and flow rehash.
 
 Run: `python3 -m unittest discover -s vendor/gt-be98-pro/open-source -p 'test_*.py'`.
+
+## Component build evidence
+
+NTFS-3G 2022.10.3 from the existing repository sources compiled successfully inside
+amng-build as a non-root user with the ARM soft-float GCC 10.3 toolchain. The
+result is an ARM EABI5 executable using /lib/ld-linux.so.3. Internal FUSE and
+libntfs-3g were compiled from source and linked into the executable. This validates
+component compilation only, not mounting on the router or complete image integration.
+
+Repeat from the repository root:
+`bash vendor/gt-be98-pro/open-source/build-ntfs.sh /absolute/empty-output-directory`.
+The output includes the compile log, ELF report, image ID and SHA256SUMS. No vendor
+build tree is modified. Full firmware generation still requires a populated build
+checkout, verified remaining inputs and the local toolchain kit.

@@ -1,4 +1,4 @@
-# Kernel module reverse-engineering assessment
+# Kernel module source coverage assessment
 
 This is an exploratory assessment, not a replacement-driver release. The initial
 scan uses the previously built standard Merlin 3006.102.9 rootfs, not a claim

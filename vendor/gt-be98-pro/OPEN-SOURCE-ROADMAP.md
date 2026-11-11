@@ -41,10 +41,10 @@ other device also does not imply that its radio firmware is open source.
 
 1. Complete the deployed-input inventory, including proprietary archive members
    embedded in otherwise source-built executables and libraries.
-2. Rebuild source-available components before attempting reverse engineering.
+2. Rebuild source-available components before attempting interface reconstruction.
 3. Remove optional closed features in a separately tested minimal profile.
 4. For a small remaining interface, document behavior and implement an independent
-   replacement with positive, failure-path, and compatibility tests. Decompiler
+   replacement with positive, failure-path, and compatibility tests. Generated
    output alone is not a correct or maintainable source implementation.
 5. Treat wireless, switch and packet-processing replacement as dedicated hardware
    bring-up work requiring recoverable test hardware, diagnostics and sustained

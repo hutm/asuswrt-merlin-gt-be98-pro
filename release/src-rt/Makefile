@@ -387,6 +387,13 @@ ifneq ($(filter-out n,$(and $(HND_ROUTER_AX_6756),$(BCM_MFG)) $(and $(HND_ROUTER
 export WLTEST := 1
 endif
 
+# Source replacement experiment: select drivers needed by the open filesystem paths.
+ifeq ($(ASUS_OPEN_COMPONENTS),y)
+ifeq ($(BUILD_NAME),GT-BE98_PRO)
+override EXTRA_KERNEL_CONFIGS := $(filter-out CONFIG_FAT_FS=% CONFIG_VFAT_FS=% CONFIG_HFS_FS=% CONFIG_HFSPLUS_FS=% CONFIG_FUSE_FS=%,$(EXTRA_KERNEL_CONFIGS)) CONFIG_FAT_FS=m CONFIG_VFAT_FS=m CONFIG_HFS_FS=m CONFIG_HFSPLUS_FS=m CONFIG_FUSE_FS=y
+endif
+endif
+
 EXTRA_KERNEL_YES_CONFIGS_1 := $(filter %=y %=Y,$(EXTRA_KERNEL_CONFIGS))
 EXTRA_KERNEL_NO_CONFIGS_1 := $(filter %=n %=N,$(EXTRA_KERNEL_CONFIGS))
 EXTRA_KERNEL_MOD_CONFIGS_1 := $(filter %=m %=M,$(EXTRA_KERNEL_CONFIGS))

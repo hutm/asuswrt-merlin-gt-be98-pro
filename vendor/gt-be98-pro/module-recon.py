@@ -2,7 +2,7 @@
 """Read-only kernel module reconnaissance; requires pyelftools==0.32.
 
 License strings and same-named source files are evidence, not a completeness
-proof. Never executes firmware or claims decompilation establishes correctness.
+proof. Never executes firmware or claims interface analysis establishes correctness.
 """
 import argparse
 import collections

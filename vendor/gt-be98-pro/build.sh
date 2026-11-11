@@ -25,7 +25,7 @@ main() {
   docker run --rm --init --name "$container" \
     -v "$workspace:$workspace" \
     -v "$source_dir:/asuswrt" -v "$kit:/work" \
-    -e "BUILD_UID=$(id -u)" -e "BUILD_GID=$(id -g)" -e ASUS_PUBLIC_GPL_38984=y \
+    -e "BUILD_UID=$(id -u)" -e "BUILD_GID=$(id -g)" -e ASUS_PUBLIC_GPL_38984=y -e "ASUS_OPEN_COMPONENTS=${ASUS_OPEN_COMPONENTS:-n}" \
     amng-build bash -c '
       set -e
       /work/scripts/20-stage-toolchain.sh

@@ -86,6 +86,7 @@ def build(kit, runs):
         print(f'Iteration evidence: {output}', flush=True)
         record = {'model': 'GT-BE98_PRO', 'state': 'building', 'installable': False,
                   'provenance_coverage': 'partial', 'hardware_tests': 'not performed',
+                  'ASUS_OPEN_COMPONENTS': os.environ.get('ASUS_OPEN_COMPONENTS', 'n'),
                   'git_head': subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip(),
                   'checks_not_automated': ['complete input provenance', 'userspace and kernel ABI checks',
                                            'flash partition review', 'hardware validation'],
