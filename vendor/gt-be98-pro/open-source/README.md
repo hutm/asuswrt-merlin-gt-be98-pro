@@ -155,3 +155,22 @@ checks (zero capacity, one byte, truncation, exact fit, empty input) passed with
 AddressSanitizer and UBSan. This is a basic utility smoke test; damaged-volume
 repair, router mounting, and hardware storage tests remain outstanding. The full
 firmware build must still succeed before this profile produces a usable artifact.
+
+## Completed filesystem/GSO build
+
+The experimental profile built successfully at commit `1b11141a5277` on
+2026-11-11. The normal image is 76,658,404 bytes with SHA-256
+`8546e8581f8042ad1e4e559026b060ccb20cdd26f94c271107a46995774bf528`.
+FIT payload integrity checks passed. Inspection of its extracted SquashFS confirms
+that tfat.ko, tntfs.ko, thfsplus.ko and sw_gso.ko are absent; fat.ko, vfat.ko,
+hfs.ko, hfsplus.ko, ntfs-3g, mkfs.hfsplus and fsck.hfsplus are present. The rootfs
+contains 151 kernel modules. This inventory does not prove all blobs are removed.
+The image still includes boot components and other binary inputs; provenance is
+partial and hardware behavior is untested. It is not published as an installable
+release. The logging source added afterward was not part of this image.
+
+## Logging replacement
+
+The experimental profile now selects a source logging library. See
+[logging/README.md](logging/README.md) for the test runner, scope and known
+behavior differences. Full-image validation of this addition is pending.

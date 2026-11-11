@@ -1,5 +1,10 @@
 include ../common.mak
 
+# Restrict the source replacement to the experimental GT-BE98_PRO profile.
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_ASUSLOG := y
+endif
+
 OBJS = libasuslog.o
 PROGS = libasuslog.so
 
@@ -27,7 +32,15 @@ endif
 #SHARE_STATIC=y
 
 
-ifeq ($(wildcard $(TOP)/libasuslog/*.c),)
+ifeq ($(OPEN_ASUSLOG),y)
+LDFLAGS_SO = -L$(TOP_PLATFORM)/nvram${BCMEX}${EX7} -lnvram -lpthread
+all: $(PROGS)
+
+# Rebuild when returning from a profile that copied a prebuilt .so over ours.
+.PHONY: open-asuslog-force
+libasuslog.o: source/libasuslog.c open-asuslog-force
+	$(CC) $(CFLAGS) -c $< -o $@
+else ifeq ($(wildcard $(TOP)/libasuslog/*.c),)
 all:
 	-cp -f $(TOP)/libasuslog/prebuild/$(BUILD_NAME)/libasuslog.so libasuslog.so
 else
