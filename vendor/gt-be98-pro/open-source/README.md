@@ -84,3 +84,33 @@ Repeat from the repository root:
 The output includes the compile log, ELF report, image ID and SHA256SUMS. No vendor
 build tree is modified. Full firmware generation still requires a populated build
 checkout, verified remaining inputs and the local toolchain kit.
+
+## Queue core implementation
+
+`gso/ring.h` is a source implementation of bounded descriptor storage and batch
+extraction. `gso/test_ring.c` passes under GCC with AddressSanitizer and UBSan in
+the build container. It exercises 8,193 full/drain cycles (multiple 16-bit wraps),
+FIFO ordering, overflow, empty/partial batches and descriptor preservation.
+The API requires external serialization; these tests do not test kernel races.
+It is not linked into firmware yet and does not implement a complete GSO module.
+
+Worker interface observations: baseline sw_gso_task at 0xaf4 selects a batch limit
+of 16; 0xafc–0xb68 copies 32-byte job records while holding the queue lock and
+advances the 16-bit consumer; 0xbc0–0xbcc calls bcm_sw_gso_skb_prehandle with the
+packet, device and two callbacks in the non-assist path. The assist path for larger
+batches has additional shared queues and callback substitution and remains pending.
+The ring core does not claim to implement that path, shutdown or flow reassignment.
+
+Re-run the C checks from the repository root:
+
+```sh
+docker run --rm --user "$(id -u):$(id -g)" \
+  -v "$PWD/vendor/gt-be98-pro/open-source/gso:/source:ro" amng-build \
+  bash -c 'gcc -std=c99 -Wall -Wextra -Werror -fsanitize=address,undefined /source/test_ring.c -o /tmp/test-ring && /tmp/test-ring'
+```
+
+Kernel configuration validation now executes the actual extraKernelConfig writer
+against a temporary configuration. Its inputs must omit the CONFIG_ prefix,
+because the writer adds it. The test confirms real output entries and catches
+doubled prefixes, not just Make-variable values. A complete kernel build and
+final-image module inventory are still required.

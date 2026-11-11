@@ -390,7 +390,7 @@ endif
 # Source replacement experiment: select drivers needed by the open filesystem paths.
 ifeq ($(ASUS_OPEN_COMPONENTS),y)
 ifeq ($(BUILD_NAME),GT-BE98_PRO)
-override EXTRA_KERNEL_CONFIGS := $(filter-out CONFIG_FAT_FS=% CONFIG_VFAT_FS=% CONFIG_HFS_FS=% CONFIG_HFSPLUS_FS=% CONFIG_FUSE_FS=%,$(EXTRA_KERNEL_CONFIGS)) CONFIG_FAT_FS=m CONFIG_VFAT_FS=m CONFIG_HFS_FS=m CONFIG_HFSPLUS_FS=m CONFIG_FUSE_FS=y
+override EXTRA_KERNEL_CONFIGS := $(filter-out FAT_FS=% VFAT_FS=% HFS_FS=% HFSPLUS_FS=% FUSE_FS=%,$(EXTRA_KERNEL_CONFIGS)) FAT_FS=m VFAT_FS=m HFS_FS=m HFSPLUS_FS=m FUSE_FS=y
 endif
 endif
 
