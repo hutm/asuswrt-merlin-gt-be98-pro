@@ -69,4 +69,29 @@ for command in show dump getall; do
   echo "$command: filtering, empty slots and size report match"
 done
 
+qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+  -E LD_PRELOAD=/tmp/stubs.so -E SAVE_FIXTURE=1 /tmp/source-cli save /tmp/source-backup
+qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+  -E LD_PRELOAD=/tmp/stubs.so -E SAVE_FIXTURE=1 /firmware/bin/nvram save /tmp/reference-backup
+python3 - <<"PYTHON"
+from pathlib import Path
+def records(path):
+    data=Path(path).read_bytes()
+    assert data[:4]==b"HDR2"
+    size=int.from_bytes(data[4:7],"little")
+    assert len(data)==size+8
+    payload=bytes(0 if c>=253 else (255+data[7]-c)&255 for c in data[8:])
+    return payload.rstrip(b"\0").split(b"\0")
+expected=[b"lan_ipaddr=192.0.2.1",b"test_exact=decrypted",b"empty=",b"equals=a=b"]
+assert records("/tmp/source-backup")==records("/tmp/reference-backup")==expected
+print("save: encrypted-table selection and decoded backup records match")
+PYTHON
+
+if qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+  -E LD_PRELOAD=/tmp/stubs.so -E SAVE_FIXTURE=1 /tmp/source-cli save /dev/full; then
+  echo "save incorrectly succeeded on a full output device" >&2
+  exit 1
+fi
+echo "save: output failure returns nonzero"
+
 '

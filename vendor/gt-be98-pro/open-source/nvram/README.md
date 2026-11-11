@@ -656,3 +656,20 @@ The writer is not yet selected by `save` or `fb_save`. Their encrypted-setting
 conversion and feedback-secret filtering still need validation before integration.
 The reference profile uses next-block padding; the older generic GPL writer has
 an additional 3072-byte minimum that this reference-compatible primitive omits.
+
+## Backup command writer integration
+
+The opt-in GPL CLI now calls `nv_profile_write` from its existing backup writer,
+checks close errors, and propagates failures from save, mode exports and feedback
+exports to a nonzero exit status. Default builds retain their existing writer.
+A complete ARM CLI comparison uses a synthetic encrypted defaults-table entry
+and decryption backend: ordinary values, empty values, embedded equals signs and
+the decrypted entry match the reference after independently decoding each backup.
+The original reference produces different random padding; comparison is of the
+format and settings records. A `/dev/full` check confirms save reports failure.
+
+This validates decryption selection and backup serialization, not the proprietary
+shared decryption routine itself. Existing input collection, conversion bounds,
+feedback redaction and erase behavior still need review before selecting the
+source executable for firmware. Destination files can be truncated before a
+later validation failure; this integration does not provide transactional export.

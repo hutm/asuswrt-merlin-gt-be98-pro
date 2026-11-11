@@ -615,6 +615,17 @@ unsigned char get_rand()
 
 int nvram_save_new(char *file, char *buf)
 {
+#ifdef ASUS_OPEN_NVRAM_CLI
+    FILE *output = fopen(file, "wb");
+    int result, saved;
+    if (!output) return -1;
+    result = nv_profile_write(output, buf, 262144, get_rand() % 30);
+    saved = errno;
+    if (fclose(output) && !result) { result = -1; saved = errno; }
+    errno = saved;
+    return result;
+#else
+
 	FILE *fp;
 	char *name;
 #if defined(RTCONFIG_SAVEJFFS)
@@ -689,6 +700,7 @@ int nvram_save_new(char *file, char *buf)
 	}
 	fclose(fp);
 	return 0;
+#endif
 }
 
 int issyspara(char *p)
@@ -989,10 +1001,18 @@ main(int argc, char **argv)
 				}
 				memset(tmp_dnv, 0, nvram_space);
 				nvram_dec_all(tmp_dnv, buf);
-				nvram_save_new(*argv, tmp_dnv);
+				#ifdef ASUS_OPEN_NVRAM_CLI
+                if (nvram_save_new(*argv, tmp_dnv)) { perror(*argv); free(tmp_dnv); free(buf); return 1; }
+#else
+                nvram_save_new(*argv, tmp_dnv);
+#endif
 				free(tmp_dnv);
 #else
-				nvram_save_new(*argv, buf);
+				#ifdef ASUS_OPEN_NVRAM_CLI
+                if (nvram_save_new(*argv, buf)) { perror(*argv); free(buf); return 1; }
+#else
+                nvram_save_new(*argv, buf);
+#endif
 #endif
 			}
 		}
@@ -1021,7 +1041,11 @@ main(int argc, char **argv)
 #else
 				export_mode(mode, tmp_export, buf);
 #endif
-				nvram_save_new(*argv, tmp_export);
+				#ifdef ASUS_OPEN_NVRAM_CLI
+                if (nvram_save_new(*argv, tmp_export)) { perror(*argv); free(tmp_export); free(buf); return 1; }
+#else
+                nvram_save_new(*argv, tmp_export);
+#endif
 				free(tmp_export);
 			}
 		}
@@ -1042,7 +1066,11 @@ main(int argc, char **argv)
 				memcpy(tmpbuf, buf, nvram_space);
 #endif
 				_secure_conf(tmpbuf, nvram_space);
-				nvram_save_new(*argv, tmpbuf);
+				#ifdef ASUS_OPEN_NVRAM_CLI
+                if (nvram_save_new(*argv, tmpbuf)) { perror(*argv); free(tmpbuf); free(buf); return 1; }
+#else
+                nvram_save_new(*argv, tmpbuf);
+#endif
 				free(tmpbuf);
 			}
 		}
