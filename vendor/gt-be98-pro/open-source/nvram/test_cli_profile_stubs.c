@@ -46,7 +46,7 @@ FILE *fopen(const char *path,const char *mode) {
 
 char *nvram_get(const char *name) {printf("GET[%s]\n",name);return NULL;}
 char *wlcsm_nvram_get(const char *name) {printf("WGET[%s]\n",name);return "synthetic";}
-int nvram_getall(char *out,int size) {memset(out,0,size);return 0;}
+int nvram_getall(char *out,int size) {const char data[]="key=one\0empty=\0equals=a=b\0\0";if(size<(int)sizeof data)abort();memset(out,0,size);memcpy(out,data,sizeof data);return 0;}
 int wlcsm_nvram_getall(char *out,int size) {return nvram_getall(out,size);}
 int nvram_commit(void) {puts("COMMIT");return 0;}
 int nvram_kcommit(void) {puts("KCOMMIT");return 0;}

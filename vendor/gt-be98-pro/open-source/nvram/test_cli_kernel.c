@@ -17,6 +17,14 @@ int nvram_kcommit(void){event("C","",NULL);return 0;}
 char *wlcsm_nvram_get(const char *key){(void)key;return NULL;}
 char *wlcsm_nvram_get_bitflag(const char *key,unsigned bit){(void)key;(void)bit;return NULL;}
 int wlcsm_nvram_set_bitflag(const char *key,unsigned bit,int enabled){(void)key;(void)bit;(void)enabled;return 0;}
+static int snapshot_mode;
+int nvram_getall(char *out,int capacity){
+ const char data[]="key=one\0empty=\0equals=a=b\0\0";
+ if(snapshot_mode==1){errno=EIO;return -1;}
+ if(snapshot_mode==2){memset(out,'x',(size_t)capacity);return 0;}
+ if(snapshot_mode==3){memset(out,'x',(size_t)capacity);out[capacity-1]=0;return 0;}
+ memcpy(out,data,sizeof data);return 0;
+}
 static void reset(void){used=0;events[0]=0;}
 int main(void){
  FILE *out=tmpfile();assert(out);char *set[]={"kset","key=a=b"};assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"A:key:a=b;K:key:a=b;"));
@@ -28,6 +36,16 @@ int main(void){
  char path[]="/tmp/cli-kernel-XXXXXX";int fd=mkstemp(path);assert(fd>=0);const char data[]="#ignored=x\n key =one\nkey=two\nempty=\n";assert(write(fd,data,sizeof data-1)==sizeof data-1);close(fd);
  reset();set[0]="kernelset";set[1]=path;assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"K:key:one;K:key:two;K:empty:;"));reset();set[0]="loadfile";assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"W:key:one;W:key:two;W:empty:;"));set[0]="kernelset";unlink(path);
  assert(nv_cli_kernel(2,set,out)==-1&&errno==ENOENT);assert(nv_cli_kernel(1,set,out)==-1&&errno==EINVAL);
+ set[0]="savefile";set[1]=path;
+ assert(nv_cli_kernel(2,set,out)==2);
+ FILE *export=fopen(path,"r");assert(export);char exported[64]={0};
+ assert(fread(exported,1,sizeof exported,export)==strlen("key=one\nempty=\nequals=a=b\n"));fclose(export);
+ assert(!strcmp(exported,"key=one\nempty=\nequals=a=b\n"));
+ for(snapshot_mode=1;snapshot_mode<=3;++snapshot_mode){
+  assert(nv_cli_kernel(2,set,out)==-1);assert(errno==(snapshot_mode==1?EIO:EPROTO));
+  export=fopen(path,"r");assert(export);char unchanged[64]={0};fread(unchanged,1,sizeof unchanged,export);fclose(export);assert(!strcmp(unchanged,exported));
+ }
+ snapshot_mode=0;unlink(path);set[1]="/nonexistent/parent/export";assert(nv_cli_kernel(2,set,out)==-1);
  set[0]="unknown";assert(!nv_cli_kernel(1,set,out));fclose(out);
  puts("Kernel CLI: routing order, NULL values, stop control, file loading and failures passed");return 0;
 }

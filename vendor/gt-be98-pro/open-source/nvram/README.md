@@ -576,5 +576,21 @@ flag commands with synthetic backends and matches their transcripts.
 kernel setter. Omitted loadfile paths select `/data/nvramdefault.txt`, matching
 the reference. The source opens files read-only and reports parse/setter errors.
 Tests distinguish the two setter routes and preserve duplicate/empty values.
-`savefile`, dump/restart variants and remaining ordinary-command error handling
+Dump/restart variants and remaining ordinary-command error handling
 still need work before selecting the source CLI in firmware.
+
+## Text export candidate
+
+`savefile [path]` now exports the ASUS getter's NUL-separated settings as text,
+retaining record order, empty values and embedded equals signs. The default path
+is `/data/nvramdefault.txt`. The complete CLI's exported bytes and success message
+match the reference executable under ARM/QEMU with a synthetic settings backend.
+This is a text export, distinct from the HDR1/HDR2 backup commands.
+
+The source validates the complete snapshot within 262144 bytes before opening
+its destination. Getter failures and missing record/list termination therefore
+leave an existing export untouched. Native sanitizer and ARM tests cover these
+cases and invalid destination paths; the full component suite passes. Output
+and close failures are reported, but errors after opening may leave a partial
+file. This change does not select the CLI in the firmware or establish hardware
+compatibility.

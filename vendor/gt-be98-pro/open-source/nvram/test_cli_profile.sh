@@ -44,4 +44,15 @@ for args in "getflag flags 3" "setflag flags 3=1"; do
   echo "$args: source/reference command behavior matches"
 done
 
+qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+  -E LD_PRELOAD=/tmp/stubs.so /tmp/source-cli savefile /tmp/export >/tmp/source.log
+mv /tmp/export /tmp/source-export
+qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+  -E LD_PRELOAD=/tmp/stubs.so /firmware/bin/nvram savefile /tmp/export >/tmp/reference.log
+cmp /tmp/source.log /tmp/reference.log
+cmp /tmp/source-export /tmp/export
+printf "key=one\nempty=\nequals=a=b\n" >/tmp/expected-export
+cmp /tmp/export /tmp/expected-export
+echo "savefile: source/reference exports and status match"
+
 '
