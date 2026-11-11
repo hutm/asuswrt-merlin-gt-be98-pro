@@ -611,7 +611,7 @@ arguments, long argument vectors, NULL/empty/truncated output paths, status and
 error results, plus NULL-format handling. `_eval` is intercepted in every run:
 no commands are executed and no output files are opened. Allocation-failure
 injection and the real process-launch backend are not covered. The candidate
-object now needs an export/caller audit and integration into the full build.
+object is selected by the experimental build described below.
 
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_commands.sh
@@ -648,3 +648,23 @@ The CLI's link-time `-rpath-link` now includes the already-built OpenSSL and zli
 source directories. A non-root Docker link of that CLI against the actual newly
 built shared library passes. This adds no runtime search path; the full-build
 retry and packaged-image audit remain pending.
+
+The next full-build retry passed the CLI link and stopped at `write_smb_conf`
+with the same transitive-library lookup failure. The experimental model's
+`common.mak` now supplies the OpenSSL/zlib link-time search paths to consumers
+using its `LDFLAGS`. This adds no runtime search path.
+
+`test_linked.sh` runs 14 reference-comparison suites against the actual newly
+linked `libshared.so`, rather than separately compiled candidate sources. All
+14 pass for the library from that retry. Random-device mocks forward unrelated
+file opens so OpenSSL can read its configuration. The suites still intercept
+settings and execution backends; they do not validate physical storage,
+process launching or router hardware. Run with immutable extracted inputs:
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/original/root \
+ASUS_SPWENC_CANDIDATE_DIR=/absolute/directory/containing/libshared \
+bash vendor/gt-be98-pro/open-source/spwenc/test_linked.sh
+```
+
+Full-image integration and packaged-library verification remain pending.

@@ -22,6 +22,11 @@ endif
 include $(SRCBASE)/target.mak
 include $(SRCBASE)/platform.mak
 
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+# Source libshared adds these transitive dependencies before filesystem staging.
+LDFLAGS += -Wl,-rpath-link,$(TOP)/openssl-3.5:$(TOP)/zlib
+endif
+
 ifeq ($(PLATFORM_ARCH),)
 export PLATFORM_ARCH := $(PLATFORM)
 endif

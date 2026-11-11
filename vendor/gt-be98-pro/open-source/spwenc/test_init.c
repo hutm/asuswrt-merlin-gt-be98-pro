@@ -24,7 +24,7 @@ int dec_nvram(char *name,char *input,char *output){(void)input;if(event("decode"
 int RAND_bytes(unsigned char *out,int size){assert(size==16);if(random_fail)return 0;for(int i=0;i<size;++i)out[i]=(unsigned char)(i*13);return 1;}
 #ifdef REFERENCE
 #include <dlfcn.h>
-FILE *fopen64(const char *path,const char *access){assert(!strcmp(path,"/dev/urandom")&&!strcmp(access,"r"));FILE *f=tmpfile();assert(f);for(int i=0;i<17;++i)fputc(i*13,f);rewind(f);return f;}
+FILE *fopen64(const char *path,const char *access){if(strcmp(path,"/dev/urandom")){FILE *(*real_open)(const char *,const char *)=dlsym(RTLD_NEXT,"fopen64");assert(real_open);return real_open(path,access);}assert(!strcmp(access,"r"));FILE *f=tmpfile();assert(f);for(int i=0;i<17;++i)fputc(i*13,f);rewind(f);return f;}
 #endif
 int main(void){
 #ifdef REFERENCE
