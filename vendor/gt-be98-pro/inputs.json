@@ -135,11 +135,6 @@
       "sha256": "e44e9c5ba6da1d04601303af73e08559b9bc41d875aa9411e34c080dc401bf18"
     },
     {
-      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/spwenc.o",
-      "archive_member": "asuswrt/release/src/router/shared/prebuild/spwenc.o",
-      "sha256": "6f81e07642c69c545874f6e644eff8d6e57129e6855a4f9a9966d1124737d77a"
-    },
-    {
       "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/ethctl_cmd.o",
       "archive_member": "asuswrt/release/src/router/shared/prebuild/ethctl_cmd.o",
       "sha256": "424a4caee66376cd9f621f02c183dc90dde70692ceb2175701f4b8da94f17d2d"
@@ -183,11 +178,6 @@
       "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/tcode.o",
       "archive_member": "asuswrt/release/src/router/shared/prebuild/tcode.o",
       "sha256": "e3fb2039b7a50e219e5f0547530d43918708d18785fa1f29940fe602063f8791"
-    },
-    {
-      "destination": "release/src/router/httpd/prebuild/GT-BE98_PRO/web_hook.o",
-      "archive_member": "asuswrt/release/src/router/httpd/prebuild/web_hook.o",
-      "sha256": "54dbded1ef995d59e9e43e47ef8b1c6abd98ef478afaac15f988b6d79cd08e47"
     },
     {
       "destination": "release/src/router/httpd/prebuild/GT-BE98_PRO/pwenc.o",
@@ -703,11 +693,6 @@
       "destination": "release/src/router/bwdpi_source/asus_sql/prebuild/GT-BE98_PRO/bwdpi_sqlite",
       "archive_member": "asuswrt/release/src/router/bwdpi_source/asus_sql/prebuild/bwdpi_sqlite",
       "sha256": "fd729920448fd981cc8f53e2d71aee58ef4a5bedab0e295a0e3c2ea77d2416ce"
-    },
-    {
-      "destination": "release/src/router/bwdpi_source/asus_sql/prebuild/GT-BE98_PRO/libbwdpi_sql.so",
-      "archive_member": "asuswrt/release/src/router/bwdpi_source/asus_sql/prebuild/libbwdpi_sql.so",
-      "sha256": "025b73a3c0377d1e28e0bae8a60fde07d33105dbd7d88aee99037287a4269ed7"
     },
     {
       "destination": "release/src/router/nmp-api/networkmap/prebuild/GT-BE98_PRO/libnmpapi.so",

@@ -3238,7 +3238,9 @@ static void shutdn(int rb)
 	config_jumbo_frame();
 #endif
 #if defined(RTBE88U) || defined(RTBE96U) || defined(GTBE96) || defined(GTBE98) || defined(GTBE98_PRO) || defined(GTBE19000) || defined(GTBE19000AI) || defined(GTBE96_AI)
+#ifndef ASUS_PUBLIC_GPL_38984
 	ed_thresh_clear();
+#endif
 #endif
 #if defined(RTCONFIG_HND_ROUTER_AX_6756) || defined(RTCONFIG_HND_ROUTER_BE_4916)
 	if (f_exists("/jffs/remove_hidden_flag"))

@@ -9982,7 +9982,9 @@ void onboarding_check()
 		lock = file_lock("onboarding");
 		if (strlen(nvram_safe_get("cfg_group")) == 0) {
 			stop_cfgsync();
+#ifndef ASUS_PUBLIC_GPL_38984
 			backup_eth_ob_log();
+#endif
 			notify_rc("resetdefault");
 		}
 		file_unlock(lock);

@@ -102,16 +102,22 @@ def main():
     parser.add_argument('--root', type=Path, default=HERE.parents[1])
     parser.add_argument('--archive', type=Path)
     args = parser.parse_args()
-    manifest = json.loads((HERE / 'inputs.json').read_text())
+    manifests = [json.loads((HERE / name).read_text())
+                 for name in ('inputs.json', 'supplemental-inputs.json')]
     try:
         if args.command == 'stage':
             if args.archive is None:
                 parser.error('stage requires --archive')
-            stage(args.root, manifest, args.archive)
+            archive_hash = digest(args.archive)
+            matching = [m for m in manifests if m['archive']['sha256'] == archive_hash]
+            if len(matching) != 1:
+                raise ValueError('Archive does not match exactly one pinned ASUS checksum')
+            stage(args.root, matching[0], args.archive)
         elif args.command == 'verify':
-            verify(args.root, manifest)
+            for manifest in manifests:
+                verify(args.root, manifest)
         else:
-            release_gate(manifest, json.loads((HERE / 'release-status.json').read_text()))
+            release_gate(manifests[0], json.loads((HERE / 'release-status.json').read_text()))
     except (ValueError, OSError, tarfile.TarError, zipfile.BadZipFile) as exc:
         print(str(exc), file=sys.stderr)
         return 1

@@ -4486,7 +4486,7 @@ int main(int argc, char **argv)
 
 		return 0;
 	}
-#if defined(CONFIG_BCMWL5) && defined(RTCONFIG_WIFI7)
+#if defined(CONFIG_BCMWL5) && defined(RTCONFIG_WIFI7) && !defined(ASUS_PUBLIC_GPL_38984)
 	if (!strcmp(base, "wl_scb")) {
 		wl_scb();
 		return 0;

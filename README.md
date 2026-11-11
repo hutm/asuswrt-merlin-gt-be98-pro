@@ -3,8 +3,10 @@
 Experimental fork of Asuswrt-Merlin for **ASUS GT-BE98 Pro only** (not GT-BE98).
 This is an independent project, not an ASUS or upstream Merlin release.
 
-**No installable firmware release is available.** The first integration build
-fails to link, input provenance is incomplete, and there has been no hardware test.
+**No installable firmware release is available.** An experimental firmware image
+now builds and passes static image/dependency checks. Input provenance is still
+incomplete, cross-model userspace compatibility is untested, and there has been
+no hardware test. See [build results](vendor/gt-be98-pro/build-result.json).
 The word “verified” describes individual inputs checked against an ASUS-published
 archive checksum; it is not a claim that the current tree or an image is verified.
 

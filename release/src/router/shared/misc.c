@@ -7655,3 +7655,17 @@ rfctime(const time_t *timep, char *ts_string, int len)
 	strftime(ts_string, len, "%a, %d %b %Y %H:%M:%S %z", &tm);
 	return ts_string;
 }
+
+#ifdef ASUS_PUBLIC_GPL_38984
+#if !defined(GTBE98_PRO) || defined(RTCONFIG_MXL_826XX)
+#error Public GPL compatibility requires the GT-BE98 Pro Realtek switch platform
+#endif
+/* GT-BE98 Pro has no MaxLinear dual-SerDes workaround. ASUS 39442's
+ * implementation unconditionally returns zero on this model (see vendor notes).
+ * Keep the capability query available when linking the older 38984 private.o.
+ */
+int is_mxl_dual_serdes_war(void)
+{
+	return 0;
+}
+#endif

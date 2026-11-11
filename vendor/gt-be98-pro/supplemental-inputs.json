@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "model": "GT-BE98_PRO",
+  "merlin_base": "69838e4a60564e5550e97f11d8a8cf2c6260c4f0",
+  "coverage": "partial",
+  "archive": {
+    "version": "3.0.0.6.102_39274",
+    "model": "GT-BE98",
+    "url": "https://dlcdnets.asus.com/pub/ASUS/wireless/GT-BE98/GPL_GT_BE98_300610239274.zip",
+    "sha256": "4ddd3de0d6c2067d7021d38c0471a1e1350ccd9d51587baa80ef0e0b2f293425"
+  },
+  "inputs": [
+    {
+      "destination": "release/src/router/shared/prebuild/GT-BE98_PRO/spwenc.o",
+      "archive_member": "asuswrt/release/src/router/shared/prebuild/spwenc.o",
+      "sha256": "9bfacfbb7eedfb6ac8d3dd9c9c136b8561eedf0b4ab3f8c9599be9a94a2cbe70"
+    },
+    {
+      "destination": "release/src/router/httpd/prebuild/GT-BE98_PRO/web_hook.o",
+      "archive_member": "asuswrt/release/src/router/httpd/prebuild/web_hook.o",
+      "sha256": "9e1837819a5e7430688cddb56abdf16b309c5f5e87caafb9340c0891e69a7aae"
+    },
+    {
+      "destination": "release/src/router/bwdpi_source/asus_sql/prebuild/GT-BE98_PRO/libbwdpi_sql.so",
+      "archive_member": "asuswrt/release/src/router/bwdpi_source/asus_sql/prebuild/libbwdpi_sql.so",
+      "sha256": "6ec0258d0973a49c7ff6eafcbccc207856596492ab6e73a53aaa30c62cd1fe3a"
+    }
+  ]
+}

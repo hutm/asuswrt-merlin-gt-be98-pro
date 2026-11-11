@@ -1,6 +1,13 @@
 
 include ../common.mak
 
+ifeq ($(ASUS_PUBLIC_GPL_38984),y)
+ifneq ($(BUILD_NAME),GT-BE98_PRO)
+$(error ASUS public GPL compatibility is only supported for GT-BE98_PRO)
+endif
+CFLAGS += -DASUS_PUBLIC_GPL_38984
+endif
+
 ifeq ($(HND_ROUTER_BE_4916),y)
 -include sdk_profile.mak
 endif
@@ -1647,7 +1654,9 @@ endif
 	@cd $(INSTALLDIR)/sbin && ln -sf rc wpasupp
 	@cd $(INSTALLDIR)/sbin && ln -sf rc wlconf_pre
 ifeq ($(and $(CONFIG_BCMWL5),$(RTCONFIG_WIFI7)),y)
+ifneq ($(ASUS_PUBLIC_GPL_38984),y)
 	@cd $(INSTALLDIR)/sbin && ln -sf rc wl_scb
+endif
 endif
 ifneq (,$(or \
 	$(filter $(BUILD_NAME),RT-AX55 RT-AX1800 RT-AX58U_V2 RT-AX3000N BR63 GT-BE98 GT-BE98_PRO GT-BE96 RT-BE58U TUF-BE3600 RT-BE58U_V2 TUF-BE3600_V2 RT-BE55 GT-BE19000 RT-BE92U RT-BE95U RT-BE82U TUF-BE82 RT-BE58U_PRO GT-BE19000AI GT-BE96_AI), \

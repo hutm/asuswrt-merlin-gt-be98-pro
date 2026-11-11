@@ -1,4 +1,11 @@
 include ../common.mak
+
+ifeq ($(ASUS_PUBLIC_GPL_38984),y)
+ifneq ($(BUILD_NAME),GT-BE98_PRO)
+$(error ASUS public GPL compatibility is only supported for GT-BE98_PRO)
+endif
+CFLAGS += -DASUS_PUBLIC_GPL_38984
+endif
 include $(SRCBASE)/.config
 include ../.config
 

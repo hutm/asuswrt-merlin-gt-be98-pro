@@ -1,0 +1,35 @@
+{
+  "status": "experimental image built, not approved for installation or publication",
+  "model": "GT-BE98_PRO",
+  "merlin_base": "69838e4a60564e5550e97f11d8a8cf2c6260c4f0",
+  "git_head_during_build": "6a732efa8e",
+  "source_changes_were_uncommitted_during_build": true,
+  "source_patch_sha256": "db5241c32bdc8673acbdfe567ab82dabaf25dd2ed5c2c102bcf04d1f5d46b1bd",
+  "profile": {
+    "ASUS_PUBLIC_GPL_38984": "y",
+    "MULTISERVICE_WAN": "n"
+  },
+  "declared_verified_input_count": 280,
+  "provenance_coverage": "partial",
+  "images": {
+    "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
+      "bytes": 78548172,
+      "sha256": "e28e2dacd1b0cb5a4204b22a3b2910534e1b51b2ec9d9955f71b2ee9fda86ecf"
+    },
+    "GT-BE98_PRO_3006_102.9_0_nand_squashfs_loader.pkgtb": {
+      "bytes": 80645560,
+      "sha256": "68e9903dc46ce662b2afff933feb9d8804f62c08eeddde5ee85f3f573e3ee1cf"
+    }
+  },
+  "validation": {
+    "fit_payload_hashes": "passed",
+    "rootfs_extraction": "passed",
+    "userspace_elf_checked": 648,
+    "new_userspace_resolution_failures": 0,
+    "kernel_modules_checked": 153,
+    "kernel_symbol_resolution_failures": 0,
+    "hardware_tests": "not performed"
+  },
+  "launcher_note": "Docker compilation/packaging completed successfully. Editing the outer launcher while it ran caused a stray trailing command and exit 127 after image hashes were printed. Corrected launcher passes bash syntax check; independent post-build image checks passed.",
+  "kernel_checker_note": "Trend Micro modules retain export-table relocations but not __ksymtab_* symbol names; name-only screening incorrectly reported missing exports."
+}
