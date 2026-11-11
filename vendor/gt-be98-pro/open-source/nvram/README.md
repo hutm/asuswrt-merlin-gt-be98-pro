@@ -532,3 +532,22 @@ matched the earlier captured settings sequence. The candidate is not selected
 in firmware yet: remaining command parity and full-image integration still need
 validation. The existing GPL CLI's backup/restore and erase behavior also need
 review before replacing the packaged executable.
+
+## Bounded profile restore candidate
+
+The opt-in GPL CLI uses `profile.c` for HDR1/HDR2 restore. It limits declared
+payload length to the allocated settings capacity, rejects truncated files,
+decodes HDR2 within that bound, and validates string termination before applying
+any records. Setter errors stop with possible partial changes. Invalid or
+unterminated input no longer reaches the legacy unbounded buffer scan. A record
+without `=` unsets its complete key once rather than repeatedly scanning suffixes.
+Default CLI builds keep their existing implementation.
+
+Native sanitizer and ARM/QEMU tests cover both formats, oversized/truncated data,
+unterminated records and callback failure. The complete adapted CLI cross-links.
+A short synthetic HDR1 comparison remains unresolved: the source candidate
+applied the two selected settings, but the reference CLI made no setter calls
+with the same fixture and ancillary stubs. This is not a demonstrated behavior
+match. Additional backup-format/reference testing is required before CLI
+selection. The reference usage also identifies missing `getflag`, `setflag`,
+`loadfile`, `savefile`, `dump` and restart command variants for the parity audit.

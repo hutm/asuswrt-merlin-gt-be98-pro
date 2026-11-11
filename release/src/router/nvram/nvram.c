@@ -46,6 +46,7 @@
 #include "nvram_mode.h"
 #ifdef ASUS_OPEN_NVRAM_CLI
 #include "cli_kernel.h"
+#include "profile.h"
 #endif
 
 #define PROTECT_CHAR	'x'
@@ -712,6 +713,28 @@ int issyspara(char *p)
 	else return 0;
 }
 
+#ifdef ASUS_OPEN_NVRAM_CLI
+static int apply_profile(void *context, const char *key, const char *value)
+{
+    int result;
+    (void)context;
+    if (value && !issyspara((char *)key)) return 0;
+    result = value ? nvram_set(key, value) : nvram_unset(key);
+    return result < 0 ? -1 : 0;
+}
+static int restore_profile(const char *path, unsigned int capacity)
+{
+    FILE *input = fopen(path, "rb");
+    int result, saved;
+    if (!input) return -1;
+    result = nv_profile_read(input, capacity, apply_profile, NULL);
+    saved = errno;
+    if (fclose(input) && !result) return -1;
+    errno = saved;
+    return result;
+}
+#endif
+
 // restore nvram from file
 int nvram_restore(char *file, char *buf)
 {
@@ -1017,7 +1040,15 @@ main(int argc, char **argv)
 		{
 			if (*++argv) 
 			{
+#ifdef ASUS_OPEN_NVRAM_CLI
+                if (restore_profile(*argv, nvram_space)) {
+                    perror(*argv);
+                    free(buf);
+                    return 1;
+                }
+#else
 				nvram_restore_new(*argv, buf);
+#endif
 			}
 			
 		}
