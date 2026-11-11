@@ -162,13 +162,33 @@ static int nvram_dec_all(char* buf_ap, char* buf)
 		for (t = router_defaults; t->name; t++)
 		{
 			if (strcmp(name, t->name) == 0 && t->enc == 1) {
-				dec_nvram(t->name, value, output);
-				value = output;
+#ifdef ASUS_OPEN_NVRAM_CLI
+                memset(output, 0xff, sizeof(output));
+                if (dec_nvram(t->name, value, output) < 0) return -1;
+                if (!memchr(output, 0, sizeof(output))) { errno = EPROTO; return -1; }
+#else
+                dec_nvram(t->name, value, output);
+#endif
+                value = output;
 			}
 		}
 
-		snprintf(nv, sizeof(nv), "%s=%s", name, value);
-		ptr = stpcpy(ptr, nv) + 1;
+#ifdef ASUS_OPEN_NVRAM_CLI
+        {
+            size_t needed = strlen(name) + strlen(value) + 2;
+            size_t used = (size_t)(ptr - buf_ap);
+            if (needed >= 262144 - used) { errno = EOVERFLOW; return -1; }
+            memcpy(ptr, name, strlen(name));
+            ptr += strlen(name);
+            *ptr++ = '=';
+            memcpy(ptr, value, strlen(value) + 1);
+            ptr += strlen(value) + 1;
+            *ptr = 0;
+        }
+#else
+        snprintf(nv, sizeof(nv), "%s=%s", name, value);
+        ptr = stpcpy(ptr, nv) + 1;
+#endif
 #ifdef ASUS_DEBUG
 				puts(nv);
 #endif
@@ -955,6 +975,20 @@ main(int argc, char **argv)
             continue;
         }
 #endif
+#ifdef ASUS_OPEN_NVRAM_CLI
+        if (!strcmp(*argv, "save") || !strncmp(*argv, "save_ap", 7) ||
+            !strncmp(*argv, "save_rp", 7) || !strncmp(*argv, "fb_save", 7)) {
+            size_t used;
+            int fetched;
+            memset(buf, 0xff, nvram_space);
+            fetched = nvram_getall(buf, nvram_space);
+            if (fetched < 0 || fetched >= (int)nvram_space ||
+                nv_profile_validate(buf, nvram_space, &used)) {
+                if (fetched >= (int)nvram_space) errno = EPROTO;
+                perror(*argv); free(buf); return 1;
+            }
+        }
+#endif
 		if (!strncmp(*argv, "get", 3)) {
 			if (*++argv) {
 				if ((value = nvram_get(*argv)))
@@ -992,7 +1026,9 @@ main(int argc, char **argv)
 		{
 			if (*++argv)
 			{
-				nvram_getall(buf, nvram_space);
+				#ifndef ASUS_OPEN_NVRAM_CLI
+                nvram_getall(buf, nvram_space);
+#endif
 #ifdef RTCONFIG_NVRAM_ENCRYPT
 				char *tmp_dnv = malloc(nvram_space);
 				if (!tmp_dnv) {
@@ -1000,7 +1036,11 @@ main(int argc, char **argv)
 					return 0;
 				}
 				memset(tmp_dnv, 0, nvram_space);
-				nvram_dec_all(tmp_dnv, buf);
+				#ifdef ASUS_OPEN_NVRAM_CLI
+                if (nvram_dec_all(tmp_dnv, buf)) { perror(*argv); free(tmp_dnv); free(buf); return 1; }
+#else
+                nvram_dec_all(tmp_dnv, buf);
+#endif
 				#ifdef ASUS_OPEN_NVRAM_CLI
                 if (nvram_save_new(*argv, tmp_dnv)) { perror(*argv); free(tmp_dnv); free(buf); return 1; }
 #else
@@ -1027,7 +1067,9 @@ main(int argc, char **argv)
 					return 0;
 				}
 				memset(tmp_export, 0, nvram_space);
-				nvram_getall(buf, NVRAM_SPACE);
+				#ifndef ASUS_OPEN_NVRAM_CLI
+                nvram_getall(buf, NVRAM_SPACE);
+#endif
 #ifdef RTCONFIG_NVRAM_ENCRYPT
 				char *tmp_dnv = malloc(nvram_space);
 				if (!tmp_dnv) {
@@ -1035,7 +1077,11 @@ main(int argc, char **argv)
 					return 0;
 				}
 				memset(tmp_dnv, 0, nvram_space);
-				nvram_dec_all(tmp_dnv, buf);
+				#ifdef ASUS_OPEN_NVRAM_CLI
+                if (nvram_dec_all(tmp_dnv, buf)) { perror(*argv); free(tmp_dnv); free(buf); return 1; }
+#else
+                nvram_dec_all(tmp_dnv, buf);
+#endif
 				export_mode(mode, tmp_export, tmp_dnv);
 				free(tmp_dnv);
 #else
@@ -1058,10 +1104,16 @@ main(int argc, char **argv)
 					fprintf(stderr, "Can NOT alloc memory!!!");
 					return 0;
 				}
-				nvram_getall(buf, nvram_space);
+				#ifndef ASUS_OPEN_NVRAM_CLI
+                nvram_getall(buf, nvram_space);
+#endif
 #ifdef RTCONFIG_NVRAM_ENCRYPT
 				memset(tmpbuf, 0, nvram_space);
-				nvram_dec_all(tmpbuf, buf);
+				#ifdef ASUS_OPEN_NVRAM_CLI
+                if (nvram_dec_all(tmpbuf, buf)) { perror(*argv); free(tmpbuf); free(buf); return 1; }
+#else
+                nvram_dec_all(tmpbuf, buf);
+#endif
 #else
 				memcpy(tmpbuf, buf, nvram_space);
 #endif

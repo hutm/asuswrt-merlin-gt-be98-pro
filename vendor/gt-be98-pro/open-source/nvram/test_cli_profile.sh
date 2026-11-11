@@ -94,4 +94,18 @@ if qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
 fi
 echo "save: output failure returns nonzero"
 
+for fault in readfail unterminated oversized decryptfail decryptunterminated expansion; do
+  for command in save fb_save save_ap save_rp; do
+    printf "existing backup" >/tmp/preserved
+    if qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib \
+      -E LD_PRELOAD=/tmp/stubs.so -E SAVE_FIXTURE=1 -E SAVE_FAULT=$fault \
+      /tmp/source-cli $command /tmp/preserved; then
+      echo "$command unexpectedly accepted $fault" >&2
+      exit 1
+    fi
+    test "$(cat /tmp/preserved)" = "existing backup"
+  done
+  echo "backup input failure $fault: rejected before destination changes"
+done
+
 '

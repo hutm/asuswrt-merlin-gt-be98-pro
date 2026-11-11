@@ -673,3 +673,22 @@ shared decryption routine itself. Existing input collection, conversion bounds,
 feedback redaction and erase behavior still need review before selecting the
 source executable for firmware. Destination files can be truncated before a
 later validation failure; this integration does not provide transactional export.
+
+## Backup input and conversion bounds
+
+Opt-in backup commands collect settings once, check the getter status and reported
+length, and validate the bounded list before invoking string-based conversion.
+The encrypted-settings conversion checks the decryption return and terminator,
+resets its scratch output for each call, and checks cumulative destination space.
+It no longer silently truncates an ordinary record through the legacy 65535-byte
+intermediate buffer. All transformed records retain a terminating empty slot.
+The shared decrypt ABI still has no output-capacity argument; its implementation
+must honor the existing 4096-byte output contract. These caller checks cannot
+prevent an overrun inside that dependency.
+
+ARM integration tests exercise `save`, `fb_save`, `save_ap` and `save_rp` with a
+failed getter, unterminated snapshot, oversized reported length, failed decrypt,
+unterminated decrypt output and aggregate expansion beyond capacity. Each returns
+failure before opening the destination and preserves an existing backup. The
+ordinary source/reference backup comparison still passes. This does not complete
+feedback redaction or mode-export auditing; the source CLI remains unselected.

@@ -38,16 +38,23 @@ done:
     saved=errno;free(data);errno=saved;return result;
 }
 
-int nv_profile_write(FILE *output,const char *settings,size_t capacity,unsigned salt) {
-    size_t count=0,length,i;unsigned char *encoded,header[8]={'H','D','R','2',0,0,0,0};
-    int result=0,saved;
-    if(!output || !settings || !capacity || salt>29) {errno=EINVAL;return -1;}
+int nv_profile_validate(const char *settings,size_t capacity,size_t *used) {
+    size_t count=0;
+    if(!settings || !capacity || !used) {errno=EINVAL;return -1;}
     while(count<capacity && settings[count]) {
         const char *end=memchr(settings+count,0,capacity-count);
         if(!end) {errno=EPROTO;return -1;}
         count=(size_t)(end-settings)+1;
     }
     if(count>=capacity) {errno=EPROTO;return -1;}
+    *used=count;return 0;
+}
+
+int nv_profile_write(FILE *output,const char *settings,size_t capacity,unsigned salt) {
+    size_t count=0,length,i;unsigned char *encoded,header[8]={'H','D','R','2',0,0,0,0};
+    int result=0,saved;
+    if(!output || !settings || !capacity || salt>29) {errno=EINVAL;return -1;}
+    if(nv_profile_validate(settings,capacity,&count)) return -1;
     /* Always append padding, including when records end on a block boundary. */
     if(count>0xffffff-1024) {errno=EOVERFLOW;return -1;}
     length=count+(1024-count%1024);

@@ -21,6 +21,10 @@ struct tuple router_prefix_defaults[]={{"wl","",0,0,0,0,0},{"lan","",0,0,0,0,0},
 int invalid_nvram_get_name(char *name) { return !strcmp(name,"restricted"); }
 int dec_nvram(char *name,char *input,char *output) {
  if(strcmp(name,"test_exact") || strcmp(input,"ciphertext")) abort();
+ const char *fault=getenv("SAVE_FAULT");
+ if(fault && !strcmp(fault,"decryptfail")){errno=EIO;return -1;}
+ if(fault && !strcmp(fault,"decryptunterminated")){memset(output,120,4096);return 0;}
+ if(fault && !strcmp(fault,"expansion")){memset(output,120,4095);output[4095]=0;return 0;}
  strcpy(output,"decrypted");return 0;
 }
 void sync(void) {}
@@ -50,6 +54,15 @@ FILE *fopen(const char *path,const char *mode) {
 char *nvram_get(const char *name) {printf("GET[%s]\n",name);return NULL;}
 char *wlcsm_nvram_get(const char *name) {printf("WGET[%s]\n",name);return "synthetic";}
 int nvram_getall(char *out,int size) {const char data[]="key=one\0empty=\0equals=a=b\0\0";if(size<(int)sizeof data)abort();memset(out,0,size);memcpy(out,data,sizeof data);
+ const char *fault=getenv("SAVE_FAULT");
+ if(fault && !strcmp(fault,"readfail")){errno=EIO;return -1;}
+ if(fault && !strcmp(fault,"unterminated")){memset(out,120,size);return 0;}
+ if(fault && !strcmp(fault,"oversized"))return size;
+ if(fault && !strcmp(fault,"expansion")){
+  const char item[]="test_exact=ciphertext";char *next=out;
+  for(int i=0;i<70;++i){memcpy(next,item,sizeof item);next+=sizeof item;}
+  *next=0;return 0;
+ }
  if(getenv("SAVE_FIXTURE")) {
   const char save[]="lan_ipaddr=192.0.2.1\0test_exact=ciphertext\0empty=\0equals=a=b\0\0";
   memcpy(out,save,sizeof save);return 0;
