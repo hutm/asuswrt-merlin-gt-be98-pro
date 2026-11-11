@@ -640,3 +640,11 @@ No hardware compatibility or flash-readiness claim follows from these tests.
 ```
 bash vendor/gt-be98-pro/open-source/spwenc/test_exports.sh
 ```
+
+The first full-build attempt compiled the replacement shared library but stopped
+when linking the source NVRAM CLI: its early link step could not locate the new
+transitive `libcrypto.so.3` and `libz.so.1` dependencies in the staging filesystem.
+The CLI's link-time `-rpath-link` now includes the already-built OpenSSL and zlib
+source directories. A non-root Docker link of that CLI against the actual newly
+built shared library passes. This adds no runtime search path; the full-build
+retry and packaged-image audit remain pending.

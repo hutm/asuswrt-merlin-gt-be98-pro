@@ -24,5 +24,5 @@ cli: FORCE
 	  -I$(PLATFORM_DIR)/bcmdrivers/broadcom/net/wl/impl103/main/src/include \
 	  $(ROUTER_DIR)/nvram/nvram.c $(addprefix $(SOURCE_DIR),$(CLI_SOURCES)) \
 	  -L$(NVRAM_DIR) -L$(SHARED_DIR) -L$(INSTALL_DIR)/lib -L$(INSTALL_DIR)/usr/lib \
-	  -Wl,-rpath-link,$(INSTALL_DIR)/lib:$(INSTALL_DIR)/usr/lib \
+	  -Wl,-rpath-link,$(ROUTER_DIR)/openssl-3.5:$(ROUTER_DIR)/zlib:$(INSTALL_DIR)/lib:$(INSTALL_DIR)/usr/lib \
 	  -lnvram -lshared -o $(CLI_OUTPUT)
