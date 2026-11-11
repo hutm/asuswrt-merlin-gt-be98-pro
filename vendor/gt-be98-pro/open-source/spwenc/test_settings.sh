@@ -20,5 +20,5 @@ $compiler -std=c11 -Wall -Wextra -Werror -DREFERENCE -rdynamic test_settings.c -
 qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib /tmp/reference >/tmp/reference.txt
 cmp /tmp/native.txt /tmp/arm.txt
 cmp /tmp/arm.txt /tmp/reference.txt
-echo "Settings encryption: 557 native/ARM/reference cases match; source capacity and denied-salt checks pass"
+echo "Settings: 557 encryption and 604 decryption native/ARM/reference cases pass; capacity and denied-salt checks pass"
 '

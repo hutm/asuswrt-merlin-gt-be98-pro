@@ -275,3 +275,23 @@ candidate remains outside firmware.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_settings.sh
 ```
+
+## Settings decryption candidate
+
+The settings transformer now also supplies `dec_nvram` and capacity-aware
+`nv_dec_setting`. Ordinary settings use salted password decoding with its
+pass-through fallback. Account lists decode each second field and prepend each
+usable record, retaining the original record-order behavior. The return value is
+that of the last usable record's decoder, not an aggregate success indication;
+empty lists or lists without usable records return 0. The checked transformer
+keeps output unchanged on errors and rejects an assembled list that exceeds its
+4096-byte internal bound or the caller's capacity.
+
+The settings suite adds 604 native/ARM/reference decryption checks: 90 encrypted
+fixture decodes with correct/wrong salt, 512 ordinary-value round trips, and two
+mixed empty/encrypted list orders that verify the last-record return semantics.
+Ciphertext, list output and return values agree across implementations. Native
+sanitizer checks also exercise denied salt and short destination errors. Existing
+strict frame-validation differences from the password wrapper still apply.
+Conditional setting updates and whole-settings migration remain incomplete; this
+candidate has not been selected in firmware.
