@@ -3,6 +3,7 @@
 #define _POSIX_C_SOURCE 200809L
 #include "runtime.h"
 #include "storage_binding.h"
+#include "manager.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
@@ -13,6 +14,7 @@
 static struct nv_transport transport={31,5000,0,1};
 #else
 extern int nv_runtime_test_exchange(void *,const void *,size_t,void *,size_t,size_t *);
+extern int nv_runtime_test_manager_exchange(const void *,size_t,int (*)(void *,const void *,size_t),void *);
 extern int nv_runtime_test_directory(void);
 extern int nv_runtime_test_data_directory(void);
 extern void nv_runtime_test_sync(void);
@@ -184,3 +186,22 @@ char *wlcsm_nvram_xfr(const char *input) {
     leave();return value;
 }
 char *nvram_xfr(const char *input) {return wlcsm_nvram_xfr(input);}
+
+static int restart_reply(void *state,const void *data,size_t size) {
+    return nv_restart_accept(state,data,size);
+}
+int wlcsm_mngr_restart(unsigned radio,unsigned source,int persist,int wait) {
+    unsigned char request[128];size_t size;struct nv_restart_reply state={0};int result;
+    if(enter()) return 1;
+    result=nv_restart_request(request,sizeof request,radio,source,persist,wait,&size);
+    if(!result) {
+#ifdef NV_RUNTIME_TEST
+        result=nv_runtime_test_manager_exchange(request,size,restart_reply,&state);
+#else
+        unsigned char reply[1280];size_t received;
+        result=nv_socket_exchange_until(&transport,request,size,reply,sizeof reply,&received,restart_reply,&state);
+#endif
+    }
+    if(!result && !state.done) {errno=EPROTO;result=-1;}
+    leave();return result?1:0;
+}

@@ -37,12 +37,16 @@ static int nv_wait(int fd,short events,int64_t deadline) {
         errno=EIO;return -1;
     }
 }
-/* GET/SET request exchanges only. A separate persistent listener is required
+/* Request/reply exchanges. A separate persistent listener is required
  * for notifications. Random port IDs reduce delayed-reply reuse risk; the
  * protocol has no reliable sequence identifier, so this is not a proof of
  * correlation across arbitrarily many exchanges. */
-static int nv_socket_exchange(void *context,const void *request,size_t length,
-                              void *reply,size_t capacity,size_t *received)
+/* accept: positive completes, zero continues on this socket, negative fails.
+ * One deadline covers sending and every fragment. Callback sees only validated
+ * transport origins; it must validate application framing and bound its state. */
+static int nv_socket_exchange_until(void *context,const void *request,size_t length,
+                              void *reply,size_t capacity,size_t *received,
+                              int (*accept)(void *,const void *,size_t),void *state)
 {
     struct nv_transport *t=context;
     struct sockaddr_nl local={0},peer={0},sender;
@@ -97,9 +101,18 @@ static int nv_socket_exchange(void *context,const void *request,size_t length,
         if(msg.msg_namelen!=sizeof sender || sender.nl_family!=AF_NETLINK ||
            sender.nl_pid!=expected || sender.nl_groups) continue;
         if(msg.msg_flags&MSG_TRUNC) { errno=EMSGSIZE;goto done; }
+        if(accept) {
+            int status=accept(state,reply,(size_t)count);
+            if(status<0) goto done;
+            if(!status) continue;
+        }
         *received=(size_t)count;result=0;break;
     }
 done:
     saved=errno;close(fd);errno=saved;return result;
+}
+static int nv_socket_exchange(void *context,const void *request,size_t length,
+                              void *reply,size_t capacity,size_t *received) {
+    return nv_socket_exchange_until(context,request,length,reply,capacity,received,NULL,NULL);
 }
 #endif

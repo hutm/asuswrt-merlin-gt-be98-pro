@@ -15,11 +15,18 @@
 static char path[]="/tmp/nv-runtime-XXXXXX",small[64],large[64];
 static int present,deny,fail_init=1,requests,reenter,commits,commit_fail,data_fail,syncs,markers,stop_fail,marker_fail;
 static const char *stop_value,*salt_value;
-static int salt_fail,salt_gets,last_change,change_fail,getall_fail;
+static int salt_fail,salt_gets,last_change,change_fail,getall_fail,restart_fail;
 int nv_runtime_test_directory(void){if(fail_init){fail_init=0;errno=ENOENT;return -1;}return open(path,O_RDONLY|O_DIRECTORY);}
 int nv_runtime_test_data_directory(void){if(data_fail){errno=ENOENT;return -1;}return open(path,O_RDONLY|O_DIRECTORY);}
 void nv_runtime_test_sync(void){++syncs;}
 FILE *nv_runtime_test_commit_marker(void){char name[256];++markers;if(marker_fail){errno=EACCES;return NULL;}snprintf(name,sizeof name,"%s/commit_ret",path);return fopen(name,"w");}
+int nv_runtime_test_manager_exchange(const void *request,size_t size,int (*accept)(void *,const void *,size_t),void *state){
+ struct nv_frame_view f;unsigned char reply[128];size_t length;unsigned flags;
+ assert(!nv_frame_decode(request,size,&f)&&f.type==9);memcpy(&flags,f.payload,4);assert(flags==0x03020603);
+ if(restart_fail){errno=ETIMEDOUT;return -1;}
+ assert(!nv_frame_encode(reply,sizeof reply,10,0,42,"O",1,&length));assert(!accept(state,reply,length));
+ assert(!nv_frame_encode(reply,sizeof reply,11,0,42,"K",1,&length));assert(accept(state,reply,length)==1);return 0;
+}
 int nv_runtime_test_exchange(void *context,const void *request,size_t size,void *reply,size_t capacity,size_t *returned){
  (void)context;struct nv_frame_view f;struct nv_pair_view p;unsigned char payload[1024];size_t n=0;
  assert(!nv_frame_decode(request,size,&f));++requests;
@@ -43,6 +50,7 @@ int invalid_program_check(void){return deny;}
 static void *worker(void *unused){(void)unused;for(int i=0;i<100;++i){char out[64];assert(!nvram_set("key","parallel"));assert(nvram_getall(out,sizeof out)==18);}return NULL;}
 int main(void){
  assert(mkdtemp(path));assert(!nvram_get("key")&&errno==ENOENT);assert(!nvram_get("key"));
+ assert(!wlcsm_mngr_restart(3,2,1,1));restart_fail=1;assert(wlcsm_mngr_restart(3,2,1,1)==1&&errno==ETIMEDOUT);restart_fail=0;
  assert(!strcmp(nvram_xfr("convert"),"converted"));assert(!strcmp(wlcsm_nvram_xfr("convert"),"converted"));
  assert(!nvram_get_salt()&&salt_gets==1);
  salt_value="example";char *salt=nvram_get_salt();assert(salt&&!strcmp(salt,"example")&&salt_gets==2);

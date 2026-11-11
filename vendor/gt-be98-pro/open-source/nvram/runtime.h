@@ -27,4 +27,6 @@ int nvram_kcommit(void);
 /* Shared borrowed conversion buffer; NULL on empty reply or error. */
 char *wlcsm_nvram_xfr(const char *input);
 char *nvram_xfr(const char *input);
+/* Zero acknowledges a manager response, not proof that hardware restarted. */
+int wlcsm_mngr_restart(unsigned radio,unsigned source,int persist,int wait);
 #endif

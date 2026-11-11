@@ -1,6 +1,7 @@
 #define _POSIX_C_SOURCE 200809L
 #include "transport.h"
 #include "getall.h"
+#include "manager.h"
 #include <assert.h>
 #include <pthread.h>
 #include <stdio.h>
@@ -13,6 +14,19 @@ static void *serve(void *opaque) {
     size_t length;
     ssize_t n=recvfrom(s->fd,request,sizeof request,0,(struct sockaddr *)&client,&size);
     assert(n>0);
+    if(s->mode>=4) {
+        assert(!nv_frame_encode(reply,sizeof reply,10,0,42,"part",4,&length));
+        assert(sendto(s->fd,reply,length,0,(struct sockaddr *)&client,size)==(ssize_t)length);
+        if(s->mode==5) return NULL;
+        assert(!nv_frame_encode(reply,sizeof reply,11,0,s->mode==8?43:42,
+                               "01234567890123456",s->mode==7?17:4,&length));
+        if(s->mode==6) {
+            int bad=socket(AF_NETLINK,SOCK_RAW,NETLINK_USERSOCK);assert(bad>=0);
+            assert(sendto(bad,reply,length,0,(struct sockaddr *)&client,size)==(ssize_t)length);
+            close(bad);
+        } else assert(sendto(s->fd,reply,length,0,(struct sockaddr *)&client,size)==(ssize_t)length);
+        return NULL;
+    }
     if(s->mode==1) return NULL;
     if(s->mode==3) {
         assert(n>1024);
@@ -28,6 +42,9 @@ static void *serve(void *opaque) {
     }
     assert(sendto(s->fd,reply,length,0,(struct sockaddr *)&client,size)==(ssize_t)length);
     return NULL;
+}
+static int accept_restart(void *state,const void *data,size_t size) {
+    return nv_restart_accept(state,data,size);
 }
 int main(void) {
     struct sockaddr_nl address={0};
@@ -62,6 +79,19 @@ int main(void) {
         assert(!pthread_join(thread,NULL));
         assert(!nv_frame_decode(reply,received,&view) && view.length==sizeof payload);
         assert(!memcmp(view.payload,payload,sizeof payload));
+    }
+    for(server.mode=4;server.mode<=8;++server.mode) {
+        unsigned char request[128],reply[1280];size_t size,received=999;
+        struct nv_restart_reply state={0};
+        assert(!nv_restart_request(request,sizeof request,3,2,1,1,&size));
+        assert(!pthread_create(&thread,NULL,serve,&server));
+        int result=nv_socket_exchange_until(&transport,request,size,reply,sizeof reply,&received,accept_restart,&state);
+        int saved=errno;assert(!pthread_join(thread,NULL));
+        if(server.mode==4) assert(!result&&state.done&&state.used==8&&!memcmp(state.data,"part0123",8));
+        else {
+            assert(result==-1&&!state.done&&state.used==4&&received==999);
+            assert(saved==(server.mode==7?EOVERFLOW:server.mode==8?EPROTO:ETIMEDOUT));
+        }
     }
     close(server.fd);
     puts("Netlink transport: real usersock exchange, maximum payload, deadline and forged-header wrong-sender rejection passed");

@@ -356,10 +356,10 @@ these cases, direct-backend behavior and transport failure. The source checks
 the echoed payload as well as message type; acknowledgement still does not prove
 the kernel applied the change.
 
-The earlier firmware dynamic-symbol scan's remaining unimplemented consumer
-name is `wlcsm_mngr_restart`. That scan does not
+The runtime now implements all names identified by the earlier firmware
+dynamic-symbol consumer scan. That scan does not
 cover dynamically constructed symbol lookups, static consumers or every export
-of the original library. Completing those names alone is insufficient to
+of the original library. Implementing those names alone is insufficient to
 claim full library compatibility or hardware readiness.
 
 ## Kernel-only commit
@@ -415,8 +415,17 @@ manager ID. It preserves state on error. Transport-origin validation is still
 required; the inner manager ID is not authentication by itself. Native sanitizer
 and ARM/QEMU tests cover framing, accumulation, ID changes and overflow.
 
-This codec is not yet an exported restart implementation. A single socket must
-remain open through the multipart exchange under a deadline; the current
-ordinary request transport closes after one reply. That transport integration
-and manager/hardware validation remain outstanding. No restart was sent to a
-router or running wireless manager during these tests.
+The runtime now exports `wlcsm_mngr_restart`. The transport keeps one socket
+open through the multipart exchange with a deadline covering send and all
+receives. Every fragment passes sender validation before decoding. Single-reply
+callers use the same transport with no continuation callback. The runtime maps
+completion to zero and errors to one; a response acknowledges the exchange, not
+successful hardware restart. A timeout may follow an applied restart.
+
+Native Netlink usersock tests cover two-fragment completion, incomplete-response
+timeout, wrong-sender final replies, oversized replies and changing manager IDs.
+Runtime native sanitizer and ARM/QEMU tests cover exported success and failure.
+The real transport path also cross-compiles for ARM; Netlink usersock tests run
+natively because QEMU does not provide that facility. No restart was sent to a
+router or running wireless manager. Actual manager/hardware validation and full
+replacement-library integration remain outstanding.
