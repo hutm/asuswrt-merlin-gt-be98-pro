@@ -139,3 +139,19 @@ uncommitted edits to those kernel functions are not part of this test.
 The ring core remains available for a future threaded source implementation if
 synchronous processing does not meet throughput requirements. No replacement
 is considered hardware validated until its behavior and performance are measured.
+
+## HFS utility portability
+
+The first complete experimental build stopped while linking fsck_hfs: its two
+strlcpy calls relied on a libc extension absent from the ARM target libc. A small
+locally named bounded-copy function in diskdev_cmds' Linux compatibility header
+supplies those calls without adding a binary library dependency. It returns the
+source length and terminates the destination whenever its capacity is nonzero.
+
+Validation: both HFS utilities were rebuilt from clean objects using the ARM
+GCC 10.3 toolchain in Docker. Under qemu-arm, newfs_hfs formatted a disposable
+64 MiB regular file and fsck_hfs -fn reported that volume healthy. Copy boundary
+checks (zero capacity, one byte, truncation, exact fit, empty input) passed with
+AddressSanitizer and UBSan. This is a basic utility smoke test; damaged-volume
+repair, router mounting, and hardware storage tests remain outstanding. The full
+firmware build must still succeed before this profile produces a usable artifact.

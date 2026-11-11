@@ -2176,7 +2176,7 @@ update_out:
 	/* Always update the last recordType, fileID and attribute name before exiting */
 	prevAttr->recordType = rec->recordType;
 	prevAttr->fileID = fileID;
-	(void) strlcpy((char *)prevAttr->attrname, (char *)attrname, sizeof(prevAttr->attrname));
+	(void) diskdev_strlcpy((char *)prevAttr->attrname, (char *)attrname, sizeof(prevAttr->attrname));
 
 	goto out;
 
@@ -3201,7 +3201,7 @@ static OSErr	AddExtentToOverlapList( SGlobPtr GPtr, HFSCatalogNodeID fileNumber,
 		if (extentInfo.attrname == NULL) {
 			return(memFullErr);
 		}
-		strlcpy(extentInfo.attrname, attrname, attrlen);
+		diskdev_strlcpy(extentInfo.attrname, attrname, attrlen);
 	}
 	
 	//	If it's uninitialized

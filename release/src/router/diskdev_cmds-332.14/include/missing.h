@@ -5,6 +5,23 @@
 #include <byteswap.h>
 #include <errno.h>
 #include <stdint.h>
+#include <stddef.h>
+
+/* Local name avoids depending on a libc-specific strlcpy extension. */
+static inline size_t diskdev_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t length = 0;
+
+	while (src[length] != '\0') {
+		if (size != 0 && length < size - 1)
+			dst[length] = src[length];
+		++length;
+	}
+	if (size != 0)
+		dst[length < size ? length : size - 1] = '\0';
+	return length;
+}
+
 
 #define MAXBSIZE		(256 * 4096)
 
