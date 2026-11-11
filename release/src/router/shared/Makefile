@@ -650,9 +650,17 @@ ifeq ($(wildcard $(SRCBASE)/router/sw-hw-auth/*.c),)
 	cp -f $(TOP)/sw-hw-auth/prebuild/$(BUILD_NAME)/hw_auth.o ./
 endif
 
-nvpriv.o:
+.PHONY: open-nvpriv-force
+open-nvpriv-force:
+
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+nvpriv.o: source/nvpriv.c source/storage_keys.h open-nvpriv-force
+	$(CC) $(CFLAGS) -o $@ -c source/nvpriv.c
+else
+nvpriv.o: open-nvpriv-force
 ifneq ($(wildcard ./prebuild/nvpriv.o),)
 	@-cp -f ./prebuild/nvpriv.o .
+endif
 endif
 
 aae_ipc.o:

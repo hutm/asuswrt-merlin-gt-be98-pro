@@ -12,6 +12,8 @@ docker run --rm --network none --user "$(id -u):$(id -g)" \
 set -euo pipefail
 ulimit -c 0
 cp -r /tests /tmp/source
+cp /source/release/src/router/shared/source/nvpriv.c /tmp/source/storage.c
+cp /source/release/src/router/shared/source/storage_keys.h /tmp/source/storage_keys.h
 python3 /tmp/source/make-reference.py /source /tmp/source/reference.h
 cd /tmp/source
 for name in pair frame getall settings persist client cache notification listener transport client_transport; do
@@ -38,10 +40,12 @@ timeout 30 /tmp/test-core
 /toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
   -pthread test_core.c -L/tmp/core-arm -Wl,-rpath,/tmp/core-arm -lnvcore -o /tmp/test-core-arm
 timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-core-arm
-gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined \
-  storage.c test_storage.c -o /tmp/test-storage
-timeout 30 /tmp/test-storage
-/toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
-  storage.c test_storage.c -o /tmp/test-storage-arm
-timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-storage-arm
+for name in storage storage_bulk; do
+  gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined \
+    storage.c "test_$name.c" -o /tmp/test-storage
+  timeout 30 /tmp/test-storage
+  /toolchain/bin/arm-buildroot-linux-gnueabi-gcc -std=c11 -Wall -Wextra -Werror \
+    storage.c "test_$name.c" -o /tmp/test-storage-arm
+  timeout 30 qemu-arm -L /toolchain/arm-buildroot-linux-gnueabi/sysroot /tmp/test-storage-arm
+done
 '
