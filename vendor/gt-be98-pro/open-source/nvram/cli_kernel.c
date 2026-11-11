@@ -37,6 +37,7 @@ static int savefile(const char *path,FILE *output) {
 }
 /* The shared policy receives the complete key, including names over 127 bytes. */
 extern int invalid_nvram_get_name(char *name);
+extern int large_nvram(char *name);
 static int dump(FILE *output) {
     const size_t capacity=262144;size_t pos=0,end;int count,result=0,saved;
     char *data=malloc(capacity);
@@ -110,22 +111,27 @@ int nv_cli_kernel(int argc,char *const argv[],FILE *output) {
         if(nvram_get("asus_stop_commit")) return 1;
         return nvram_kcommit()?-1:1;
     }
-    if(strcmp(command,"kget") && strcmp(command,"kset") && strcmp(command,"kunset") && strcmp(command,"kernelset")) return 0;
+    if(strcmp(command,"get") && strcmp(command,"set") && strcmp(command,"unset") && strcmp(command,"kget") && strcmp(command,"kset") && strcmp(command,"kunset") && strcmp(command,"kernelset")) return 0;
     if(argc<2 || !argv[1]) {errno=EINVAL;return -1;}
-    if(!strcmp(command,"kget")) {
+    if(!strcmp(command,"get") || !strcmp(command,"kget")) {
         value=nvram_get(argv[1]);
         if(value && (fputs(value,output)==EOF || fputc('\n',output)==EOF)) return -1;
         return 2;
     }
-    if(!strcmp(command,"kunset")) {
-        if(nvram_unset(argv[1])<0 || nvram_kset(argv[1],NULL)) return -1;
+    if(!strcmp(command,"unset") || !strcmp(command,"kunset")) {
+        if(nvram_unset(argv[1])<0) return -1;
+        if(nvram_kset(argv[1],NULL)) return -1;
         return 2;
     }
-    if(!strcmp(command,"kset")) {
+    if(!strcmp(command,"set") || !strcmp(command,"kset")) {
         copy=strdup(argv[1]);if(!copy) return -1;
         value=strchr(copy,'=');if(value) *value++=0;
-        result=nvram_set(copy,value);
-        if(result>=0) result=nvram_kset(copy,value);
+        if(value) {
+            size_t length=strlen(value);
+            while(length && value[length-1]=='\n') value[--length]=0;
+        }
+        result=nvram_set(nv_trim_key(copy),value);
+        if(result>=0 && !large_nvram(copy)) result=nvram_kset(nv_trim_key(copy),value);
         saved=errno;free(copy);errno=saved;return result<0?-1:2;
     }
     input=fopen(argv[1],"r");if(!input) return -1;

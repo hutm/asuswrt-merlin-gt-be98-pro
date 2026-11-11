@@ -11,7 +11,7 @@ static char events[512];static int used,fail;static const char *stop;
 static void event(const char *op,const char *key,const char *value){used+=snprintf(events+used,sizeof events-used,"%s:%s:%s;",op,key,value?value:"<NULL>");assert(used<(int)sizeof events);}
 char *nvram_get(const char *key){if(!strcmp(key,"asus_stop_commit"))return (char *)stop;assert(!strcmp(key,"key"));return "value";}
 int nvram_set(const char *key,const char *value){event("A",key,value);if(fail){errno=EIO;return -1;}return 3;}
-int nvram_unset(const char *key){event("U",key,NULL);return 0;}
+int nvram_unset(const char *key){event("U",key,NULL);if(fail){errno=EIO;return -1;}return 0;}
 int nvram_kset(const char *key,const char *value){event("K",key,value);return 0;}
 int wlcsm_nvram_set(const char *key,const char *value){event("W",key,value);return 0;}
 static int commit_fail,restart_fail,kcommit_fail;
@@ -42,6 +42,8 @@ int unlink(const char *path){
  event("UNLINK",path,NULL);if(unlink_error){errno=unlink_error;return -1;}return 0;
 }
 void sync(void){event("SYNC","",NULL);}
+static int large;
+int large_nvram(char *name){(void)name;return large;}
 static int erase_result;
 int system(const char *command){assert(!strcmp(command,"hnd-erase nvram"));event("ERASE","",NULL);if(erase_result==-1)errno=EAGAIN;return erase_result;}
 static void reset(void){used=0;events[0]=0;}
@@ -94,6 +96,15 @@ int main(void){
  reset();set[0]="godefault";assert(nv_cli_kernel(1,set,out)==1&&!strcmp(events,"UNLINK:/data/.kernel_nvram.setting:<NULL>;SYNC::<NULL>;"));
  reset();unlink_error=ENOENT;assert(nv_cli_kernel(1,set,out)==1&&!strcmp(events,"UNLINK:/data/.kernel_nvram.setting:<NULL>;SYNC::<NULL>;"));
  reset();unlink_error=EACCES;assert(nv_cli_kernel(1,set,out)==-1&&errno==EACCES&&!strcmp(events,"UNLINK:/data/.kernel_nvram.setting:<NULL>;"));unlink_error=0;
+ reset();set[0]="set";set[1]="key=a=b";assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"A:key:a=b;K:key:a=b;"));
+ reset();set[1]="key=";assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"A:key:;K:key:;"));
+ reset();set[1]="key";assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"A:key:<NULL>;K:key:<NULL>;"));
+ reset();set[0]="unset";assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"U:key:<NULL>;K:key:<NULL>;"));
+ fail=1;assert(nv_cli_kernel(2,set,out)==-1&&errno==EIO);set[0]="set";assert(nv_cli_kernel(2,set,out)==-1&&errno==EIO);fail=0;
+ const char *ordinary[]={"get","set","unset"};for(unsigned i=0;i<3;++i){set[0]=(char *)ordinary[i];assert(nv_cli_kernel(1,set,out)==-1&&errno==EINVAL);}
+ set[0]="get";view=tmpfile();assert(view);assert(nv_cli_kernel(2,set,view)==2);rewind(view);char ordinary_value[16]={0};assert(fread(ordinary_value,1,sizeof ordinary_value,view)==6&&!strcmp(ordinary_value,"value\n"));fclose(view);
+ reset();set[0]="set";set[1]=" \"key\" = value \n";assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"A:key: value ;K:key: value ;"));
+ reset();large=1;set[1]="key=large";assert(nv_cli_kernel(2,set,out)==2&&!strcmp(events,"A:key:large;"));large=0;
  set[0]="unknown";assert(!nv_cli_kernel(1,set,out));fclose(out);
  puts("Kernel CLI: routing order, NULL values, stop control, file loading and failures passed");return 0;
 }

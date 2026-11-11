@@ -743,3 +743,22 @@ placeholder substitution and confirms failure preserves an existing backup.
 The full CLI comparison suite passes, including earlier backup and command checks.
 Mode exports and remaining ordinary-command cases still need review; no new
 firmware build or hardware validation is implied by these component results.
+
+## Ordinary get/set/unset commands
+
+The adapter now handles exact `get`, `set` and `unset` commands before the legacy
+prefix parser. They share the observed kernel-command routes: get uses the ASUS
+getter; unset calls the ASUS unsetter followed by a kernel NULL SET; set calls
+the ASUS setter followed by kernel SET unless `large_nvram` routes that key to
+large storage. Set trims surrounding spaces/quotes from keys and trailing newlines
+from values, preserves value spaces and additional equals signs, and retains NULL
+for a missing equals sign. Caller arguments are not modified.
+
+ARM reference comparisons match ordinary get, set, empty value, missing equals,
+embedded equals and unset transcripts. Native sanitizer and ARM tests cover
+missing arguments, failed writes, key/value trimming and skipping the kernel SET
+for large storage. Failed ASUS writes stop before the second write; positive
+ASUS setter results remain accepted because that ABI can return a byte count.
+As with kget, the pointer getter still cannot distinguish absence from failure.
+All component tests and the full CLI reference suite pass. The CLI is not yet
+selected in firmware; mode export and broader feedback coverage remain to review.
