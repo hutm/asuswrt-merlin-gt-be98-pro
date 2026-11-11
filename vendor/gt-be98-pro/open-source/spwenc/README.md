@@ -586,3 +586,33 @@ caller review and full integration.
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_aes_abi.sh
 ```
+
+## Command-execution helper candidates
+
+`commands.c` supplies `safe_do_system`, `safe_fork_do_system` and
+`safe_do_system_to_file`. It formats the command, parses whitespace/quotes and
+backslash escapes into arguments, rejects unquoted shell metacharacters, and
+passes the argument vector to the existing `_eval` implementation. Empty quoted
+arguments are discarded as in the reference. Shell basenames sh/bash/dash/ash/ksh
+are rejected case-insensitively. Asynchronous calls pass a PID pointer to `_eval`;
+file calls use its bounded `>`/`>>` redirection-string contract. Return values
+propagate from `_eval`. Reference debug messages are omitted.
+
+This reproduces the existing policy; it is not a general command-security
+boundary. Other interpreters or multicall programs are not prohibited by that
+policy. No shell expansion is performed by these helpers themselves. Token
+lengths above 8190 bytes fail with E2BIG. NULL formats and malformed syntax fail
+with EINVAL; prohibited shell names fail with EPERM.
+
+The suite compares native sanitizer, ARM and original-library traces for 27
+command forms in four dispatch modes, 504 ASCII/quoting/escaping combinations,
+six token-size boundaries and nine output-path/append cases. It checks formatted
+arguments, long argument vectors, NULL/empty/truncated output paths, status and
+error results, plus NULL-format handling. `_eval` is intercepted in every run:
+no commands are executed and no output files are opened. Allocation-failure
+injection and the real process-launch backend are not covered. The candidate
+object now needs an export/caller audit and integration into the full build.
+
+```
+ASUS_SPWENC_REFERENCE_ROOT=/absolute/extracted/root bash vendor/gt-be98-pro/open-source/spwenc/test_commands.sh
+```
