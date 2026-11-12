@@ -673,9 +673,15 @@ ifneq ($(wildcard ./prebuild/private.o),)
 	@-cp -f ./prebuild/private.o .
 endif
 
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_SW_AUTH_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/sw-auth)
+sw_auth.o: $(OPEN_SW_AUTH_DIR)/auth_code.c $(TOP)/sw-hw-auth/auth_common.h
+	$(CC) -I$(TOP)/openssl-3.5/include -I$(TOP)/sw-hw-auth $(CFLAGS) -c $< -o $@
+else
 sw_auth.o:
 ifeq ($(wildcard $(SRCBASE)/router/sw-hw-auth/*.c),)
 	cp -f $(TOP)/sw-hw-auth/prebuild/$(BUILD_NAME)/sw_auth.o ./
+endif
 endif
 
 hw_auth.o:
