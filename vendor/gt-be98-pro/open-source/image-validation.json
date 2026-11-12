@@ -1,17 +1,17 @@
 {
-  "source_commit": "cdf046bb2b2d0d0f210f92806ae9d7a880b75a3e",
-  "iteration": "20261112T020717Z-y9sfa7x1",
+  "source_commit": "2f2602a4d2ec0a970ff4f6c83b1ba89477c3f92a",
+  "iteration": "20261112T021942Z-j4bf2tqt",
   "state": "built-experimental",
   "installable": false,
   "images": {
     "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
       "bytes": 76715752,
-      "sha256": "574e0a4b62641443680b856269cfede95c905d960ed60bd03a25597879362c55"
+      "sha256": "00196854e1d50521362f44d27fd6fa167eeb61baeb36a894df469d377d3e6af6"
     }
   },
   "fit_payload_hashes": "passed",
   "source_matches_packaged": {
-    "libshared.so": "70c0eb9b9f8315d544da25721fe117a0074e2a85943a2c5aab8d17200e8a52ae"
+    "libshared.so": "b38de2ff38033d0273ef0d2e6faeed913563e8410e45b9a0d5114553fbe22432"
   },
   "userspace": {
     "elf_count": 647,
@@ -32,7 +32,7 @@
   ],
   "shared_archive": {
     "member_count": 71,
-    "vendor_matching_members": 7,
+    "vendor_matching_members": 6,
     "scope": "libshared only; vendor match does not establish licensing"
   },
   "prior_component_validation": {
@@ -98,19 +98,6 @@
     ],
     "iteration": "20261112T014223Z-shlxp5mb"
   },
-  "hardware_auth_validation": {
-    "wireless_query_comparisons": 4653,
-    "handshake_comparisons": 792,
-    "composed_authentication_comparisons": 640,
-    "wrapper_comparisons": 486,
-    "public_table_fields": 48,
-    "wrapper_failure_cases": 5,
-    "compiled_object_matches_archive": true,
-    "packaged_library_matches_stripped_build": true,
-    "limits": [
-      "Settings, wireless commands, clock and randomness mocked; hardware and actual service interoperability untested."
-    ]
-  },
   "final_vendor_input_inventory": {
     "regular_files": 3157,
     "elf_files": 801,
@@ -122,6 +109,30 @@
       "Unmatched inputs can still be linked into executables or modules; no absence claim follows.",
       "Embedded firmware, boot components and inputs outside these partial manifests are not comprehensively covered.",
       "Allocated-section matching allows differences in non-allocated ELF metadata; it is not a whole-file checksum match."
+    ]
+  },
+  "prior_hardware_auth_validation": {
+    "wireless_query_comparisons": 4653,
+    "handshake_comparisons": 792,
+    "composed_authentication_comparisons": 640,
+    "wrapper_comparisons": 486,
+    "public_table_fields": 48,
+    "wrapper_failure_cases": 5,
+    "compiled_object_matches_archive": true,
+    "packaged_library_matches_stripped_build": true,
+    "limits": [
+      "Settings, wireless commands, clock and randomness mocked; hardware and actual service interoperability untested."
+    ],
+    "iteration": "20261112T020717Z-y9sfa7x1"
+  },
+  "territory_settings_validation": {
+    "packaged_comparison_cases": 28110,
+    "public_table_fields": 575,
+    "compiled_object_matches_archive": true,
+    "packaged_library_matches_stripped_build": true,
+    "provider_call_order_checked": true,
+    "limits": [
+      "Settings and notification providers mocked; hardware behavior not tested."
     ]
   }
 }

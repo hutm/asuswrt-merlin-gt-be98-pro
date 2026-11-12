@@ -33,4 +33,13 @@ Valid string arguments are required by the original public interfaces; null
 function arguments and malformed caller-mutated tables are not covered. Empty
 reserved tables preserve their ARM storage, without claiming an interface for
 populating them. Testing is limited to this router's tables and reference build.
-Full firmware integration and hardware behavior remain to be validated.
+The image built from `2f2602a4d2` packages the source implementation: its stripped
+libshared matches the build output and the compiled helper matches its archive
+member. Packaged tests pass all 28,110 behavior comparisons and 575 table fields.
+Userspace diagnostics are unchanged, and all 151 kernel modules pass static
+checks. Router hardware behavior remains untested.
+
+To repeat packaged checks, set `ASUS_REFERENCE_ROOT` to the preceding extracted
+root, set `ASUS_IMAGE_RUN` to the new audit directory containing `root/`, and run
+`bash vendor/gt-be98-pro/open-source/tcode/test_packaged.sh`. Logs are saved in
+the audit directory.

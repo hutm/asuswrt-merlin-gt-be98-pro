@@ -9,16 +9,15 @@ or equivalent behavior. Do not relabel proprietary disassembly as open source.
 
 ## Latest build validation
 
-The experimental build at `cdf046bb2b` completed with source hardware
-authentication helpers selected. Packaged libshared matches its stripped build
-output, and the compiled helper matches its archive member. Packaged tests pass
-4653 wireless query comparisons, 792 handshake comparisons, 640 composed
-checks, 486 wrapper comparisons, 48 table fields and five wrapper failure cases.
-Userspace results remain unchanged (647 ELF files and 80 existing diagnostic
-records). All 151 kernel modules pass static checks against the packaged kernel.
-The shared archive has 7 remaining vendor-matching objects; this is not a
-whole-image proprietary component count. Earlier component results and exact
-hashes are recorded in [image-validation.json](image-validation.json).
+The experimental build at `2f2602a4d2` completed with source territory and feature
+settings selected. Packaged libshared matches its stripped build output, and the
+compiled helper matches its archive member. Packaged tests pass 28,110 behavior
+comparisons and 575 public table fields. Userspace results remain unchanged
+(647 ELF files and 80 existing diagnostic records). All 151 kernel modules pass
+static checks against the packaged kernel. The shared archive has 6 remaining
+vendor-matching objects; this is not a whole-image proprietary component count.
+Earlier component results and exact hashes are recorded in
+[image-validation.json](image-validation.json).
 
 A broader scan finds 120 packaged paths matching 118 of 280 pinned vendor inputs,
 either exactly or by allocated ELF sections. These partial manifests do not cover
