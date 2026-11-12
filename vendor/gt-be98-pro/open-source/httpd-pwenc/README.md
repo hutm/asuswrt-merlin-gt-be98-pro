@@ -58,8 +58,11 @@ The retry013 HTTP link lists 17 input objects. Inspection found the original fou
 exports in `prebuild/pwenc.o` and only `gen_ddns_hostname` referenced by another
 object (`web.o`). All 17 objects were readable. This configuration compiles out
 the older password caller. Symbol-name inspection does not cover dynamic lookup
-or prove runtime bindings. Full-image validation of the source selection is
-pending.
+or prove runtime bindings. The experimental image at `f2f0b10d57` packages an HTTP executable
+byte-identical to the stripped source build with this selection. Static userspace
+checks add no new dependency/symbol/interpreter failures. See
+[image-validation.json](../image-validation.json); HTTP service behavior on hardware
+is still untested.
 
 `test_failures.c` injects direct malloc/calloc, cipher-context, BIO allocation
 and digest failures. It checks cleanup under native sanitizers and checks that

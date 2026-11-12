@@ -1,0 +1,35 @@
+{
+  "source_commit": "f2f0b10d57649084f87f09940d8226aa14fd8a48",
+  "iteration": "20261112T001540Z-_ax0tv9y",
+  "state": "built-experimental",
+  "installable": false,
+  "images": {
+    "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
+      "bytes": 76719848,
+      "sha256": "e9284f712b1d060f8012804fb47fdee33760a715a34851dac08dc80e6038f4ff"
+    }
+  },
+  "fit_payload_hashes": "passed",
+  "source_matches_packaged": {
+    "libshared.so": "87f09c41362dab1d5f2ab3eddb4224672a9bf8fa41893ff5148a86e593fa68ed",
+    "httpd": "93a25de73a0e4177b8aa91113f8b531172de262ccc7724616842edf758a80586"
+  },
+  "packaged_shared_library_comparison_suites": 14,
+  "userspace": {
+    "elf_count": 647,
+    "existing_failure_records": 80,
+    "new_dependency_symbol_or_interpreter_failures": 0,
+    "walk_errors": []
+  },
+  "kernel_modules": {
+    "count": 151,
+    "static_failures": 0,
+    "kernel_matches_packaged_payload": true
+  },
+  "limits": [
+    "Hardware boot, settings migration on physical storage, networking and performance have not been tested.",
+    "Userspace check approximates declared dependency and symbol resolution; existing diagnostic records remain.",
+    "Kernel check covers static symbols, dependencies, architecture and available CRC entries only.",
+    "Proprietary components remain; this is not a fully open-source image."
+  ]
+}

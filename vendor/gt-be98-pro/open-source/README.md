@@ -7,7 +7,24 @@ kernel modules, embedded radio/accelerator firmware, and boot-stage components.
 Interface analysis alone does not establish source completeness, licensing rights,
 or equivalent behavior. Do not relabel proprietary disassembly as open source.
 
-## First implemented change
+## Latest build validation
+
+The experimental build at `f2f0b10d57` completed with the source credential/settings
+and HTTP helpers selected. Packaged `libshared.so` and `httpd` match their stripped
+source-built outputs. All 14 packaged shared-library comparison suites pass.
+Static userspace checks show no new dependency/symbol/interpreter failures; 80
+existing diagnostic records remain. All 151 kernel modules pass static checks,
+with the audited kernel matching the image payload. Exact hashes and limitations
+are in [image-validation.json](image-validation.json). Hardware testing has not
+been performed, and substantial proprietary code remains.
+
+Current work focuses on userspace replacements and source-available components;
+a new hardware-driver/radio-firmware reconstruction project is outside the
+current work, following the user's scope clarification. The broader inventory
+below records remaining dependencies, not a commitment to replace those drivers.
+
+## Initial implementation notes (historical)
+
 
 `ASUS_OPEN_COMPONENTS=y` selects the existing open filesystem build paths for
 GT-BE98_PRO: TFAT=n, NTFS="open", HFS="open". It is opt-in and leaves other

@@ -633,33 +633,24 @@ Makefile now selects `open-spwenc.o` instead of `prebuild/spwenc.o`. Source Open
 option combinations retain their existing selection. The source object is
 revisited on each shared-library build, with per-source dependency tracking.
 The complete 21-script component suite passes before starting this integration
-attempt, including native sanitizer and ARM/reference checks. A successful full
-firmware build, packaged-object verification and image ABI audit remain pending.
+attempt, including native sanitizer and ARM/reference checks. Full-image validation results are recorded below.
 No hardware compatibility or flash-readiness claim follows from these tests.
 
 ```
 bash vendor/gt-be98-pro/open-source/spwenc/test_exports.sh
 ```
 
-The first full-build attempt compiled the replacement shared library but stopped
-when linking the source NVRAM CLI: its early link step could not locate the new
-transitive `libcrypto.so.3` and `libz.so.1` dependencies in the staging filesystem.
-The CLI's link-time `-rpath-link` now includes the already-built OpenSSL and zlib
-source directories. A non-root Docker link of that CLI against the actual newly
-built shared library passes. This adds no runtime search path; the full-build
-retry and packaged-image audit remain pending.
+The source shared library adds OpenSSL 3.5 and zlib as transitive dependencies.
+`OPEN_SHARED_LDFLAGS` supplies their build-directory `-rpath-link` paths to
+consumers before filesystem staging. Recipes that replace the common flags
+explicitly retain this variable; Inadyn's generated Makefile depends on
+`common.mak` to refresh stale configuration. No runtime search path is added.
 
-The next full-build retry passed the CLI link and stopped at `write_smb_conf`
-with the same transitive-library lookup failure. The experimental model's
-`common.mak` now supplies the OpenSSL/zlib link-time search paths to consumers
-using its `LDFLAGS`. This adds no runtime search path.
-
-`test_linked.sh` runs 14 reference-comparison suites against the actual newly
-linked `libshared.so`, rather than separately compiled candidate sources. All
-14 pass for the library from that retry. Random-device mocks forward unrelated
-file opens so OpenSSL can read its configuration. The suites still intercept
-settings and execution backends; they do not validate physical storage,
-process launching or router hardware. Run with immutable extracted inputs:
+`test_linked.sh` runs 14 reference-comparison suites against the actual linked
+`libshared.so`, rather than separately compiled candidate sources. Random-device
+mocks forward unrelated file opens so OpenSSL can read its configuration.
+Settings and execution backends remain intercepted; physical storage, process
+launching and router hardware are not covered.
 
 ```
 ASUS_SPWENC_REFERENCE_ROOT=/absolute/original/root \
@@ -667,50 +658,11 @@ ASUS_SPWENC_CANDIDATE_DIR=/absolute/directory/containing/libshared \
 bash vendor/gt-be98-pro/open-source/spwenc/test_linked.sh
 ```
 
-Full-image integration and packaged-library verification remain pending.
-
-The subsequent retry linked `write_smb_conf` successfully, then stopped at
-`wps_pbcd` because `rc/Makefile` replaces the common `LDFLAGS` value. The common
-search-path expression is now named `OPEN_SHARED_LDFLAGS`, and rc appends it after
-its override. It remains empty outside the experimental model/profile. This
-also reaches rc's derived `LDFLAGS2`; full-build validation is still pending.
-
-The rc retry passed its links and reached httpd, whose link recipe uses `LIBS`
-and `EXTRALDFLAGS` rather than `LDFLAGS`. That recipe now also consumes
-`OPEN_SHARED_LDFLAGS` to resolve the new shared-library dependencies. The next
-full-image retry is still required; no image from these failed retries is a
-validation artifact.
-
-The httpd retry passed that link and stopped at rstats, which also resets
-`LDFLAGS`. The rstats, infosvr and ntpclient overrides now retain
-`OPEN_SHARED_LDFLAGS`; the latter two were identified by inspecting their source
-Makefiles for the same reset pattern. These are link-time paths only and expand
-to nothing outside the experimental profile. Full-image validation remains open.
-
-The utility retry passed those links and later stopped at the AWS-IoT executable,
-whose `LDFLAGS` override lost the new zlib search path. That override now retains
-`OPEN_SHARED_LDFLAGS`. A subsequent full-image build remains required.
-
-The next retry compiled and linked the source HTTP helper and passed AWS-IoT,
-then stopped at CoovaChilli's unresolved zlib dependency. CoovaChilli's configure
-recipe now receives `OPEN_SHARED_LDFLAGS`; its local generated Makefile was
-invalidated so the retry regenerates those flags. Full-image validation remains
-pending.
-
-CoovaChilli subsequently passed; the next failure was Lighttpd's standalone
-preconfigure script replacing the common flags. The HND configure invocation
-now passes `OPEN_SHARED_LDFLAGS` explicitly and that script appends it. Its local
-configuration stamp was invalidated for regeneration. The actual HTTP link in
-that retry includes `open-httpd-pwenc.o` and excludes `prebuild/pwenc.o`.
-Packaged-image validation is still pending.
-
-Lighttpd then passed; Dropbear's configure link probe failed on the new shared
-library dependencies. Its explicit configure-time `LDFLAGS` now includes
-`OPEN_SHARED_LDFLAGS`. The compiler itself was working; the configure error was
-an unresolved transitive-library link. Full-image validation remains pending.
-
-Dropbear passed on the next retry. Inadyn then linked using an older generated
-Makefile without the common flags, although its configure recipe already uses
-`LDFLAGS`. Its generated Makefile now depends on `common.mak`, so changing these
-flags invalidates that configuration. This fixes stale configuration rather
-than adding a separate dependency path. Full-image validation remains pending.
+The full experimental build at `f2f0b10d57` succeeded. Its packaged shared library
+is byte-identical to the stripped source-built output and passes all 14 linked
+comparison suites. The packaged HTTP executable likewise matches its source
+build. Static userspace checks introduce no new dependency/symbol/interpreter
+failures relative to the previous image; 80 existing diagnostic records remain.
+All 151 kernel modules pass the static module check, and the audited kernel ELF
+matches the packaged kernel payload. See [image-validation.json](../image-validation.json)
+for hashes, exact scope and limitations. This is not hardware validation.
