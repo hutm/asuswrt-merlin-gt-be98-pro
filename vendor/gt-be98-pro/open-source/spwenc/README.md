@@ -703,3 +703,8 @@ now passes `OPEN_SHARED_LDFLAGS` explicitly and that script appends it. Its loca
 configuration stamp was invalidated for regeneration. The actual HTTP link in
 that retry includes `open-httpd-pwenc.o` and excludes `prebuild/pwenc.o`.
 Packaged-image validation is still pending.
+
+Lighttpd then passed; Dropbear's configure link probe failed on the new shared
+library dependencies. Its explicit configure-time `LDFLAGS` now includes
+`OPEN_SHARED_LDFLAGS`. The compiler itself was working; the configure error was
+an unresolved transitive-library link. Full-image validation remains pending.

@@ -6454,7 +6454,7 @@ dropbear/config.h: dropbear/config.h.in
 	cd dropbear && \
 		CPPFLAGS="-O2 -Wall $(EXTRACFLAGS) -DARGTYPE=3 -ffunction-sections -fdata-sections -I$(STAGEDIR)/usr/include \
 			$(if $(RTCONFIG_PROTECTION_SERVER),-DSECURITY_NOTIFY,)" \
-		LDFLAGS="-Wl,--gc-sections -L$(STAGEDIR)/usr/lib" \
+		LDFLAGS="$(OPEN_SHARED_LDFLAGS) -Wl,--gc-sections -L$(STAGEDIR)/usr/lib" \
 		LIBS="$(if $(RTCONFIG_PROTECTION_SERVER),-lptcsrv) \
 			$(if $(RTCONFIG_TRUSTZONE),-L$(TOP)/ateed -latee) \
 			$(if $(filter $(BUILD_NAME),RT-BE82M GS-BE18000 GS-BE12000 GS7_PRO GT7),-L$(TOP)/libhostapi -lhostapi,) \
