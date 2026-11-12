@@ -429,7 +429,12 @@ ifeq ($(RTCONFIG_TCODE),y)
 OBJS	+= $(if $(wildcard tcode.c),tcode.o,prebuild/tcode.o)
 endif
 
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_SETTINGS_NAMES_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/settings-names)
+OBJS += open-settings-names.o
+else
 OBJS	+= $(if $(wildcard shutils_private.c),shutils_private.o,prebuild/shutils_private.o)
+endif
 
 ifeq ($(RTCONFIG_ISP_CUSTOMIZE),y)
 OBJS	+= $(if $(wildcard customize_shared.c),customize_shared.o,prebuild/customize_shared.o)
@@ -660,6 +665,11 @@ endif
 ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
 .PHONY: open-spwenc-force
 open-spwenc-force:
+ifneq ($(OPEN_SETTINGS_NAMES_DIR),)
+open-settings-names.o: $(OPEN_SETTINGS_NAMES_DIR)/settings_names.c
+	$(CC) $(CFLAGS) -c $< -o $@
+endif
+
 open-spwenc.o: open-spwenc-force
 	$(MAKE) -f $(OPEN_SPWENC_DIR)/Makefile CC="$(CC)" \
 	  BUILD_DIR="$(CURDIR)/.open-spwenc" OUTPUT="$(CURDIR)/$@" \
