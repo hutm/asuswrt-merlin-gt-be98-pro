@@ -47,3 +47,15 @@ validity requirements remain part of the existing API. Source comparison tests
 are evidence of compatibility for their covered cases, not proof of hardware
 behavior. Firmware integration, packaged checks and hardware validation must be
 completed before this replacement is considered suitable for installation.
+
+The experimental image built from `50465117c5` packages this implementation.
+All 20 suites pass against its packaged library, which matches the stripped
+build output. The guest-network object matches the source-built archive member;
+`libshared` now contains four remaining vendor-matching objects. Userspace
+diagnostics are unchanged, and all 151 kernel modules pass static checks.
+Twelve additional allocation-failure tests cover enumeration and subnet lookup
+buffer handling and cleanup. Hardware validation remains pending.
+
+For packaged validation, set `ASUS_REFERENCE_ROOT` to the preceding extracted
+root and `ASUS_IMAGE_RUN` to the new audit directory containing `root/`, then run
+`bash vendor/gt-be98-pro/open-source/amas-wgn/test_packaged.sh`.

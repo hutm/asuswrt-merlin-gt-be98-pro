@@ -1,6 +1,6 @@
 {
   "reference_iteration": "20261112T023949Z-72b96612",
-  "status": "source-integrated-image-not-rebuilt",
+  "status": "packaged-experimental",
   "comparison_suites": [
     "basic",
     "subnet",
@@ -29,12 +29,11 @@
   "export_count": 32,
   "export_set_matches_reference_object": true,
   "limits": [
-    "New firmware image not built or validated.",
     "Hardware boot, settings migration and networking not tested.",
-    "Additional candidate-only malformed-input and allocation-failure tests remain."
+    "Additional malformed-input hardening tests remain."
   ],
   "files": {
-    "README.md": "73937640f83788efdd1c13c490107654568e5f36aa98f4594a352293bec4af3c",
+    "README.md": "ecf9b5788278c00542ec1eb4acc40dc9607fc8f1024bd0e680317e1f833f1e80",
     "check_layout.py": "63d2a086ef293dc985f8e7f4ea53ff99cd3c7809df73008bd64f10ce6cf7d01d",
     "guest-network.c": "1501b71eb9ef4126278a429dcb03582d2ef90fc8ea968c28e8baf3304b0cf5ab",
     "subnet.h": "a9164634da92070624a776dbb3cf1ff0f2a159e86e564a312026eae1e020d126",
@@ -43,6 +42,8 @@
     "test-bands.c": "c514e6af4e03006f56991be3730a875d0965763479b025aadb8d94a69f17ba6d",
     "test-basic.c": "422ba6a02b02287b34ce4c52e0348d30f9d488092fe4bae58589821e2b08645c",
     "test-check-settings.c": "b3dbcd227f2b7f2a96fe8ddc08f9431010898ecf9b4201f394b84341492a3019",
+    "test-enumeration-faults.c": "32f6fa1326346860a7fce66ae5175c72a4488f80153cd4d01080067bc83ee877",
+    "test-enumeration-faults.sh": "e40f97faf16e7ce2304d72f9addeac4536b5d41f8101fce8ef135d677d772e4b",
     "test-guest-enabled.c": "5239db5b29d2cc50a4bf2936ee3fe9c6140c13adf5797dbc8865961fbeb5b569",
     "test-guest-ifnames.c": "bdcec6eeab71f2c3b3cc3aa7a143ce335c094d91596c2eca0da37a57d38fe4c1",
     "test-guest-subnet.c": "0fa0aec7b10b5ea0a68252325d3c56029702a8cce7cc9d1083ac891ccfa6e797",
@@ -59,8 +60,34 @@
     "test-vlan-validation.c": "ebda12d8ac21b97a98c36c64990439ab2903a31eeb99faec39fdb87d06e02704",
     "test-vlan.c": "2fbcb63e8102c703818189982691fe302cc6639a05f2e9dc702a06ed962da212",
     "test.sh": "5842c7d40c21c8c6aad3048e97977c13322651870334cdbccb1faa59d3975d1f",
-    "test_container.sh": "35f207f80131e719c08cee54cff943818bc75a711c88da2ea2c0e1b23b7f8f01",
+    "test_container.sh": "d8fd83d2890be0f9d0eaa16c3457610dacb38819c3fc6db2b50ea13bbfc193e7",
+    "test_packaged.sh": "c3c35783f8bf6dca8e874c6645a505d3b104fa0220d35f629e83ec91b1656974",
+    "test_packaged_container.sh": "1ba420284bf2a023a488db9636bfd2ba617ca89558f7ccf8b3768aae2a1f2817",
     "vlan.h": "851afdf7382bd91fc66ce483548602769ab3fc27195717a4a8f00da3a8db7fa3"
   },
-  "public_header_sha256": "a6e07228bae1c85d45f38980cda405f029da3cc3cf38a1a34ca2991703eb4c9e"
+  "public_header_sha256": "a6e07228bae1c85d45f38980cda405f029da3cc3cf38a1a34ca2991703eb4c9e",
+  "packaged_iteration": "20261112T031958Z-mzql1bqo",
+  "packaged_comparison_suites": [
+    "basic",
+    "subnet",
+    "serialize",
+    "allocation",
+    "settings",
+    "vlan",
+    "vlan-parser",
+    "vlan-allocation",
+    "bands",
+    "vlan-composed",
+    "vlan-units",
+    "vlan-shift",
+    "vlan-settings",
+    "guest-ifnames",
+    "all-ifnames",
+    "guest-enabled",
+    "check-settings",
+    "guest-vlans",
+    "vlan-validation",
+    "guest-subnet"
+  ],
+  "candidate_enumeration_allocation_failure_cases": 12
 }

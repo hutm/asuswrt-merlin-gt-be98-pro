@@ -1,17 +1,17 @@
 {
-  "source_commit": "0efb344dd0b14a15f181907913ac0442fac79e4c",
-  "iteration": "20261112T023949Z-72b96612",
+  "source_commit": "50465117c57406618c85ac68db144fcaf8c558f1",
+  "iteration": "20261112T031958Z-mzql1bqo",
   "state": "built-experimental",
   "installable": false,
   "images": {
     "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
-      "bytes": 76715748,
-      "sha256": "2dcf8011481b5d6d5b21cc0e085dbd3b0b62de322b09e3754d3c52731cb3128b"
+      "bytes": 76715752,
+      "sha256": "902c73cbda15cc859a2efa1dcf8236a7daae1122be88f101736010dfade6c8a7"
     }
   },
   "fit_payload_hashes": "passed",
   "source_matches_packaged": {
-    "libshared.so": "4a95259a006c288a3223a83382fa31c800656dacac7728d5e316d3ce39cd7099"
+    "libshared.so": "ad30f494809170cea07428d9782ce5667caec3a57334c959294c4a6a4a0a6023"
   },
   "userspace": {
     "elf_count": 647,
@@ -32,7 +32,7 @@
   ],
   "shared_archive": {
     "member_count": 71,
-    "vendor_matching_members": 5,
+    "vendor_matching_members": 4,
     "scope": "libshared only; vendor match does not establish licensing"
   },
   "prior_component_validation": {
@@ -136,7 +136,7 @@
     ],
     "iteration": "20261112T021942Z-j4bf2tqt"
   },
-  "ethernet_command_validation": {
+  "prior_ethernet_command_validation": {
     "packaged_callback_comparisons": 320794,
     "packaged_lookup_comparisons": 7730,
     "bounded_no_common_media_case": "passed",
@@ -145,6 +145,39 @@
     "limits": [
       "Device requests and sleep mocked; hardware behavior not tested.",
       "Only defined SERDES request fields compared, excluding unspecified reference padding."
+    ],
+    "iteration": "20261112T023949Z-72b96612"
+  },
+  "guest_network_validation": {
+    "packaged_comparison_suites": [
+      "basic",
+      "subnet",
+      "serialize",
+      "allocation",
+      "settings",
+      "vlan",
+      "vlan-parser",
+      "vlan-allocation",
+      "bands",
+      "vlan-composed",
+      "vlan-units",
+      "vlan-shift",
+      "vlan-settings",
+      "guest-ifnames",
+      "all-ifnames",
+      "guest-enabled",
+      "check-settings",
+      "guest-vlans",
+      "vlan-validation",
+      "guest-subnet"
+    ],
+    "candidate_enumeration_allocation_failures": 12,
+    "public_record_layout": "all field offsets and sizes match on ARM and native",
+    "compiled_object_matches_archive": true,
+    "object_sha256": "50d30343a44292cd1a3644d0c8d5f735f7f76eeb152412a65f364f3995958010",
+    "packaged_library_matches_stripped_build": true,
+    "limits": [
+      "Settings and kernel VLAN configuration mocked; no hardware networking or migration tests."
     ]
   }
 }

@@ -42,3 +42,5 @@ test-guest-vlans guest-vlans
 test-vlan-validation vlan-validation
 test-guest-subnet guest-subnet
 CASES
+
+bash /tests/test-enumeration-faults.sh
