@@ -220,7 +220,13 @@ endif
 OBJS = shutils.o defaults.o model.o rtstate.o boardapi.o
 OBJS += network_utility.o
 OBJS += misc.o version.o files.o strings.o process.o
-OBJS += bin_sem_asus.o semaphore.o pids.o $(if $(wildcard notify_rc.c),notify_rc.o,prebuild/notify_rc.o)
+OBJS += bin_sem_asus.o semaphore.o pids.o
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_NOTIFY_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/notify-rc)
+OBJS += open-notify-rc.o
+else
+OBJS += $(if $(wildcard notify_rc.c),notify_rc.o,prebuild/notify_rc.o)
+endif
 OBJS += discover.o
 OBJS += base64.o
 OBJS += nvparse.o
@@ -669,6 +675,9 @@ ifneq ($(OPEN_SETTINGS_NAMES_DIR),)
 open-settings-names.o: $(OPEN_SETTINGS_NAMES_DIR)/settings_names.c
 	$(CC) $(CFLAGS) -c $< -o $@
 endif
+
+open-notify-rc.o: $(OPEN_NOTIFY_DIR)/notify.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 open-spwenc.o: open-spwenc-force
 	$(MAKE) -f $(OPEN_SPWENC_DIR)/Makefile CC="$(CC)" \
