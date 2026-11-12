@@ -690,3 +690,9 @@ to nothing outside the experimental profile. Full-image validation remains open.
 The utility retry passed those links and later stopped at the AWS-IoT executable,
 whose `LDFLAGS` override lost the new zlib search path. That override now retains
 `OPEN_SHARED_LDFLAGS`. A subsequent full-image build remains required.
+
+The next retry compiled and linked the source HTTP helper and passed AWS-IoT,
+then stopped at CoovaChilli's unresolved zlib dependency. CoovaChilli's configure
+recipe now receives `OPEN_SHARED_LDFLAGS`; its local generated Makefile was
+invalidated so the retry regenerates those flags. Full-image validation remains
+pending.
