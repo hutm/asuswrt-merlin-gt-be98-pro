@@ -2,7 +2,8 @@
 
 This source candidate supplies the four exports of the model's HTTP `pwenc.o`:
 `base64`, `aes_encrypt`, `pwenc` and `gen_ddns_hostname`. It uses OpenSSL EVP/BIO
-interfaces. It is not yet selected by the firmware Makefile.
+interfaces. The experimental GT-BE98_PRO profile now selects it as
+`open-httpd-pwenc.o`; other model/profile combinations keep their existing selection.
 
 The similarly named source in `aws-iot/src/pwenc.c` has different exports and
 uses AES-256-ECB, so it is not a drop-in implementation of this interface.
@@ -31,8 +32,8 @@ The visible HTTP password caller is conditional on HTTPS without NVRAM_ENCRYPT;
 its SMTP setting permits 128 bytes. The DDNS caller uses a 64-byte buffer.
 Other binary callers, dynamic lookup and full-image bindings still need review.
 Invalid pointers/negative lengths are rejected; unbounded legacy caller buffers
-cannot be made safe without changing that ABI. Allocation/backend failure
-injection remains untested.
+cannot be made safe without changing that ABI. Targeted allocation and backend failure injection passes on ARM and native
+sanitizers; this is not exhaustive failure coverage.
 
 ## Verification
 
@@ -52,3 +53,15 @@ bash vendor/gt-be98-pro/open-source/httpd-pwenc/test.sh
 ```
 
 Passing these checks does not establish full-image or hardware compatibility.
+
+The retry013 HTTP link lists 17 input objects. Inspection found the original four
+exports in `prebuild/pwenc.o` and only `gen_ddns_hostname` referenced by another
+object (`web.o`). All 17 objects were readable. This configuration compiles out
+the older password caller. Symbol-name inspection does not cover dynamic lookup
+or prove runtime bindings. Full-image validation of the source selection is
+pending.
+
+`test_failures.c` injects direct malloc/calloc, cipher-context, BIO allocation
+and digest failures. It checks cleanup under native sanitizers and checks that
+AES/password/DDNS failure paths preserve the caller's entire output buffer on
+both native and ARM. It does not inject every internal OpenSSL failure.

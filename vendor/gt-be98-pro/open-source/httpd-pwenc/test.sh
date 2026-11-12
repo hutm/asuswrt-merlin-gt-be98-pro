@@ -15,6 +15,12 @@ $cc -std=gnu11 -Wall -Wextra -Werror -I/source/release/src/router/openssl-3.5/in
 qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib /tmp/arm > /tmp/arm.log
 gcc -std=gnu11 -Wall -Wextra -Werror -fsanitize=address,undefined test.c pwenc.c -lcrypto -o /tmp/native
 /tmp/native > /tmp/native.log
+wrap=-Wl,--wrap=malloc,--wrap=calloc,--wrap=EVP_CIPHER_CTX_new,--wrap=EVP_Digest,--wrap=BIO_new
+gcc -std=gnu11 -Wall -Wextra -Werror -fsanitize=address,undefined test_failures.c pwenc.c "$wrap" -lcrypto -o /tmp/failures
+/tmp/failures
+$cc -std=gnu11 -Wall -Wextra -Werror -I/source/release/src/router/openssl-3.5/include test_failures.c pwenc.c "$wrap" -L/firmware/lib -L/firmware/usr/lib -Wl,-rpath-link,/firmware/lib:/firmware/usr/lib -lcrypto -o /tmp/arm-failures
+qemu-arm -L /firmware -E LD_LIBRARY_PATH=/firmware/lib:/firmware/usr/lib /tmp/arm-failures
+
 python3 - <<PY
 from pathlib import Path
 outputs=[[s for s in Path("/tmp/"+f+".log").read_text().splitlines() if s.startswith("CHECK ")] for f in ["reference","arm","native"]]

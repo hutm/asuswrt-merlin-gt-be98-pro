@@ -686,3 +686,7 @@ The httpd retry passed that link and stopped at rstats, which also resets
 `OPEN_SHARED_LDFLAGS`; the latter two were identified by inspecting their source
 Makefiles for the same reset pattern. These are link-time paths only and expand
 to nothing outside the experimental profile. Full-image validation remains open.
+
+The utility retry passed those links and later stopped at the AWS-IoT executable,
+whose `LDFLAGS` override lost the new zlib search path. That override now retains
+`OPEN_SHARED_LDFLAGS`. A subsequent full-image build remains required.

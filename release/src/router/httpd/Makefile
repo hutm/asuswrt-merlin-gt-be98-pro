@@ -190,7 +190,12 @@ OBJS += vis_gui.o
 endif
 
 ifeq ($(RTCONFIG_HTTPS),y)
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_HTTPD_PWENC_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/httpd-pwenc)
+OBJS += open-httpd-pwenc.o
+else
 OBJS += $(if $(wildcard pwenc.c), pwenc.o, prebuild/pwenc.o)
+endif
 endif
 
 ifeq ($(RTCONFIG_CAPTCHA),y)
@@ -474,6 +479,11 @@ ifeq ($(RTCONFIG_BCM_AFC),y)
 asus_afc.o:
 	@-cp -f ./prebuild/asus_afc.o .
 endif
+endif
+
+ifneq ($(OPEN_HTTPD_PWENC_DIR),)
+open-httpd-pwenc.o: $(OPEN_HTTPD_PWENC_DIR)/pwenc.c $(OPEN_HTTPD_PWENC_DIR)/pwenc.h
+	$(CC) $(CFLAGS) -I$(TOP)/openssl-3.5/include -c $< -o $@
 endif
 
 %.o: %.c .%.depend
