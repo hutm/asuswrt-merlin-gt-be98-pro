@@ -666,6 +666,7 @@ install: all
 
 clean:
 	rm -rf .open-spwenc
+	rm -rf .open-hw-auth
 	rm -f *.o *.so *.a .*.depend *.prep sysdeps/*.o sysdeps/broadcom/*.o sysdeps/ralink/*.o sysdeps/qtn/*.o
 
 private.o:
@@ -684,9 +685,17 @@ ifeq ($(wildcard $(SRCBASE)/router/sw-hw-auth/*.c),)
 endif
 endif
 
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_HW_AUTH_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/hw-auth)
+.PHONY: open-hw-auth-force
+open-hw-auth-force:
+hw_auth.o: open-hw-auth-force
+	$(MAKE) -f $(OPEN_HW_AUTH_DIR)/Makefile CC="$(CC)" CFLAGS="$(CFLAGS)" CPPFLAGS="-I$(TOP)/shared" BUILD_DIR="$(CURDIR)/.open-hw-auth" OUTPUT="$(CURDIR)/hw_auth.o"
+else
 hw_auth.o:
 ifeq ($(wildcard $(SRCBASE)/router/sw-hw-auth/*.c),)
 	cp -f $(TOP)/sw-hw-auth/prebuild/$(BUILD_NAME)/hw_auth.o ./
+endif
 endif
 
 ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
