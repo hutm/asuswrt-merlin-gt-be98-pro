@@ -46,4 +46,17 @@ ASUS_REFERENCE_ROOT=/absolute/extracted/reference/root \
 bash vendor/gt-be98-pro/open-source/notify-rc/test.sh
 ```
 
-Full-image and hardware validation remain pending.
+The image built at `1d8412c714` includes `open-notify-rc.o` and excludes
+`notify_rc.o` from the shared archive. Packaged libshared matches its stripped
+source-built output. The same comparison suite passes against the actual
+packaged library, with syscall and settings effects still mocked. Userspace ABI
+results are unchanged, and all 151 modules pass static checks against the image
+kernel. Hardware validation remains pending.
+
+To rerun the packaged-library comparison:
+
+```sh
+ASUS_REFERENCE_ROOT=/absolute/reference/root \
+ASUS_CANDIDATE_ROOT=/absolute/candidate/root \
+bash vendor/gt-be98-pro/open-source/notify-rc/test_linked.sh
+```

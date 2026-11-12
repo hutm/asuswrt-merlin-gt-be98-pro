@@ -9,16 +9,16 @@ or equivalent behavior. Do not relabel proprietary disassembly as open source.
 
 ## Latest build validation
 
-The experimental build at `37f23388ac` completed with source credential/settings,
-HTTP, manufacturing-settings and Broadcom utility selections. Packaged libshared
-matches the stripped source-built library. The three utilities pass 209156
-comparison records against the reference packaged library; all 14 credential/
-settings shared-library suites also pass. Userspace ABI checks remain unchanged
-(647 ELF files and 80 existing diagnostic records). All 151 kernel modules pass
-static checks against the packaged kernel. The shared archive has 14 remaining
-vendor-matching objects; this is not a whole-image proprietary-component count.
-Exact hashes and limitations are in [image-validation.json](image-validation.json).
-Hardware testing has not been performed, and substantial proprietary code remains.
+The experimental build at `1d8412c714` completed with source service-notification
+helpers selected. Packaged libshared matches the stripped source-built library
+and passes 23444 notification/state/failure/race comparison scenarios, plus
+boundary checks. Userspace ABI results remain unchanged (647 ELF files and 80
+existing diagnostic records). All 151 kernel modules pass static checks against
+the packaged kernel. The shared archive has 13 remaining vendor-matching objects;
+this is not a whole-image proprietary-component count. Earlier component-suite
+results and exact image hashes are recorded in
+[image-validation.json](image-validation.json). Hardware testing has not been
+performed, and substantial proprietary code remains.
 
 Current work focuses on userspace replacements and source-available components;
 a new hardware-driver/radio-firmware reconstruction project is outside the

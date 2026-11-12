@@ -8,6 +8,20 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <unistd.h>
+#ifdef LINKED_SHARED
+#include <dlfcn.h>
+static int (*notify_rc)(const char *);
+static int (*notify_rc_after_wait)(const char *);
+static int (*notify_rc_after_period_wait)(const char *, int);
+static int (*notify_rc_and_wait)(const char *);
+static int (*notify_rc_and_wait_1min)(const char *);
+static int (*notify_rc_and_wait_2min)(const char *);
+static int (*notify_rc_and_period_wait)(const char *, int);
+static int (*wait_rc_service)(int, const char *);
+static int (*skippable_event)(const char *);
+static char **skip_table_address;
+#define skip_table (*skip_table_address)
+#else
 extern int notify_rc(const char *);
 extern int notify_rc_after_wait(const char *);
 extern int notify_rc_after_period_wait(const char *, int);
@@ -18,6 +32,7 @@ extern int notify_rc_and_period_wait(const char *, int);
 extern int wait_rc_service(int, const char *);
 extern int skippable_event(const char *);
 extern char *skip_table;
+#endif
 static char service[512],last[512],pidvalue[32],reason[128];
 static int valid, before_clear,after_clear,sleeps,signals,sets,evals;
 static uint32_t trace;
@@ -71,6 +86,20 @@ int _eval(char *const argv[],const char *path,int timeout,pid_t *pid){assert(!pa
 static void reset(const char *busy,const char *ack,int clear,int after){strlcpy(service,busy,sizeof(service));strlcpy(last,ack,sizeof(last));strlcpy(pidvalue,"123",sizeof(pidvalue));reason[0]=0;valid=1;missing=failures=action=phase_sleeps=race_mode=rc_reads=0;before_clear=clear;after_clear=after;sleeps=signals=sets=evals=0;trace=2166136261u;}
 static int invoke(int api,const char *event,int period){switch(api){case 0:return notify_rc(event);case 1:return notify_rc_after_wait(event);case 2:return notify_rc_after_period_wait(event,period);case 3:return notify_rc_and_wait(event);case 4:return notify_rc_and_wait_1min(event);case 5:return notify_rc_and_wait_2min(event);case 6:return notify_rc_and_period_wait(event,period);default:return wait_rc_service(period,event);}}
 int main(void){
+#ifdef LINKED_SHARED
+ void *h=dlopen("libshared.so",RTLD_LAZY);if(!h){fputs(dlerror(),stderr);return 1;}
+ *(void **)(&notify_rc)=dlsym(h,"notify_rc");assert(notify_rc);
+ *(void **)(&notify_rc_after_wait)=dlsym(h,"notify_rc_after_wait");assert(notify_rc_after_wait);
+ *(void **)(&notify_rc_after_period_wait)=dlsym(h,"notify_rc_after_period_wait");assert(notify_rc_after_period_wait);
+ *(void **)(&notify_rc_and_wait)=dlsym(h,"notify_rc_and_wait");assert(notify_rc_and_wait);
+ *(void **)(&notify_rc_and_wait_1min)=dlsym(h,"notify_rc_and_wait_1min");assert(notify_rc_and_wait_1min);
+ *(void **)(&notify_rc_and_wait_2min)=dlsym(h,"notify_rc_and_wait_2min");assert(notify_rc_and_wait_2min);
+ *(void **)(&notify_rc_and_period_wait)=dlsym(h,"notify_rc_and_period_wait");assert(notify_rc_and_period_wait);
+ *(void **)(&wait_rc_service)=dlsym(h,"wait_rc_service");assert(wait_rc_service);
+ *(void **)(&skippable_event)=dlsym(h,"skippable_event");assert(skippable_event);
+ skip_table_address=dlsym(h,"skip_table");assert(skip_table_address);
+#endif
+
  const char *events[]={NULL,"","restart_autowan","restart_dnsmasq","reboot","prefix_reboot_suffix"};
  const char *busy[]={"","other","restart_autowan"};
  int periods[]={-1,0,1,6,7,8,15};int clear[]={-1,1,6,7};unsigned count=0;
