@@ -1,0 +1,148 @@
+{
+  "state": "combined-library-tested-integration-pending",
+  "integrated": false,
+  "reference_iteration": "20261112T031958Z-mzql1bqo",
+  "suites": [
+    {
+      "name": "acsd-init",
+      "sha256": "be19f1cf2b8cd659d22c9218f06448a81650e8711dc6f1fd3ed08c9a6a133402"
+    },
+    {
+      "name": "backhaul-composed",
+      "sha256": "ae215b19c47283987e3f6136f76792c2fd940ff8a98c4b7faf7182ca1b57d059"
+    },
+    {
+      "name": "backhaul",
+      "sha256": "0cc42eb531f409866f5416b0b875a5f332e6736e0140e402d5624868068f9dcd"
+    },
+    {
+      "name": "backhaul-setting",
+      "sha256": "aa505a01945ea05caf7e9c72f5ba8782f82b7c7383faadbcd9d5375fdd0f4efd"
+    },
+    {
+      "name": "band-map",
+      "sha256": "069c15f8e4890952c667436b21f443c4cd44c2ba47fa717a4506f7b8d4de3bcd"
+    },
+    {
+      "name": "band-type",
+      "sha256": "a4e78de98c83f2a6928b94fb2a83e59aea94a57f28b6964b923131016198b116"
+    },
+    {
+      "name": "channel-info",
+      "sha256": "78c32cbfd9413770d16f0f5fbf7f6c2755d8d66a54db88d8c8bc92f401ffb20a"
+    },
+    {
+      "name": "channel-weights",
+      "sha256": "67f71f41751b4f104dc8e049e3ebe6cbb295e86858adf3019f569828e3c497f7"
+    },
+    {
+      "name": "configuration",
+      "sha256": "18ae6b4bae056c60869ec5dc8aa758cb60d3de46402ba88277018b079fb81d3a"
+    },
+    {
+      "name": "counts",
+      "sha256": "09aa97e6709aad0ae83d7a7e127fd8b6ea2bd70c7584f3cc9cface811732b1c7"
+    },
+    {
+      "name": "helpers",
+      "sha256": "dd0abaa05bea50f04ca2272073e01dcb0b59e18bb5c85987b861a4626f116353"
+    },
+    {
+      "name": "interfaces",
+      "sha256": "6e149c8f11524bfb4a3b7f28da02af553cc8bdaa68ec1f2c8eba5c994afe1ba2"
+    },
+    {
+      "name": "mlo-config",
+      "sha256": "ff40347c4d3480393a8099646f354267a6f21673610cc372eeaa2b03e5d0be20"
+    },
+    {
+      "name": "mlo-policy",
+      "sha256": "3599b5f6f276778747e4f9481e5647237838f8251955c5bc65ebce2ac2614ec8"
+    },
+    {
+      "name": "mlo-stage",
+      "sha256": "d41c1b51dba338b79048a5ba3ba15f855ac3a05ed24fb1196cf775b6d395d465"
+    },
+    {
+      "name": "mlo-support",
+      "sha256": "7e848d61cdb1b1bd49afdbe184034f29da4e1e7fbe62720b6fa8597b7ee28f86"
+    },
+    {
+      "name": "parse-ethernet",
+      "sha256": "dc0c2e1808d807206b5e149ad4c57b7799ef620e8f4a92ccecc325716143da8f"
+    },
+    {
+      "name": "radio-policy",
+      "sha256": "b739e507df06dbde4e739fc5941d1dc405209fee014d0815b696892556986533"
+    },
+    {
+      "name": "settings",
+      "sha256": "5628d239d404c66ef5167547df5d33b18ec05be968bc776860534f38aee70afd"
+    },
+    {
+      "name": "uplink-description",
+      "sha256": "7ac209b626fa535066943b7499a1254aaededb08e02d76419a0ff36f2066f875"
+    }
+  ],
+  "suite_count": 20,
+  "arm_and_native_sanitizers": "passed",
+  "backhaul_composed_cases": 36480,
+  "limits": [
+    "Most suites mock providers; backhaul-composed and existing MLO policy suites exercise internal source helpers together",
+    "Public firmware-header signature checks and final build integration pending",
+    "Hardware behavior untested"
+  ],
+  "source_sha256": {
+    "acsd-init.c": "e0be2328c66d486dabb215d3aa5f9bda37010d9d6eb9d0cb050e70f578e99e5d",
+    "backhaul-setting.c": "d4ec3db575ccd797e12f090d57f9eb6c7e0d1e8808dd53e364c619caf539d38f",
+    "backhaul.c": "40e88674e7a324045a109e724c847a95b63b269bb36a58f8e6b963fdbb1526ce",
+    "band-map.c": "16d0021af0eee95abc41361c68209896b43243dbbc9c06da46ec1e2982d74391",
+    "band-type.c": "a2d79d237241971348cbfa46857d8b749f0cc71dc00de3e51274e953a19bbbe2",
+    "channel-info.c": "d0ac0b9fb16e8dedae68bb4d1313646e4125b25ca4796b6fc87ef9a8ea6361dd",
+    "channel-weights.c": "ea3da2f6913c453884d1b9c7330d108367214cf4c3b552b3a98cebfffc1e3933",
+    "configuration.c": "d62854c7a8b5a5c429893f04618d7efcec1574f8f1e77277305158e8b57abdb8",
+    "helpers.c": "60ce4e1520e2173903352e11a44c5a8e38228e90356349f0f938219fbf20072e",
+    "interfaces.c": "011405c29ad71731609de6f143e83a635b6194bf0e618f52c311d9d4ab6858cf",
+    "mlo-config.c": "76da2263fb4f1c060d4377224370aec9631f94e44399d09f93e5baf8766712b3",
+    "mlo-policy.c": "a2916b43b1a066c14877a0d8f0be8ad2eb5dd63649dac2486b64195a738cc5f9",
+    "mlo-stage.c": "bf0bedd4532aa8de0c30d35a14662d2cfc8478e7335f7a04c324aecf97786534",
+    "mlo-support.c": "24cb6b6879cde18bd9141bfe74d4b63213185820789476bac45b3553f25e6cf2",
+    "parse-ethernet.c": "67239cb1b4f4637de76994ebdf5f4e7503339523614085adf36128209fd734c9",
+    "radio-policy.c": "fa89c7c5ff6dba5314f16dc2c44fd06d4c2c1aabdd435ddcdb784da7314c92c5",
+    "settings.c": "14fff4a4df1d6bab93922eab4466c431adac88a66c32b31b4901bea74ec323a4",
+    "uplink-description.c": "7906be1057ba6276f318640d13b84ba757a30ae9ae77a397f1f928d07189e376"
+  },
+  "component_makefile": {
+    "arm_relocatable_object": "passed",
+    "expected_export_count": 45,
+    "exact_export_set": "passed",
+    "public_header_declarations_checked": 31
+  },
+  "firmware_build": "pending",
+  "maintained_runner": {
+    "state": "passed",
+    "suites": [
+      "acsd-init",
+      "backhaul-composed",
+      "backhaul-setting",
+      "backhaul",
+      "band-map",
+      "band-type",
+      "channel-info",
+      "channel-weights",
+      "configuration",
+      "counts",
+      "helpers",
+      "interfaces",
+      "mlo-config",
+      "mlo-policy",
+      "mlo-stage",
+      "mlo-support",
+      "parse-ethernet",
+      "radio-policy",
+      "settings",
+      "uplink-description"
+    ],
+    "suite_count": 20
+  }
+}

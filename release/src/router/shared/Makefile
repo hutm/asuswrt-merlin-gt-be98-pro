@@ -519,7 +519,12 @@ else
 OBJS += $(if $(wildcard sysdeps/amas/amas_dwb.c),amas_dwb.o,prebuild/amas_dwb.o)
 endif
 endif
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_AMAS_UTILS_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/amas-utils)
+OBJS += amas_utils.o
+else
 OBJS += $(if $(wildcard amas_utils.c),amas_utils.o,prebuild/amas_utils.o)
+endif
 ifeq ($(RTCONFIG_AMASDB),y)
 CFLAGS += -DAMASDB
 endif
@@ -683,6 +688,7 @@ clean:
 	rm -rf .open-spwenc
 	rm -rf .open-hw-auth
 	rm -rf .open-tcode
+	rm -rf .open-amas-utils
 	rm -f *.o *.so *.a .*.depend *.prep sysdeps/*.o sysdeps/broadcom/*.o sysdeps/ralink/*.o sysdeps/qtn/*.o
 
 private.o:
@@ -695,6 +701,13 @@ ifneq ($(OPEN_TCODE_DIR),)
 open-tcode-force:
 tcode.o: open-tcode-force
 	$(MAKE) -f $(OPEN_TCODE_DIR)/Makefile CC="$(CC)" CFLAGS="$(CFLAGS)" CPPFLAGS="-I$(TOP)/shared" BUILD_DIR="$(CURDIR)/.open-tcode" OUTPUT="$(CURDIR)/tcode.o"
+endif
+
+ifneq ($(OPEN_AMAS_UTILS_DIR),)
+.PHONY: open-amas-utils-force
+open-amas-utils-force:
+amas_utils.o: open-amas-utils-force
+	$(MAKE) -f $(OPEN_AMAS_UTILS_DIR)/Makefile CC="$(CC)" CFLAGS="$(CFLAGS)" BUILD_DIR="$(CURDIR)/.open-amas-utils" OUTPUT="$(CURDIR)/amas_utils.o"
 endif
 
 ifneq ($(OPEN_AMAS_WGN_DIR),)
