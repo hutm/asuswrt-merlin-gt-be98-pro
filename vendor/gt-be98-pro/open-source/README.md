@@ -9,12 +9,12 @@ or equivalent behavior. Do not relabel proprietary disassembly as open source.
 
 ## Latest build validation
 
-The experimental build at `d57b548de2` completed with the source mesh backhaul settings
-helper selected. Packaged libshared matches its stripped source-built output;
-the packaged helper matches 7290 reference scenarios using in-memory settings.
+The experimental build at `4515464505` completed with the source jumbo-frame status
+formatter selected. Packaged libshared matches its stripped source-built output;
+the packaged formatter matches output and return values across 528912 calls.
 Userspace ABI results remain unchanged (647 ELF files and 80 existing diagnostic
 records). All 151 kernel modules pass static checks against the packaged kernel.
-The shared archive has 10 remaining vendor-matching objects; this is not a
+The shared archive has 9 remaining vendor-matching objects; this is not a
 whole-image proprietary component count. Earlier component results and exact
 hashes are recorded in [image-validation.json](image-validation.json). Router
 hardware and vendor-service interoperability have not been tested, and substantial

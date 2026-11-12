@@ -25,5 +25,9 @@ bash vendor/gt-be98-pro/open-source/ethswctl/test.sh
 
 A scan of 801 ELF files in image `20261112T011455Z-4pii0t_j` found the ten exports
 in libshared and no dynamic imports. That does not rule out internal calls or
-runtime symbol lookup. The exports are retained. Packaged-image validation is
-pending; this helper's replacement says nothing about driver source coverage.
+runtime symbol lookup. The exports are retained. The image built from `4515464505` includes the source
+formatter: its packaged libshared matches the stripped build output, and all
+528912 output/return comparisons pass against the packaged functions. Userspace
+diagnostics are unchanged and all 151 kernel modules pass static checks.
+Hardware testing remains pending; this replacement says nothing about driver
+source coverage.

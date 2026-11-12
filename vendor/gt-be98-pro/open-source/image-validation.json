@@ -1,17 +1,17 @@
 {
-  "source_commit": "d57b548de24156f883eacba164b0e629a312664a",
-  "iteration": "20261112T012659Z-fdonwcqe",
+  "source_commit": "4515464505e6047e321d48f0de2a43082333c0e9",
+  "iteration": "20261112T013454Z-l4cu_0gs",
   "state": "built-experimental",
   "installable": false,
   "images": {
     "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
       "bytes": 76715752,
-      "sha256": "b1b33c7206358a965a39adb1a4cf054623a8f5dc686542fe8baf17649091ba1e"
+      "sha256": "865b2d22a7415c3034b003b30560141759d448820622e2a56708f7bf9a812eae"
     }
   },
   "fit_payload_hashes": "passed",
   "source_matches_packaged": {
-    "libshared.so": "42ddc2501da1bb1f7908ed0e6ffd69e955f03580355fe1e427d42f3c091909db"
+    "libshared.so": "ea40f49dc39c13fda9bfc2192d7df03153609851dec16d5420887909f26c4e1f"
   },
   "userspace": {
     "elf_count": 647,
@@ -32,7 +32,7 @@
   ],
   "shared_archive": {
     "member_count": 71,
-    "vendor_matching_members": 10,
+    "vendor_matching_members": 9,
     "scope": "libshared only; vendor match does not establish licensing"
   },
   "prior_component_validation": {
@@ -70,11 +70,18 @@
       "Only the model helper is exercised; unrelated shared-library symbols use lazy resolution."
     ]
   },
-  "mesh_settings_validation": {
+  "prior_mesh_settings_validation": {
+    "iteration": "20261112T012659Z-fdonwcqe",
     "packaged_comparison_cases": 7290,
     "reference_output": "linked-reference-cases.log",
     "packaged_output": "mesh-linked-cases.log",
     "fixture": "linked-test.c",
     "settings_providers": "mocked in-memory; no hardware settings writes"
+  },
+  "jumbo_formatter_validation": {
+    "packaged_output_and_return_comparison_calls": 528912,
+    "fixture": "linked-test.c",
+    "reference_output": "reference-returns.log",
+    "packaged_output": "jumbo-linked-cases.log"
   }
 }
