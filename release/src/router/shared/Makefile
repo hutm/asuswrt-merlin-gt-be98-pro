@@ -614,7 +614,12 @@ OBJS += nvsw.o
 endif
 
 ifeq ($(or $(RTCONFIG_GEARUPPLUGIN), $(RTCONFIG_UUPLUGIN)), y)
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_UU_UTILS_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/uu-utils)
+OBJS += open-uu-utils.o
+else
 OBJS += $(if $(wildcard uu_utils.c),uu_utils.o,prebuild/uu_utils.o)
+endif
 endif
 
 ifeq ($(RTCONFIG_MXL_826XX),y)
@@ -678,6 +683,11 @@ endif
 
 open-notify-rc.o: $(OPEN_NOTIFY_DIR)/notify.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+ifneq ($(OPEN_UU_UTILS_DIR),)
+open-uu-utils.o: $(OPEN_UU_UTILS_DIR)/model_check.c model.h
+	$(CC) $(CFLAGS) -c $< -o $@
+endif
 
 open-spwenc.o: open-spwenc-force
 	$(MAKE) -f $(OPEN_SPWENC_DIR)/Makefile CC="$(CC)" \
