@@ -64,4 +64,16 @@ ASUS_REFERENCE_ROOT=/absolute/extracted/reference/root \
 bash vendor/gt-be98-pro/open-source/aae-ipc/test.sh
 ```
 
-Full-image integration and router/service interoperability remain pending.
+The image built at `467ddefb96` contains the tested source IPC object in the
+shared archive. Packaged libshared matches the stripped source-built library
+and passes the 26 real-socket cases. The actual build object also passes the
+reference comparison and candidate failure suites. Userspace ABI results remain
+unchanged, and all 151 modules pass static checks against the packaged kernel.
+Router hardware and vendor-service interoperability remain untested.
+
+To test an extracted candidate library:
+
+```sh
+ASUS_CANDIDATE_ROOT=/absolute/candidate/root \
+bash vendor/gt-be98-pro/open-source/aae-ipc/test_linked.sh
+```

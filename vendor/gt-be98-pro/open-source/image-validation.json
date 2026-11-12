@@ -1,17 +1,17 @@
 {
-  "source_commit": "1d8412c714909857db9df4a1f8fb47b05dd03e39",
-  "iteration": "20261112T004421Z-xlj7gm5h",
+  "source_commit": "467ddefb96cfec5f7edb9aa2169be1124696d8f7",
+  "iteration": "20261112T010446Z-hg6r_g_6",
   "state": "built-experimental",
   "installable": false,
   "images": {
     "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
       "bytes": 76719848,
-      "sha256": "cfe8e7ea284d19600cc458063092e2d649bce2588de29994515b52ea78c0e920"
+      "sha256": "ad138cc6fd046e441eba75939309271e781e9f17ee4305c7b486a8703a6fc576"
     }
   },
   "fit_payload_hashes": "passed",
   "source_matches_packaged": {
-    "libshared.so": "4ad2291de84222f18a89d152816ab2381f84204b207ffbaf299f9c87be27094d"
+    "libshared.so": "fce1624893fb69f9e7fc8fde1f932b8484ab897a6de61823d618eb3f34e1187e"
   },
   "userspace": {
     "elf_count": 647,
@@ -32,7 +32,7 @@
   ],
   "shared_archive": {
     "member_count": 71,
-    "vendor_matching_members": 13,
+    "vendor_matching_members": 12,
     "scope": "libshared only; vendor match does not establish licensing"
   },
   "prior_component_validation": {
@@ -44,10 +44,18 @@
       "bcmwifi_channels": 65536
     }
   },
-  "packaged_notification_comparison": {
+  "prior_notification_validation": {
+    "iteration": "20261112T004421Z-xlj7gm5h",
     "notification_scenarios": 8064,
     "state_and_failure_scenarios": 15360,
     "changes_between_reads": 20,
     "candidate_minimum_integer_boundary": "passed"
+  },
+  "ipc_validation": {
+    "actual_build_object_comparison_cases": 4200,
+    "candidate_fault_scenarios": 23,
+    "invalid_argument_cases": 11,
+    "packaged_real_socket_cases": 26,
+    "tested_object_matches_archive": true
   }
 }

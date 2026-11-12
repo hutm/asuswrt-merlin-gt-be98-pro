@@ -9,8 +9,14 @@
 #include <sys/wait.h>
 #include <time.h>
 #include <unistd.h>
+#ifdef LINKED_SHARED
+#include <dlfcn.h>
+static int (*aae_sendIpcMsg)(char *,char *,int);
+static int (*aae_sendIpcMsgAndWaitResp)(char *,char *,int,char *,int,int);
+#else
 extern int aae_sendIpcMsg(char *,char *,int);
 extern int aae_sendIpcMsgAndWaitResp(char *,char *,int,char *,int,int);
+#endif
 static void pause_ms(long ms){struct timespec t={ms/1000,(ms%1000)*1000000};while(nanosleep(&t,&t))assert(errno==EINTR);}
 static void run_case(int mode,int length,int capacity)
 {
@@ -51,6 +57,11 @@ static void run_case(int mode,int length,int capacity)
 }
 int main(void)
 {
+#ifdef LINKED_SHARED
+ void *h=dlopen("libshared.so",RTLD_LAZY);if(!h){fputs(dlerror(),stderr);return 1;}
+ *(void **)(&aae_sendIpcMsg)=dlsym(h,"aae_sendIpcMsg");assert(aae_sendIpcMsg);
+ *(void **)(&aae_sendIpcMsgAndWaitResp)=dlsym(h,"aae_sendIpcMsgAndWaitResp");assert(aae_sendIpcMsgAndWaitResp);
+#endif
  int lengths[]={0,1,2047,2048},capacities[]={1,2,16,2048,2071};
  for(unsigned l=0;l<4;l++)for(unsigned c=0;c<5;c++)run_case(1,lengths[l],capacities[c]);
  run_case(0,2048,16);run_case(2,15,2048);run_case(3,15,2048);run_case(4,15,2048);run_case(5,15,2048);
