@@ -432,7 +432,12 @@ OBJS	+= $(if $(wildcard plc_utils.c),plc_utils.o,prebuild/plc_utils.o)
 endif
 
 ifeq ($(RTCONFIG_TCODE),y)
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_TCODE_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/tcode)
+OBJS += tcode.o
+else
 OBJS	+= $(if $(wildcard tcode.c),tcode.o,prebuild/tcode.o)
+endif
 endif
 
 ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
@@ -667,11 +672,19 @@ install: all
 clean:
 	rm -rf .open-spwenc
 	rm -rf .open-hw-auth
+	rm -rf .open-tcode
 	rm -f *.o *.so *.a .*.depend *.prep sysdeps/*.o sysdeps/broadcom/*.o sysdeps/ralink/*.o sysdeps/qtn/*.o
 
 private.o:
 ifneq ($(wildcard ./prebuild/private.o),)
 	@-cp -f ./prebuild/private.o .
+endif
+
+ifneq ($(OPEN_TCODE_DIR),)
+.PHONY: open-tcode-force
+open-tcode-force:
+tcode.o: open-tcode-force
+	$(MAKE) -f $(OPEN_TCODE_DIR)/Makefile CC="$(CC)" CFLAGS="$(CFLAGS)" CPPFLAGS="-I$(TOP)/shared" BUILD_DIR="$(CURDIR)/.open-tcode" OUTPUT="$(CURDIR)/tcode.o"
 endif
 
 ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
