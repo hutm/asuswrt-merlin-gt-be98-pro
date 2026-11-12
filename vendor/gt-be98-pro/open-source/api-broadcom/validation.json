@@ -1,0 +1,34 @@
+{
+  "state": "source-integrated-component-tested",
+  "full_image_validated": false,
+  "reference_iteration": "20261112T041115Z-4ne5f3wp",
+  "warning_free_compile": true,
+  "comparison_cases": {
+    "mib": 10560,
+    "prefix": 5940,
+    "policy": 6936,
+    "wireless_caps": 24500
+  },
+  "candidate_cases": {
+    "gpio": 1440,
+    "long_prefix_policy": 32
+  },
+  "mapping_inputs": 358,
+  "export_count": 54,
+  "exported_policy_table_bytes_identical": 8816,
+  "limits": [
+    "Only eight exports exercised; other functions require additional validation.",
+    "Device and settings providers mocked; hardware untested.",
+    "GPIO tests validate defined candidate behavior rather than undefined vendor paths.",
+    "Long-prefix cases are not sanitizer-instrumented.",
+    "Full image rebuild and packaged-library tests pending."
+  ],
+  "sha256": {
+    "api-broadcom.c": "73a29bdb89326c0a66b8f68912f49171ab9bf38c43e6af2f3de366642e72c163",
+    "test-mib.c": "0a5a3742213be4005075d8804c68cb13cc744eefc86c850523d93e90983d60b6",
+    "test-prefix.c": "a98111c0f12c74e87ac910e6827fc8d7e0c31af0285381d88e7d8b50e968ea81",
+    "test-policy.c": "e094cb58a681bcb1e1048e7abe08330ec3a5a835cd9bfb9d4b54428d1fb23e0f",
+    "test-wireless-caps.c": "b304701bef87651f59e49ec3d9f1a1e348321a974c9ff600b5273ce2659f27db",
+    "test-gpio.c": "f739d8587bccd8779e0ae3f18d9dc7f5310240e655c2a734ac102bee08d137d2"
+  }
+}

@@ -1,0 +1,82 @@
+--- asus/api-broadcom.c
++++ candidate/api-broadcom.c
+@@ -466,14 +466,14 @@
+ 		 {"0xff803158", "0xff803178", "0xff803068"},
+ 		 {"0x00000000", "0x00000000", "0x00000000"}}
+ #else
+-		{"/proc/bcm_cled/led14/config0", "/proc/bcm_cled/led15/config0", "/proc/bcm_cled/led16/config0",
+-                "0x00000000", "0x00000000", "0x00000000",
+-		"/proc/bcm_cled/led14/config1", "/proc/bcm_cled/led15/config1", "/proc/bcm_cled/led16/config1",
+-                "0x00000000", "0x00000000", "0x00000000",
+-		"/proc/bcm_cled/led14/config2", "/proc/bcm_cled/led15/config2", "/proc/bcm_cled/led16/config2",
+-                "0x00000000", "0x00000000", "0x00000000",
+-		"/proc/bcm_cled/led14/config3", "/proc/bcm_cled/led15/config3", "/proc/bcm_cled/led16/config3",
+-                "0x00000000", "0x00000000", "0x00000000"}
++		{{"/proc/bcm_cled/led14/config0", "/proc/bcm_cled/led15/config0", "/proc/bcm_cled/led16/config0"},
++		 {"0x00000000", "0x00000000", "0x00000000"},
++		 {"/proc/bcm_cled/led14/config1", "/proc/bcm_cled/led15/config1", "/proc/bcm_cled/led16/config1"},
++		 {"0x00000000", "0x00000000", "0x00000000"},
++		 {"/proc/bcm_cled/led14/config2", "/proc/bcm_cled/led15/config2", "/proc/bcm_cled/led16/config2"},
++		 {"0x00000000", "0x00000000", "0x00000000"},
++		 {"/proc/bcm_cled/led14/config3", "/proc/bcm_cled/led15/config3", "/proc/bcm_cled/led16/config3"},
++		 {"0x00000000", "0x00000000", "0x00000000"}}
+ #endif
+ 	};
+ 
+@@ -1173,7 +1173,7 @@
+ 	char btnpath[48];
+ 	char cmd[64];
+ 	int btnfd;
+-	char value[2];
++	char value[2] = {0};
+ 	sprintf(btnpath, "/sys/class/gpio/gpio%d/value", gpio);
+ 	if (!f_exists(btnpath)) {
+ 		snprintf(cmd, sizeof(cmd), "echo %d > /sys/class/gpio/export", gpio);
+@@ -1196,6 +1196,7 @@
+ 			return -1;
+ 		}
+ 	}
++	return (uint32_t)-1;
+ #else
+ 	int board_fp = open("/dev/brcmboard", O_RDWR);
+ 	int active_low = _gpio_active_low(gpio & 0xff);
+@@ -3223,7 +3224,7 @@
+ void gen_bcmbsd_def_policy(int sel)
+ {
+ 	int i, tbi, unit_id, ruleid;
+-	char namebuf[40];
++	char namebuf[64];
+ 	int o_sel = sel;
+ 	char target_bss[16];
+ 
+@@ -3252,7 +3253,7 @@
+ 
+ 		_dprintf("%s: wl%d set rule_idx [%d]\n", __func__, unit_id, ruleid);
+ #if defined(RTCONFIG_MULTILAN_MWL)
+-		if(strlen(smart_connect_get_active_prefix_by_bandid(&target_bss, sizeof(target_bss), unit_id)))
++		if(strlen(smart_connect_get_active_prefix_by_bandid(target_bss, sizeof(target_bss), unit_id)))
+ 			_dprintf("%s: <mwl> main network interface: %s\n", __func__, target_bss);
+ #endif
+ 
+@@ -3353,9 +3354,9 @@
+ #if defined(RTCONFIG_MULTILAN_MWL)
+ 	char ifnames[64], candi[16];
+ 	char word[16], *next;
+-	int bitmap;
+-
+-	get_fh_sc_ifnames(&bitmap, &ifnames, sizeof(ifnames));
++	unsigned int bitmap;
++
++	get_fh_sc_ifnames(&bitmap, ifnames, sizeof(ifnames));
+ 	snprintf(candi, sizeof(candi), "wl%d", bandid);
+ 
+ 	foreach(word, ifnames, next) {
+@@ -3371,6 +3372,8 @@
+ }
+ 
+ #ifdef RTCONFIG_MULTILAN_MWL
++void restore_nonexist_bcmbsd_def_policy(void);
++
+ void smart_connect_align_policy_mwl(void)
+ {
+ 	char policy[3][32] = {"bsd_sta_select_policy",

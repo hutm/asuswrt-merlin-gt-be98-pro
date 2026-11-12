@@ -352,10 +352,15 @@ else
 # Broadcom
 OBJS += wl.o wl_linux.o
 OBJS += broadcom.o
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_PLATFORM_API_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/api-broadcom)
+OBJS += api-broadcom.o
+else
 ifeq ($(HND_ROUTER),y)
 OBJS += $(if $(wildcard sysdeps/api-broadcom.c),api-broadcom.o,prebuild/api-broadcom.o)
 else
 OBJS += api-broadcom.o
+endif
 endif
 ifeq ($(RTCONFIG_DSL_TCLINUX),y)
 OBJS += api-tclinux.o
@@ -701,6 +706,11 @@ ifneq ($(OPEN_TCODE_DIR),)
 open-tcode-force:
 tcode.o: open-tcode-force
 	$(MAKE) -f $(OPEN_TCODE_DIR)/Makefile CC="$(CC)" CFLAGS="$(CFLAGS)" CPPFLAGS="-I$(TOP)/shared" BUILD_DIR="$(CURDIR)/.open-tcode" OUTPUT="$(CURDIR)/tcode.o"
+endif
+
+ifneq ($(OPEN_PLATFORM_API_DIR),)
+api-broadcom.o: $(OPEN_PLATFORM_API_DIR)/api-broadcom.c
+	$(CC) $(CFLAGS) -fPIC -MMD -MP -MF .api-broadcom.depend -c $< -o $@
 endif
 
 ifneq ($(OPEN_AMAS_UTILS_DIR),)

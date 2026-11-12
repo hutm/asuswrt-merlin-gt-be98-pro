@@ -1,0 +1,16 @@
+{
+  "archive_sha256": "5454a49ae63c8bf8aeffdbccab9d3eac34f5046bd4666fe085f8df379955db5c",
+  "url": "https://dlcdnets.asus.com/pub/ASUS/wireless/GT-BE98_Pro/GPL_GT_BE98_PRO_300610238984.zip",
+  "member": {
+    "member": "asuswrt/release/src/router/shared/sysdeps/api-broadcom.c",
+    "sha256": "074edbff78a4160c0f566fe950b2bdb008ab250773cf4bc41b6253cc5986241c",
+    "size": 106487
+  },
+  "extracted_source_matches": true,
+  "license": {
+    "archive_member": "asuswrt/License",
+    "sha256": "fd254f3a494d7cb92ac4a29fb1f55ce3fdbe9c3cabfa4f2156db2932246bee05",
+    "scope": "Top-level GPL v2 text supplied by ASUS. Source file contains no individual license header."
+  },
+  "patched_source_sha256": "73a29bdb89326c0a66b8f68912f49171ab9bf38c43e6af2f3de366642e72c163"
+}
