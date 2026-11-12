@@ -1,17 +1,17 @@
 {
-  "source_commit": "467ddefb96cfec5f7edb9aa2169be1124696d8f7",
-  "iteration": "20261112T010446Z-hg6r_g_6",
+  "source_commit": "788739cc1cb9748ebc354f469ca19ef44b14fe21",
+  "iteration": "20261112T011455Z-4pii0t_j",
   "state": "built-experimental",
   "installable": false,
   "images": {
     "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
-      "bytes": 76719848,
-      "sha256": "ad138cc6fd046e441eba75939309271e781e9f17ee4305c7b486a8703a6fc576"
+      "bytes": 76715752,
+      "sha256": "57d268bbee02fc13fda6e39ff6612a0a449da7a1a784ad93da53746c21427ecd"
     }
   },
   "fit_payload_hashes": "passed",
   "source_matches_packaged": {
-    "libshared.so": "fce1624893fb69f9e7fc8fde1f932b8484ab897a6de61823d618eb3f34e1187e"
+    "libshared.so": "7523407fdb3f6e25252e0e142dc57e9ae6eb130390ccd3f8bd1b1b26bf75578e"
   },
   "userspace": {
     "elf_count": 647,
@@ -32,7 +32,7 @@
   ],
   "shared_archive": {
     "member_count": 71,
-    "vendor_matching_members": 12,
+    "vendor_matching_members": 11,
     "scope": "libshared only; vendor match does not establish licensing"
   },
   "prior_component_validation": {
@@ -51,11 +51,22 @@
     "changes_between_reads": 20,
     "candidate_minimum_integer_boundary": "passed"
   },
-  "ipc_validation": {
+  "prior_ipc_validation": {
+    "iteration": "20261112T010446Z-hg6r_g_6",
     "actual_build_object_comparison_cases": 4200,
     "candidate_fault_scenarios": 23,
     "invalid_argument_cases": 11,
     "packaged_real_socket_cases": 26,
     "tested_object_matches_archive": true
+  },
+  "model_helper_validation": {
+    "packaged_comparison_cases": 48442,
+    "provider_call_order_checked": true,
+    "fixture": "uu-linked-test.c",
+    "reference_output": "uu-reference-cases.log",
+    "packaged_output": "uu-linked-cases.log",
+    "limits": [
+      "Only the model helper is exercised; unrelated shared-library symbols use lazy resolution."
+    ]
   }
 }

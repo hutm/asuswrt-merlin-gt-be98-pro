@@ -37,4 +37,8 @@ ASUS_REFERENCE_ROOT=/absolute/extracted/reference/root \
 bash vendor/gt-be98-pro/open-source/uu-utils/test.sh
 ```
 
-Full-image and hardware validation remain pending.
+The image built from `788739cc1c` contains the source helper. The extracted
+libshared matches the stripped build output, and its helper passes the same
+48442 cases using mocked model/product providers. The test uses lazy dynamic
+resolution to isolate this helper; it does not validate other library calls.
+Hardware validation remains pending.
