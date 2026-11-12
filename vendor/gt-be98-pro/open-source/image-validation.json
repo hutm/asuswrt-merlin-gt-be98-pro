@@ -1,17 +1,17 @@
 {
-  "source_commit": "2f2602a4d2ec0a970ff4f6c83b1ba89477c3f92a",
-  "iteration": "20261112T021942Z-j4bf2tqt",
+  "source_commit": "0efb344dd0b14a15f181907913ac0442fac79e4c",
+  "iteration": "20261112T023949Z-72b96612",
   "state": "built-experimental",
   "installable": false,
   "images": {
     "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
-      "bytes": 76715752,
-      "sha256": "00196854e1d50521362f44d27fd6fa167eeb61baeb36a894df469d377d3e6af6"
+      "bytes": 76715748,
+      "sha256": "2dcf8011481b5d6d5b21cc0e085dbd3b0b62de322b09e3754d3c52731cb3128b"
     }
   },
   "fit_payload_hashes": "passed",
   "source_matches_packaged": {
-    "libshared.so": "b38de2ff38033d0273ef0d2e6faeed913563e8410e45b9a0d5114553fbe22432"
+    "libshared.so": "4a95259a006c288a3223a83382fa31c800656dacac7728d5e316d3ce39cd7099"
   },
   "userspace": {
     "elf_count": 647,
@@ -32,7 +32,7 @@
   ],
   "shared_archive": {
     "member_count": 71,
-    "vendor_matching_members": 6,
+    "vendor_matching_members": 5,
     "scope": "libshared only; vendor match does not establish licensing"
   },
   "prior_component_validation": {
@@ -125,7 +125,7 @@
     ],
     "iteration": "20261112T020717Z-y9sfa7x1"
   },
-  "territory_settings_validation": {
+  "prior_territory_settings_validation": {
     "packaged_comparison_cases": 28110,
     "public_table_fields": 575,
     "compiled_object_matches_archive": true,
@@ -133,6 +133,18 @@
     "provider_call_order_checked": true,
     "limits": [
       "Settings and notification providers mocked; hardware behavior not tested."
+    ],
+    "iteration": "20261112T021942Z-j4bf2tqt"
+  },
+  "ethernet_command_validation": {
+    "packaged_callback_comparisons": 320794,
+    "packaged_lookup_comparisons": 7730,
+    "bounded_no_common_media_case": "passed",
+    "compiled_object_matches_archive": true,
+    "packaged_library_matches_stripped_build": true,
+    "limits": [
+      "Device requests and sleep mocked; hardware behavior not tested.",
+      "Only defined SERDES request fields compared, excluding unspecified reference padding."
     ]
   }
 }

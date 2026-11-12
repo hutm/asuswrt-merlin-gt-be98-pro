@@ -35,4 +35,14 @@ dereferencing null. Other malformed pointers remain outside the interface.
 The private request numbers and layouts are specific to this router's reference
 driver ABI. Future SDK changes need renewed comparison and hardware tests.
 Static request storage and existing callback behavior do not provide thread
-safety. Full firmware integration and hardware validation remain pending.
+safety. The image built from `0efb344dd0` packages this source implementation.
+The packaged library matches its stripped build output and the helper matches
+its archive member. All 320,794 callback comparisons, 7,730 lookup checks and
+the bounded no-common-media test pass against the packaged library. Userspace
+diagnostics are unchanged, and all 151 kernel modules pass static checks.
+Hardware validation remains pending.
+
+For packaged validation, set `ASUS_REFERENCE_ROOT` to the preceding extracted
+root and `ASUS_IMAGE_RUN` to the new audit directory containing `root/`, then
+run `bash vendor/gt-be98-pro/open-source/ethctl-command/test_packaged.sh`.
+Comparison logs are saved in the audit directory.
