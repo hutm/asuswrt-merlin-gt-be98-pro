@@ -1,6 +1,6 @@
 {
-  "state": "combined-library-tested-integration-pending",
-  "integrated": false,
+  "state": "built-and-packaged-tests-passed",
+  "integrated": true,
   "reference_iteration": "20261112T031958Z-mzql1bqo",
   "suites": [
     {
@@ -118,7 +118,18 @@
     "exact_export_set": "passed",
     "public_header_declarations_checked": 31
   },
-  "firmware_build": "pending",
+  "firmware_build": {
+    "iteration": "20261112T041115Z-4ne5f3wp",
+    "source_commit": "64dacd59dbe049b0fc5b88645f710c9e8de28189",
+    "state": "built-experimental",
+    "installable": false,
+    "images": {
+      "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
+        "bytes": 76715752,
+        "sha256": "911bfa9ad7929ca04199bd43d48809d6b33b97aa1f37b9eaec9fade8bdcc1a5b"
+      }
+    }
+  },
   "maintained_runner": {
     "state": "passed",
     "suites": [
@@ -144,5 +155,40 @@
       "uplink-description"
     ],
     "suite_count": 20
+  },
+  "packaged_validation": {
+    "packaged_comparison_suites": [
+      "acsd-init",
+      "backhaul-composed",
+      "backhaul",
+      "backhaul-setting",
+      "band-map",
+      "band-type",
+      "channel-info",
+      "channel-weights",
+      "configuration",
+      "counts",
+      "helpers",
+      "interfaces",
+      "mlo-config",
+      "mlo-policy",
+      "mlo-stage",
+      "mlo-support",
+      "parse-ethernet",
+      "radio-policy",
+      "settings",
+      "uplink-description"
+    ],
+    "compiled_object_matches_archive": true,
+    "object_sha256": "2fe9ee5a78834c432bac2f5ec19837a62ab412e0ba2bee889c0f156e53d40b95",
+    "packaged_library_matches_stripped_build": true,
+    "function_exports": 39,
+    "data_exports": 6,
+    "public_declarations_checked": 31,
+    "limits": [
+      "Hardware and persistent settings not tested.",
+      "Most providers mocked; composed backhaul cases also exercise source-built helper dependencies.",
+      "Arbitrary malformed settings and pointer aliasing are not comprehensively covered."
+    ]
   }
 }

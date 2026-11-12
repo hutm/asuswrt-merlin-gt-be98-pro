@@ -1,17 +1,17 @@
 {
-  "source_commit": "50465117c57406618c85ac68db144fcaf8c558f1",
-  "iteration": "20261112T031958Z-mzql1bqo",
+  "source_commit": "64dacd59dbe049b0fc5b88645f710c9e8de28189",
+  "iteration": "20261112T041115Z-4ne5f3wp",
   "state": "built-experimental",
   "installable": false,
   "images": {
     "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
       "bytes": 76715752,
-      "sha256": "902c73cbda15cc859a2efa1dcf8236a7daae1122be88f101736010dfade6c8a7"
+      "sha256": "911bfa9ad7929ca04199bd43d48809d6b33b97aa1f37b9eaec9fade8bdcc1a5b"
     }
   },
   "fit_payload_hashes": "passed",
   "source_matches_packaged": {
-    "libshared.so": "ad30f494809170cea07428d9782ce5667caec3a57334c959294c4a6a4a0a6023"
+    "libshared.so": "65c246f3fd72f5c96eea68279e95281d3c308015cfb888cd04a15294817abde7"
   },
   "userspace": {
     "elf_count": 647,
@@ -32,7 +32,7 @@
   ],
   "shared_archive": {
     "member_count": 71,
-    "vendor_matching_members": 4,
+    "vendor_matching_members": 3,
     "scope": "libshared only; vendor match does not establish licensing"
   },
   "prior_component_validation": {
@@ -148,7 +148,7 @@
     ],
     "iteration": "20261112T023949Z-72b96612"
   },
-  "guest_network_validation": {
+  "prior_guest_network_validation": {
     "packaged_comparison_suites": [
       "basic",
       "subnet",
@@ -178,6 +178,42 @@
     "packaged_library_matches_stripped_build": true,
     "limits": [
       "Settings and kernel VLAN configuration mocked; no hardware networking or migration tests."
+    ],
+    "iteration": "20261112T031958Z-mzql1bqo"
+  },
+  "mesh_utility_validation": {
+    "packaged_comparison_suites": [
+      "acsd-init",
+      "backhaul-composed",
+      "backhaul",
+      "backhaul-setting",
+      "band-map",
+      "band-type",
+      "channel-info",
+      "channel-weights",
+      "configuration",
+      "counts",
+      "helpers",
+      "interfaces",
+      "mlo-config",
+      "mlo-policy",
+      "mlo-stage",
+      "mlo-support",
+      "parse-ethernet",
+      "radio-policy",
+      "settings",
+      "uplink-description"
+    ],
+    "compiled_object_matches_archive": true,
+    "object_sha256": "2fe9ee5a78834c432bac2f5ec19837a62ab412e0ba2bee889c0f156e53d40b95",
+    "packaged_library_matches_stripped_build": true,
+    "function_exports": 39,
+    "data_exports": 6,
+    "public_declarations_checked": 31,
+    "limits": [
+      "Hardware and persistent settings not tested.",
+      "Most providers mocked; composed backhaul cases also exercise source-built helper dependencies.",
+      "Arbitrary malformed settings and pointer aliasing are not comprehensively covered."
     ]
   }
 }

@@ -39,5 +39,6 @@ outside the defined comparison domain of the reference implementation.
 
 Validation is limited to the documented fixtures. Pointer aliasing, arbitrary
 malformed settings, hardware boot, persistent settings migration, networking and
-performance have not been established. Integration and packaged-image validation
-must pass before this component can be treated as a firmware replacement.
+performance have not been established. The experimental firmware build and all 20 packaged comparison suites passed
+for the iteration recorded in `validation.json`. The image remains non-installable
+under the project gates until hardware and remaining provenance checks pass.
