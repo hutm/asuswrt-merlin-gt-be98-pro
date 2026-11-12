@@ -708,3 +708,9 @@ Lighttpd then passed; Dropbear's configure link probe failed on the new shared
 library dependencies. Its explicit configure-time `LDFLAGS` now includes
 `OPEN_SHARED_LDFLAGS`. The compiler itself was working; the configure error was
 an unresolved transitive-library link. Full-image validation remains pending.
+
+Dropbear passed on the next retry. Inadyn then linked using an older generated
+Makefile without the common flags, although its configure recipe already uses
+`LDFLAGS`. Its generated Makefile now depends on `common.mak`, so changing these
+flags invalidates that configuration. This fixes stale configuration rather
+than adding a separate dependency path. Full-image validation remains pending.

@@ -5471,7 +5471,7 @@ libconfuse-clean:
 inadyn/configure:
 	cd inadyn && ./autogen.sh
 
-inadyn/Makefile: inadyn/configure
+inadyn/Makefile: inadyn/configure common.mak
 	cd inadyn && $(CONFIGURE) --prefix=/usr --sysconfdir=/etc --localstatedir=/var \
 		--enable-openssl \
 		confuse_CFLAGS="-I$(STAGEDIR)/usr/include" \
