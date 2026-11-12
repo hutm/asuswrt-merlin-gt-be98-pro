@@ -1,5 +1,5 @@
 {
-  "state": "source-integrated-component-tested",
+  "state": "packaged-experimental-image-tested",
   "full_image_validated": false,
   "reference_iteration": "20261112T041115Z-4ne5f3wp",
   "warning_free_compile": true,
@@ -21,7 +21,7 @@
     "Device and settings providers mocked; hardware untested.",
     "GPIO tests validate defined candidate behavior rather than undefined vendor paths.",
     "Long-prefix cases are not sanitizer-instrumented.",
-    "Full image rebuild and packaged-library tests pending."
+    "Image remains experimental and not hardware validated; static checks retain existing userspace diagnostics."
   ],
   "sha256": {
     "api-broadcom.c": "73a29bdb89326c0a66b8f68912f49171ab9bf38c43e6af2f3de366642e72c163",
@@ -30,5 +30,11 @@
     "test-policy.c": "e094cb58a681bcb1e1048e7abe08330ec3a5a835cd9bfb9d4b54428d1fb23e0f",
     "test-wireless-caps.c": "b304701bef87651f59e49ec3d9f1a1e348321a974c9ff600b5273ce2659f27db",
     "test-gpio.c": "f739d8587bccd8779e0ae3f18d9dc7f5310240e655c2a734ac102bee08d137d2"
-  }
+  },
+  "full_image_static_checks_passed": true,
+  "packaged_comparisons_passed": true,
+  "iteration": "20261112T043056Z-dum_kp_u",
+  "compiled_object_matches_archive": true,
+  "compiled_object_sha256": "c11cbf0c04aa67c7b4b1f4494d7fbc1ebd32ef62d400f59f83c67e9abcc7dbaa",
+  "packaged_library_matches_stripped_build": true
 }
