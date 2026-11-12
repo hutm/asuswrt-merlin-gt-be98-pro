@@ -41,5 +41,9 @@ The previous image has ten dynamic consumers: rc, httpd, wlc_monitor, wlc_nt,
 wlceventd, cfg_reportstatus, cfg_server, cfg_client, mastiff and aaews. Backward
 register inspection at 44 direct call sites indicates capacity 65 throughout.
 This is not complete control-flow or runtime-lookup coverage. The source rmd
-caller also declares a 65-byte output. Packaged-image and actual service
-interoperability validation remain pending.
+caller also declares a 65-byte output. The image built from `ddf80d57b1` contains the source helper. Its packaged
+libshared matches the stripped build output and passes 2685 comparisons, nine
+invalid-argument cases and 21 injected hash failures. The compiled helper object
+matches its archive member. Userspace diagnostics are unchanged; all 151 kernel
+modules pass static checks. Actual service and hardware-peer interoperability
+remain unvalidated.
