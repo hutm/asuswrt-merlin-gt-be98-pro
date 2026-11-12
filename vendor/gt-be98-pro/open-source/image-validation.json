@@ -1,18 +1,17 @@
 {
-  "source_commit": "f2f0b10d57649084f87f09940d8226aa14fd8a48",
-  "iteration": "20261112T001540Z-_ax0tv9y",
+  "source_commit": "37f23388acd9d9610726fbacce90eced47d380c1",
+  "iteration": "20261112T003545Z-7mxxwyh9",
   "state": "built-experimental",
   "installable": false,
   "images": {
     "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
       "bytes": 76719848,
-      "sha256": "e9284f712b1d060f8012804fb47fdee33760a715a34851dac08dc80e6038f4ff"
+      "sha256": "d51ded983578496dfd186f2b9d069acf4cf96ef46933924edb575e0d55e6bbbd"
     }
   },
   "fit_payload_hashes": "passed",
   "source_matches_packaged": {
-    "libshared.so": "87f09c41362dab1d5f2ab3eddb4224672a9bf8fa41893ff5148a86e593fa68ed",
-    "httpd": "93a25de73a0e4177b8aa91113f8b531172de262ccc7724616842edf758a80586"
+    "libshared.so": "bc5dc7fc5197c9883b5eb9f2d26d1f27c64c2217a3a87973906a154edb2e69e1"
   },
   "packaged_shared_library_comparison_suites": 14,
   "userspace": {
@@ -31,5 +30,15 @@
     "Userspace check approximates declared dependency and symbol resolution; existing diagnostic records remain.",
     "Kernel check covers static symbols, dependencies, architecture and available CRC entries only.",
     "Proprietary components remain; this is not a fully open-source image."
-  ]
+  ],
+  "packaged_utility_comparison_records": {
+    "bcmutils": 135428,
+    "bcmxtlv": 8192,
+    "bcmwifi_channels": 65536
+  },
+  "shared_archive": {
+    "member_count": 71,
+    "vendor_matching_members": 14,
+    "scope": "libshared only; vendor match does not establish licensing"
+  }
 }

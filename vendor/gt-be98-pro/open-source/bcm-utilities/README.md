@@ -26,4 +26,9 @@ exercise every exported function or hardware behavior. Native compilation uses
 -Ulinux to avoid a vendor header selecting kernel-only stdarg headers from the
 host kernel version; the firmware compilation retains its actual platform flags.
 
-Full-image integration and hardware validation remain pending.
+The build at `37f23388ac` contains the three source-built objects in libshared.
+The packaged library matches its stripped source-built output and passes all
+209156 utility comparison records against the reference library. The userspace
+ABI report is unchanged (647 ELF files, 80 existing diagnostic records), and all
+151 kernel modules pass static checks against the packaged kernel. Hardware
+validation remains pending. Exact image hashes are in ../image-validation.json.
