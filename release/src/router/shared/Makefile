@@ -698,9 +698,15 @@ ifneq ($(wildcard ./prebuild/nvpriv.o),)
 endif
 endif
 
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_AAE_IPC_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/aae-ipc)
+aae_ipc.o: $(OPEN_AAE_IPC_DIR)/ipc.c aae_ipc.h
+	$(CC) $(CFLAGS) -c $< -o $@
+else
 aae_ipc.o:
 ifeq ($(wildcard $(SRCBASE)/router/aaews/*.c),)
 	cp -f $(TOP)/aaews/prebuild/$(BUILD_NAME)/aae_ipc.o ./
+endif
 endif
 
 ifeq ($(RTCONFIG_MXL_826XX),y)
