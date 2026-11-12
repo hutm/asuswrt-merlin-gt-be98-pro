@@ -492,7 +492,12 @@ ifeq ($(RTCONFIG_DWB),y)
 ifeq ($(RTCONFIG_BCMBSD),y)
 CFLAGS += -DSMART_CONNECT
 endif
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_AMAS_DWB_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/amas-dwb)
+OBJS += open-amas-dwb.o
+else
 OBJS += $(if $(wildcard sysdeps/amas/amas_dwb.c),amas_dwb.o,prebuild/amas_dwb.o)
+endif
 endif
 OBJS += $(if $(wildcard amas_utils.c),amas_utils.o,prebuild/amas_utils.o)
 ifeq ($(RTCONFIG_AMASDB),y)
@@ -683,6 +688,11 @@ endif
 
 open-notify-rc.o: $(OPEN_NOTIFY_DIR)/notify.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+ifneq ($(OPEN_AMAS_DWB_DIR),)
+open-amas-dwb.o: $(OPEN_AMAS_DWB_DIR)/settings.c sysdeps/amas/amas_dwb.h rtconfig.h
+	$(CC) $(CFLAGS) -c $< -o $@
+endif
 
 ifneq ($(OPEN_UU_UTILS_DIR),)
 open-uu-utils.o: $(OPEN_UU_UTILS_DIR)/model_check.c model.h
