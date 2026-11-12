@@ -9,17 +9,22 @@ or equivalent behavior. Do not relabel proprietary disassembly as open source.
 
 ## Latest build validation
 
-The experimental build at `ddf80d57b1` completed with the OpenSSL-based software
-authentication helper selected. Packaged libshared matches its stripped source-built output;
-the packaged helper matches 2685 reference cases and passes nine invalid-argument
-cases plus 21 injected hash failures.
-Userspace ABI results remain unchanged (647 ELF files and 80 existing diagnostic
+The experimental build at `cdf046bb2b` completed with source hardware
+authentication helpers selected. Packaged libshared matches its stripped build
+output, and the compiled helper matches its archive member. Packaged tests pass
+4653 wireless query comparisons, 792 handshake comparisons, 640 composed
+checks, 486 wrapper comparisons, 48 table fields and five wrapper failure cases.
+Userspace results remain unchanged (647 ELF files and 80 existing diagnostic
 records). All 151 kernel modules pass static checks against the packaged kernel.
-The shared archive has 8 remaining vendor-matching objects; this is not a
+The shared archive has 7 remaining vendor-matching objects; this is not a
 whole-image proprietary component count. Earlier component results and exact
-hashes are recorded in [image-validation.json](image-validation.json). Router
-hardware and vendor-service interoperability have not been tested, and substantial
-proprietary code remains.
+hashes are recorded in [image-validation.json](image-validation.json).
+
+A broader scan finds 120 packaged paths matching 118 of 280 pinned vendor inputs,
+either exactly or by allocated ELF sections. These partial manifests do not cover
+all linked objects or embedded firmware. Prebuilt input matches do not establish
+licensing or whether equivalent source is available. Substantial proprietary
+components remain. Hardware and actual service interoperability are untested.
 
 Current work focuses on userspace replacements and source-available components;
 a new hardware-driver/radio-firmware reconstruction project is outside the
@@ -220,3 +225,14 @@ with partial provenance and other proprietary components still present.
 persistence implementation and its Docker test runner. These components are not
 yet integrated as a replacement for the installed NVRAM libraries. Notification,
 cache lifetime, ASUS storage hooks and full public API coverage remain required.
+
+## Final-image vendor input inventory
+
+`inventory-final-vendor.py REPOSITORY IMAGE_RUN` requires Python and pyelftools.
+It scans `IMAGE_RUN/root`, verifies current manifest inputs against their pinned
+hashes and records exact-file or allocated-ELF-section matches in
+`IMAGE_RUN/final-vendor-inventory.json`. Symlinks are excluded. A pinned input may
+match multiple installed paths, and duplicate inputs may match the same path.
+Unmatched inputs are not proven absent: static linking and embedded firmware
+require separate tracing. This report is partial provenance evidence, not a
+license classification or a complete closed-source component count.

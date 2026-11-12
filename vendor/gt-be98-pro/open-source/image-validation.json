@@ -1,17 +1,17 @@
 {
-  "source_commit": "ddf80d57b12eb0a017492c5c1dca7f16479b2ef4",
-  "iteration": "20261112T014223Z-shlxp5mb",
+  "source_commit": "cdf046bb2b2d0d0f210f92806ae9d7a880b75a3e",
+  "iteration": "20261112T020717Z-y9sfa7x1",
   "state": "built-experimental",
   "installable": false,
   "images": {
     "GT-BE98_PRO_3006_102.9_0_nand_squashfs.pkgtb": {
       "bytes": 76715752,
-      "sha256": "8e93743756729e1188cc0286c552a03c807e1549abbe20aa304f435cf9359221"
+      "sha256": "574e0a4b62641443680b856269cfede95c905d960ed60bd03a25597879362c55"
     }
   },
   "fit_payload_hashes": "passed",
   "source_matches_packaged": {
-    "libshared.so": "2f75bce0850014068555dea99e32a50294088b1096768374a341f60d2669de99"
+    "libshared.so": "70c0eb9b9f8315d544da25721fe117a0074e2a85943a2c5aab8d17200e8a52ae"
   },
   "userspace": {
     "elf_count": 647,
@@ -32,7 +32,7 @@
   ],
   "shared_archive": {
     "member_count": 71,
-    "vendor_matching_members": 8,
+    "vendor_matching_members": 7,
     "scope": "libshared only; vendor match does not establish licensing"
   },
   "prior_component_validation": {
@@ -85,7 +85,7 @@
     "reference_output": "reference-returns.log",
     "packaged_output": "jumbo-linked-cases.log"
   },
-  "software_auth_validation": {
+  "prior_software_auth_validation": {
     "packaged_comparison_cases": 2685,
     "packaged_invalid_argument_cases": 9,
     "packaged_injected_hash_failures": 21,
@@ -95,6 +95,33 @@
     "packaged_output": "auth-linked-cases.log",
     "limits": [
       "Clock and random providers mocked; hardware peer and actual service interoperability not tested."
+    ],
+    "iteration": "20261112T014223Z-shlxp5mb"
+  },
+  "hardware_auth_validation": {
+    "wireless_query_comparisons": 4653,
+    "handshake_comparisons": 792,
+    "composed_authentication_comparisons": 640,
+    "wrapper_comparisons": 486,
+    "public_table_fields": 48,
+    "wrapper_failure_cases": 5,
+    "compiled_object_matches_archive": true,
+    "packaged_library_matches_stripped_build": true,
+    "limits": [
+      "Settings, wireless commands, clock and randomness mocked; hardware and actual service interoperability untested."
+    ]
+  },
+  "final_vendor_input_inventory": {
+    "regular_files": 3157,
+    "elf_files": 801,
+    "pinned_inputs": 280,
+    "matched_inputs": 118,
+    "distinct_matched_paths": 120,
+    "limits": [
+      "Matching pinned prebuilt inputs does not establish licensing or absence of available source.",
+      "Unmatched inputs can still be linked into executables or modules; no absence claim follows.",
+      "Embedded firmware, boot components and inputs outside these partial manifests are not comprehensively covered.",
+      "Allocated-section matching allows differences in non-allocated ELF metadata; it is not a whole-file checksum match."
     ]
   }
 }

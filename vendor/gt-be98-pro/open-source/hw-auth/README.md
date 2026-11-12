@@ -38,5 +38,14 @@ retry loop can wait for time to advance on a collision; tunnel applications wait
 for wireless readiness without a timeout. Those choices preserve existing
 protocol behavior and are not recommended for new authentication protocols.
 
-Component tests pass. Full firmware integration, packaged-object verification,
-hardware boot and real service interoperability remain to be validated.
+The firmware built from `cdf046bb2b` packages this source implementation. Its
+libshared matches the stripped build output, and the compiled helper matches its
+archive member. The packaged library passes all four comparison suites, the
+48-field table comparison and five wrapper failure cases. Userspace diagnostics
+are unchanged, and all 151 kernel modules pass static checks. Hardware boot and
+real service interoperability remain unvalidated.
+
+To repeat packaged validation, set `ASUS_REFERENCE_ROOT` to the preceding image's
+extracted root, set `ASUS_IMAGE_RUN` to the new audit directory containing `root/`,
+and run `bash vendor/gt-be98-pro/open-source/hw-auth/test_packaged.sh`. Comparison
+logs are saved in the audit directory.
