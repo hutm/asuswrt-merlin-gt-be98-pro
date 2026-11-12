@@ -25,6 +25,11 @@ int __wrap_socket(int domain,int type,int protocol){assert(domain==AF_UNIX&&(typ
 #endif
 if(fault==1){errno=EMFILE;return -1;}return descriptor;}
 int __wrap_fcntl(int fd,int cmd,...){assert(fd==descriptor);if(cmd==F_GETFL){if(fault==2){errno=EIO;return -1;}return O_RDWR;}assert(cmd==F_SETFL);va_list ap;va_start(ap,cmd);int flags=va_arg(ap,int);va_end(ap);assert(flags==(O_RDWR|O_NONBLOCK));if(fault==3){errno=EIO;return -1;}return 0;}
+int __wrap_fcntl64(int fd,int cmd,...){
+ if(cmd==F_GETFL)return __wrap_fcntl(fd,cmd);
+ va_list ap;va_start(ap,cmd);int flags=va_arg(ap,int);va_end(ap);
+ return __wrap_fcntl(fd,cmd,flags);
+}
 int __wrap_connect(int fd,const struct sockaddr *addr,socklen_t n){assert(fd==descriptor&&n==sizeof(struct sockaddr_un));const struct sockaddr_un *a=(const void *)addr;assert(a->sun_family==AF_UNIX&&!strcmp(a->sun_path,"/tmp/test-ipc"));if(fault==4){errno=ECONNREFUSED;return -1;}if(async_connect||(fault>=5&&fault<=7)){errno=EINPROGRESS;return -1;}return 0;}
 int __wrap_getsockopt(int fd,int level,int opt,void *value,socklen_t *n){assert(fd==descriptor&&level==SOL_SOCKET&&opt==SO_ERROR&&*n==sizeof(int));if(fault==8){errno=EIO;return -1;}*(int *)value=fault==9?ECONNREFUSED:0;return 0;}
 ssize_t __wrap_send(int fd,const void *p,size_t n,int flags){

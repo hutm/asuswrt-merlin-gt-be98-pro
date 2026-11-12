@@ -24,7 +24,7 @@ as in the existing interface. The tests deliberately cover that behavior.
 
 ## Defined failure behavior
 
-* Requests accept zero through 2048 payload bytes. Invalid pointers/lengths,
+* Requests accept zero through 2048 payload bytes. Invalid null-pointer/length combinations,
   nonpositive response capacities/timeouts and empty paths return zero with
   EINVAL. Overlong Unix paths return ENAMETOOLONG instead of connecting to a
   silently truncated path.
