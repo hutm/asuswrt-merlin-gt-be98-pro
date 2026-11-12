@@ -7876,7 +7876,7 @@ lighttpd-1.4.39/Makefile:
 
 lighttpd-1.4.39/stamp-h1: lighttpd-1.4.39/Makefile
 ifeq ($(HND_ROUTER),y)
-	cd lighttpd-1.4.39 && ./preconfigure-script-hnd
+	cd lighttpd-1.4.39 && OPEN_SHARED_LDFLAGS="$(OPEN_SHARED_LDFLAGS)" ./preconfigure-script-hnd
 else ifeq ($(RTCONFIG_RALINK),y)
 	cd lighttpd-1.4.39 && ./preconfigure-script-ralink
 else 

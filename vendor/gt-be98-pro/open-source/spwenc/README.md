@@ -696,3 +696,10 @@ then stopped at CoovaChilli's unresolved zlib dependency. CoovaChilli's configur
 recipe now receives `OPEN_SHARED_LDFLAGS`; its local generated Makefile was
 invalidated so the retry regenerates those flags. Full-image validation remains
 pending.
+
+CoovaChilli subsequently passed; the next failure was Lighttpd's standalone
+preconfigure script replacing the common flags. The HND configure invocation
+now passes `OPEN_SHARED_LDFLAGS` explicitly and that script appends it. Its local
+configuration stamp was invalidated for regeneration. The actual HTTP link in
+that retry includes `open-httpd-pwenc.o` and excludes `prebuild/pwenc.o`.
+Packaged-image validation is still pending.
