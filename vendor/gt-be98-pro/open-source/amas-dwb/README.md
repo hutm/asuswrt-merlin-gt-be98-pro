@@ -35,5 +35,9 @@ ASUS_REFERENCE_ROOT=/absolute/extracted/reference/root \
 bash vendor/gt-be98-pro/open-source/amas-dwb/test.sh
 ```
 
-Image integration and physical mesh operation remain unvalidated. The startup
-caller is `rc/init.c`; private consumers may also invoke this public interface.
+The image built from `d57b548de2` includes the source helper. Its packaged
+libshared matches the stripped build output and passes all 7290 comparison
+scenarios with mocked settings providers. Userspace diagnostics are unchanged,
+and all 151 kernel modules pass static checks. Physical mesh operation remains
+unvalidated. The startup caller is `rc/init.c`; private consumers may also
+invoke this public interface.
