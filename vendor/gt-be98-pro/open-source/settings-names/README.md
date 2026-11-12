@@ -29,4 +29,9 @@ ASUS_REFERENCE_ROOT=/absolute/extracted/reference/root \
 bash vendor/gt-be98-pro/open-source/settings-names/test.sh
 ```
 
-Full-image and hardware validation of this selection remain pending.
+The image built at `60aea38b6a` includes `open-settings-names.o` and excludes
+`shutils_private.o` from the shared archive. Packaged libshared matches the
+stripped source-built library. The 774-case suite also passes against the
+packaged library using mocked NVRAM reads and allocation failure. The userspace
+ABI report has the same 647 ELF checks and 80 existing diagnostic records as
+the preceding image. Hardware validation remains pending.

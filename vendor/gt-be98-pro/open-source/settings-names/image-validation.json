@@ -1,0 +1,11 @@
+{
+  "source_commit": "60aea38b6a8d8fcc87cc5de959f54016ec5ec5cc",
+  "iteration": "20261112T002820Z-074f5pbx",
+  "image_sha256": "e926293ea8cf5baa2532fb0c00fd3732eb1dba6867e2e6a0a4e27bf193093495",
+  "packaged_libshared_sha256": "a9756871e3df1d54d1ce8cedd288d93a59901f9cd1d9ff1d790a0bf308637868",
+  "source_matches_packaged": true,
+  "packaged_settings_cases": 774,
+  "userspace_checks_unchanged_from": "20261112T001540Z-_ax0tv9y",
+  "hardware_validation": "not performed",
+  "installable": false
+}
