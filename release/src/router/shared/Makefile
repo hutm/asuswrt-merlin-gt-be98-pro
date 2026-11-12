@@ -747,6 +747,17 @@ prebuild/%.o:
 .depend: $(OBJS:%.o=%.c)
 	@$(CC) $(CFLAGS) -M $^ > .depend
 
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+# Rebuild the licensed utility sources already supplied with this platform.
+OPEN_BCM_INCLUDES = -I$(SRCBASE)/include -I$(SRCBASE)/common/include \
+ -I$(SRCBASE)/shared/bcmwifi/include
+bcmutils.o: $(SRCBASE)/shared/bcmutils.c
+	$(CC) $(CFLAGS) $(OPEN_BCM_INCLUDES) -MMD -MP -MF .bcmutils.depend -c $< -o $@
+bcmxtlv.o: $(SRCBASE)/shared/bcmxtlv.c
+	$(CC) $(CFLAGS) $(OPEN_BCM_INCLUDES) -MMD -MP -MF .bcmxtlv.depend -c $< -o $@
+bcmwifi_channels.o: $(SRCBASE)/shared/bcmwifi/src/bcmwifi_channels.c
+	$(CC) $(CFLAGS) $(OPEN_BCM_INCLUDES) -MMD -MP -MF .bcmwifi_channels.depend -c $< -o $@
+else
 ifneq ($(wildcard prebuild/bcmutils.o),)
 bcmutils.o: prebuild/bcmutils.o
 	cp prebuild/$@ .
@@ -773,6 +784,8 @@ else
 .bcmxtlv.depend: bcmxtlv.c
 	@$(CC) $(CFLAGS) -M $< > $@
 endif
+endif
+
 endif
 
 .%.depend: %.c
