@@ -480,7 +480,12 @@ OBJS += open-ethswctl.o
 else
 OBJS += $(if $(wildcard ethswctl.c),ethswctl.o,prebuild/ethswctl.o)
 endif
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_ETHCTL_CMD_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/ethctl-command)
+OBJS += ethctl_cmd.o
+else
 OBJS += $(if $(wildcard ethctl_cmd.c),ethctl_cmd.o,prebuild/ethctl_cmd.o)
+endif
 OBJS += memaccess.o
 endif
 
@@ -685,6 +690,11 @@ ifneq ($(OPEN_TCODE_DIR),)
 open-tcode-force:
 tcode.o: open-tcode-force
 	$(MAKE) -f $(OPEN_TCODE_DIR)/Makefile CC="$(CC)" CFLAGS="$(CFLAGS)" CPPFLAGS="-I$(TOP)/shared" BUILD_DIR="$(CURDIR)/.open-tcode" OUTPUT="$(CURDIR)/tcode.o"
+endif
+
+ifneq ($(OPEN_ETHCTL_CMD_DIR),)
+ethctl_cmd.o: $(OPEN_ETHCTL_CMD_DIR)/commands.c
+	$(CC) $(CFLAGS) -fPIC -MMD -MP -MF .ethctl_cmd.depend -c $< -o $@
 endif
 
 ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
