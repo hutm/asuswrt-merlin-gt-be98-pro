@@ -469,7 +469,12 @@ OBJS += bcmwifi_channels.o
 endif
 
 ifeq ($(HND_ROUTER),y)
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_ETHSWCTL_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/ethswctl)
+OBJS += open-ethswctl.o
+else
 OBJS += $(if $(wildcard ethswctl.c),ethswctl.o,prebuild/ethswctl.o)
+endif
 OBJS += $(if $(wildcard ethctl_cmd.c),ethctl_cmd.o,prebuild/ethctl_cmd.o)
 OBJS += memaccess.o
 endif
@@ -688,6 +693,11 @@ endif
 
 open-notify-rc.o: $(OPEN_NOTIFY_DIR)/notify.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+ifneq ($(OPEN_ETHSWCTL_DIR),)
+open-ethswctl.o: $(OPEN_ETHSWCTL_DIR)/jumbo_status.c
+	$(CC) $(CFLAGS) -c $< -o $@
+endif
 
 ifneq ($(OPEN_AMAS_DWB_DIR),)
 open-amas-dwb.o: $(OPEN_AMAS_DWB_DIR)/settings.c sysdeps/amas/amas_dwb.h rtconfig.h
