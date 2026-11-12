@@ -690,15 +690,24 @@ install: all
 	$(if $(RTCONFIG_DEBUG),,@$(STRIP) $(INSTALLDIR)/usr/lib/libshared.so)
 
 clean:
+	rm -rf .open-platform-private
 	rm -rf .open-spwenc
 	rm -rf .open-hw-auth
 	rm -rf .open-tcode
 	rm -rf .open-amas-utils
 	rm -f *.o *.so *.a .*.depend *.prep sysdeps/*.o sysdeps/broadcom/*.o sysdeps/ralink/*.o sysdeps/qtn/*.o
 
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_PLATFORM_PRIVATE_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/platform-private)
+.PHONY: open-platform-private-force
+open-platform-private-force:
+private.o: open-platform-private-force
+	$(MAKE) -f $(OPEN_PLATFORM_PRIVATE_DIR)/Makefile CC="$(CC)" CFLAGS="$(CFLAGS)" BUILD_DIR="$(CURDIR)/.open-platform-private" OUTPUT="$(CURDIR)/private.o"
+else
 private.o:
 ifneq ($(wildcard ./prebuild/private.o),)
 	@-cp -f ./prebuild/private.o .
+endif
 endif
 
 ifneq ($(OPEN_TCODE_DIR),)
