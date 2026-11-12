@@ -250,7 +250,12 @@ OBJS += $(if $(wildcard notify_ahs.c),notify_ahs.o,prebuild/notify_ahs.o)
 endif
 #ifeq ($(RTCONFIG_AMAS_WGN),y)
 ifeq ($(or $(RTCONFIG_AMAS_WGN),$(RTCONFIG_MULTILAN_CFG)),y)
+ifeq ($(ASUS_OPEN_COMPONENTS):$(BUILD_NAME),y:GT-BE98_PRO)
+OPEN_AMAS_WGN_DIR := $(abspath ../../../../vendor/gt-be98-pro/open-source/amas-wgn)
+OBJS += amas_wgn_shared.o
+else
 OBJS += $(if $(wildcard amas_wgn_shared.c),amas_wgn_shared.o,prebuild/amas_wgn_shared.o)
+endif
 endif
 ifeq ($(RTCONFIG_MULTILAN_CFG), y)
 OBJS += $(if $(wildcard amas_apg_shared.c),amas_apg_shared.o,prebuild/amas_apg_shared.o)
@@ -690,6 +695,11 @@ ifneq ($(OPEN_TCODE_DIR),)
 open-tcode-force:
 tcode.o: open-tcode-force
 	$(MAKE) -f $(OPEN_TCODE_DIR)/Makefile CC="$(CC)" CFLAGS="$(CFLAGS)" CPPFLAGS="-I$(TOP)/shared" BUILD_DIR="$(CURDIR)/.open-tcode" OUTPUT="$(CURDIR)/tcode.o"
+endif
+
+ifneq ($(OPEN_AMAS_WGN_DIR),)
+amas_wgn_shared.o: $(OPEN_AMAS_WGN_DIR)/guest-network.c $(OPEN_AMAS_WGN_DIR)/subnet.h $(OPEN_AMAS_WGN_DIR)/vlan.h
+	$(CC) $(CFLAGS) -fPIC -MMD -MP -MF .amas_wgn_shared.depend -c $< -o $@
 endif
 
 ifneq ($(OPEN_ETHCTL_CMD_DIR),)
